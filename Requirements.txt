@@ -1,0 +1,15 @@
+Ability to generate properly formatted QCP files
+Files to be created item by item with no knowledge of how QCP files are formatted necessary.
+Items can be grouped together with other items
+  File grouping - Items can be grouped into sepearte files automatically
+    May require overarching project file that contains metadata
+  Internal Groupint - Items are seperated into groups within a single file
+    Allow for groups to be headed with a comment
+    Allow items in group to all start with common prefix
+Auto tracking to ensure that no name is used more than once between all files
+Include simple text editor for creating/editing QCP files manually.
+  Syntax hilighting
+  Parsing to ensure file created properly.
+Ability to use predefined constants
+Ability to use other QCP items as values in QCPs
+  ex. ValOne, 10, valTwo, 30
