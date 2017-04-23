@@ -2,7 +2,7 @@
 #define EDITOR_H
 
 //ui include
-#include "Editor_UI.h"
+//#include "Editor_UI.h"
 
 class Editor: public QWidget, private Editor_UI
 {

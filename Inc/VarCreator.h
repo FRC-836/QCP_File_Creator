@@ -6,7 +6,7 @@
 #include "MultiVarCreator.h"
 
 //UI include
-#include "VarCreator_UI.h"
+//#include "VarCreator_UI.h"
 
 class VarCreator: public QWidget, private VarCreator_UI
 {

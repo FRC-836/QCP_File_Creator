@@ -2,7 +2,7 @@
 #define NEW_DIALOG_H
 
 //ui include
-#include "NewDialog_UI.h"
+//#include "NewDialog_UI.h"
 
 class NewDialog: public QWidget, private NewDialog_UI
 {

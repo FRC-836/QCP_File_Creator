@@ -5,6 +5,8 @@ project(QCP_File_Creator)
 
 #instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC_OPTIONS -o Inc/)
 
 #Find the QtWidgets library
 find_package(Qt5Widgets)
@@ -26,13 +28,8 @@ set(inc Inc/Creator.h
         Inc/VarCreator.h
         Inc/SingleVarCreator.h
         Inc/MultiVarCreator.h)
-set(forms forms/Creator_UI.h
-          forms/Editor_UI.h
-          forms/MainWindow_UI.h
-          forms/NewDialog_UI.h
-          forms/VarCreator_UI.h
-          forms/SingleVarCreator_UI.h
-          forms/MultiVarCreator_UI.h)
+set(forms Inc/MainWindow.ui
+        )
 
 #setup inc as a valid include directory
 include_directories(${CMAKE_SOURCE_DIR}/inc)

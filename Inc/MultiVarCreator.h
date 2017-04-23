@@ -2,7 +2,7 @@
 #define MULTI_VAR_CREATOR_H
 
 //ui include
-#include "MultiVarCreator_UI.h"
+//#include "MultiVarCreator_UI.h"
 
 class MultiVarCreator: public QWidget, private MultiVarCreator_UI
 {
