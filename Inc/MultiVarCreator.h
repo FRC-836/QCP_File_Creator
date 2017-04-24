@@ -3,6 +3,7 @@
 
 //ui include
 //#include "MultiVarCreator_UI.h"
+#include "ui_MultiVarCreator.h"
 
 class MultiVarCreator: public QWidget, private MultiVarCreator_UI
 {

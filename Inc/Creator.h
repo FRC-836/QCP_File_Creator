@@ -2,7 +2,7 @@
 #define CREATOR_H
 
 //ui include
-//#include "Creator_UI.h"
+#include "ui_Creator.h"
 
 class Creator: public QMainWindow
 {

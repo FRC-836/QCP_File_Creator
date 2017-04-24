@@ -3,6 +3,7 @@
 
 //ui include
 //#include "SingleVarCreator_UI.h"
+#include "ui_SingleVarCreator.h"
 
 class SingleVarCreator: public QWidget, private SingleVarCreator_Ui
 {

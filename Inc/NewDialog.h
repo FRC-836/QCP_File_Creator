@@ -3,8 +3,9 @@
 
 //ui include
 //#include "NewDialog_UI.h"
+#include "ui_NewDialog.h"
 
-class NewDialog: public QWidget, private NewDialog_UI
+class NewDialog: public QWidget
 {
 };
 

@@ -1,7 +1,21 @@
+//Qt includes
+#include <QApplication>
+
+//c++ included
 #include <iostream>
 
-int main()
+//custom widget includes
+#include "MainWindow.h"
+
+int main(int argc, char** argv)
 {
-  std::cout << "hello world" << std::endl;
-  return 0;
+  //setup q application
+  QApplication app(argc, argv);
+
+  //create and run main window
+  MainWindow mainWindow;
+  mainWindow.show();
+
+  //run the application
+  return app.exec();
 }

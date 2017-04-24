@@ -7,13 +7,9 @@
 class MainWindow: public QMainWindow
 {
   private:
-    Ui_MainWindow* ui;
+    Ui_MainWindow* m_ui;
   public:
-    MainWindow()
-    {
-      ui = new Ui_MainWindow();
-      ui->setupUi(this);
-    }
+    MainWindow();
 };
 
 #endif //end ifndef MAIN_WINDOW_H

@@ -3,6 +3,7 @@
 
 //ui include
 //#include "Editor_UI.h"
+#include "ui_Editor.h"
 
 class Editor: public QWidget, private Editor_UI
 {
