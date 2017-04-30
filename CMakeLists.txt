@@ -19,7 +19,7 @@ set(src src/main.cpp
         src/MainWindow.cpp
         src/NewDialog.cpp
         #src/VarCreator.cpp
-        #src/SingleVarCreator.cpp
+        src/SingleVarCreator.cpp
         #src/MultiVarCreator.cpp)
         )
 set(inc #Inc/Creator.h
@@ -27,7 +27,7 @@ set(inc #Inc/Creator.h
         Inc/MainWindow.h
         Inc/NewDialog.h
         #Inc/VarCreator.h
-        #Inc/SingleVarCreator.h
+        Inc/SingleVarCreator.h
         #Inc/MultiVarCreator.h)
         )
 set(forms #Inc/Creator.ui
@@ -35,7 +35,7 @@ set(forms #Inc/Creator.ui
           Inc/MainWindow.ui
           Inc/NewDialog.ui
           #Inc/VarCreator.ui
-          #Inc/SingleVarCreator.ui
+          Inc/SingleVarCreator.ui
           #Inc/MultiVarCreator.ui)
           )
 

@@ -13,3 +13,5 @@ Include simple text editor for creating/editing QCP files manually.
 Ability to use predefined constants
 Ability to use other QCP items as values in QCPs
   ex. ValOne, 10, valTwo, 30
+
+Ability to search for specific variables or values
