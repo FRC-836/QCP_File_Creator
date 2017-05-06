@@ -10,6 +10,10 @@
 //temporary
 #include "NewDialog.h"
 #include "SingleVarCreator.h"
+#include "MultiVarCreator.h"
+#include "Creator.h"
+#include "Editor.h"
+#include "VarCreator.h"
 
 int main(int argc, char** argv)
 {
@@ -20,12 +24,6 @@ int main(int argc, char** argv)
   MainWindow mainWindow;
   mainWindow.show();
 
-  //temporary just to see how they look
-  NewDialog newdialog;
-  newdialog.show();
-  SingleVarCreator singleVarCreator;
-  singleVarCreator.show();
-
   //run the application
   return app.exec();
-}
+} //end int main(int argc, char** argv)

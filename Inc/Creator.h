@@ -6,7 +6,25 @@
 
 class Creator: public QMainWindow
 {
-};
+  private:
+    //member variables
+    Ui_creator* m_ui;
+
+  public:
+    //constructors
+    Creator();
+    ~Creator();
+
+    //public functions
+
+    //getters
+
+    //setters
+
+  signals:
+
+  public slots:
+}; //end class Creator: public QMainWindow
 
 #endif //end ifndef CREATOR_H
 

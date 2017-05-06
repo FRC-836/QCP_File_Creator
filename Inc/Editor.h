@@ -2,11 +2,10 @@
 #define EDITOR_H
 
 //ui include
-//#include "Editor_UI.h"
-#include "ui_Editor.h"
+#include "QTextEdit"
 
-class Editor: public QWidget, private Editor_UI
+class Editor: public QTextEdit
 {
-};
+}; //end class Editor: public QTextEdit
 
 #endif //end ifndef EDITOR_H

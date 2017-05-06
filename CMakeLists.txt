@@ -14,29 +14,28 @@ find_package(Qt5Widgets)
 include_directories(Inc forms)
 
 set(src src/main.cpp
-        #src/Creator.cpp
-        #src/Editor.cpp
+        src/Creator.cpp
+        src/Editor.cpp
         src/MainWindow.cpp
         src/NewDialog.cpp
-        #src/VarCreator.cpp
+        src/VarCreator.cpp
         src/SingleVarCreator.cpp
-        #src/MultiVarCreator.cpp)
+        src/MultiVarCreator.cpp
         )
-set(inc #Inc/Creator.h
-        #Inc/Editor.h
+set(inc Inc/Creator.h
+        Inc/Editor.h
         Inc/MainWindow.h
         Inc/NewDialog.h
-        #Inc/VarCreator.h
+        Inc/VarCreator.h
         Inc/SingleVarCreator.h
-        #Inc/MultiVarCreator.h)
+        Inc/MultiVarCreator.h
         )
-set(forms #Inc/Creator.ui
-          #Inc/Editor.ui
+set(forms Inc/Creator.ui
           Inc/MainWindow.ui
           Inc/NewDialog.ui
-          #Inc/VarCreator.ui
+          Inc/VarCreator.ui
           Inc/SingleVarCreator.ui
-          #Inc/MultiVarCreator.ui)
+          Inc/MultiVarCreator.ui
           )
 
 #setup inc as a valid include directory

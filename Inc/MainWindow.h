@@ -20,6 +20,6 @@ class MainWindow: public QMainWindow
     //getters
 
     //setters
-};
+}; //end class MainWindow: public QMainWindow
 
 #endif //end ifndef MAIN_WINDOW_H
