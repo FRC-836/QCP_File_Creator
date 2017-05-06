@@ -1,0 +1,3 @@
+finish using designer to create all the UI files
+figure out how to deal with all the connections. probably need to draw up a diagram
+determine if a state manager is necessary for the whole application
