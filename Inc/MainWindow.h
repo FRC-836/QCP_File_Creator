@@ -4,6 +4,9 @@
 //ui include
 #include "ui_MainWindow.h"
 
+//QT includes
+#include "QString"
+
 class MainWindow: public QMainWindow
 {
   private:
@@ -20,6 +23,17 @@ class MainWindow: public QMainWindow
     //getters
 
     //setters
+
+  signals:
+    void createProject(const QString& filePath);
+    void openProject(const QString& filePath);
+
+  public slots:
+    //void newButtonPressed();
+    //void openButtonPressed();
+    //void editorButtonPressed();
+    //void recentFileClicked(QListWidgetItem& item);
+
 }; //end class MainWindow: public QMainWindow
 
 #endif //end ifndef MAIN_WINDOW_H

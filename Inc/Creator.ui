@@ -15,21 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
-     <widget class="QComboBox" name="cmbGroup">
-      <property name="minimumSize">
-       <size>
-        <width>200</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QComboBox" name="cmbFile">
       <property name="minimumSize">
@@ -45,23 +30,22 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="4" rowspan="3">
-     <widget class="QListWidget" name="lstConstants">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
+    <item row="0" column="2">
+     <widget class="QComboBox" name="cmbGroup">
+      <property name="minimumSize">
        <size>
-        <width>150</width>
-        <height>16777215</height>
+        <width>200</width>
+        <height>0</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="3">
+    <item row="0" column="0" rowspan="4">
      <widget class="QTreeWidget" name="treProjExplorer">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -75,6 +59,12 @@
         <height>16777215</height>
        </size>
       </property>
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
       <column>
        <property name="text">
         <string notr="true">1</string>
@@ -82,38 +72,7 @@
       </column>
      </widget>
     </item>
-    <item row="0" column="3" rowspan="3">
-     <widget class="QTreeWidget" name="treVarExplorer">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>150</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
-    </item>
-    <item row="1" column="1" rowspan="2" colspan="2">
-     <widget class="VarCreator" name="wgtEditor" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="5">
+    <item row="5" column="0" colspan="5">
      <layout class="QHBoxLayout" name="buttonLayout">
       <item>
        <widget class="QPushButton" name="btnUtil">
@@ -140,6 +99,99 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="btnNewFile">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>New File</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" rowspan="4" colspan="2">
+     <widget class="VarCreator" name="wgtEditor" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <zorder></zorder>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QPushButton" name="btnNewConst">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>New Constant</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3" rowspan="5">
+     <widget class="QTreeWidget" name="treVarExplorer">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>true</bool>
+      </property>
+      <property name="rootIsDecorated">
+       <bool>true</bool>
+      </property>
+      <property name="itemsExpandable">
+       <bool>true</bool>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="0" column="4" rowspan="4">
+     <widget class="QListWidget" name="lstConstants">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::NoDragDrop</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

@@ -21,6 +21,12 @@ set(src src/main.cpp
         src/VarCreator.cpp
         src/SingleVarCreator.cpp
         src/MultiVarCreator.cpp
+        src/Variable.cpp
+        src/Group.cpp
+        src/Project.cpp
+        src/QcpFile.cpp
+        src/ConstCreator.cpp
+        src/Manager.cpp
         )
 set(inc Inc/Creator.h
         Inc/Editor.h
@@ -29,6 +35,12 @@ set(inc Inc/Creator.h
         Inc/VarCreator.h
         Inc/SingleVarCreator.h
         Inc/MultiVarCreator.h
+        Inc/Variable.h
+        Inc/Group.h
+        Inc/Project.h
+        Inc/QcpFile.h
+        Inc/ConstCreator.h
+        Inc/Manager.h
         )
 set(forms Inc/Creator.ui
           Inc/MainWindow.ui
@@ -36,6 +48,7 @@ set(forms Inc/Creator.ui
           Inc/VarCreator.ui
           Inc/SingleVarCreator.ui
           Inc/MultiVarCreator.ui
+          Inc/ConstCreatorDialog.ui
           )
 
 #setup inc as a valid include directory
