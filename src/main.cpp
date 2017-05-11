@@ -8,12 +8,7 @@
 #include "MainWindow.h"
 
 //temporary
-#include "NewDialog.h"
-#include "SingleVarCreator.h"
-#include "MultiVarCreator.h"
-#include "Creator.h"
-#include "Editor.h"
-#include "VarCreator.h"
+#include "ConstCreator.h"
 
 int main(int argc, char** argv)
 {
@@ -25,8 +20,9 @@ int main(int argc, char** argv)
   mainWindow.show();
 
   //testing
-  Creator creator;
-  creator.show();
+  ConstCreator constCreator;
+  constCreator.show();
+
 
   //run the application
   return app.exec();
