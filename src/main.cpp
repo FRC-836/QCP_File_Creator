@@ -9,6 +9,7 @@
 
 //temporary
 #include "ConstCreator.h"
+#include "Creator.h"
 
 int main(int argc, char** argv)
 {
@@ -22,6 +23,8 @@ int main(int argc, char** argv)
   //testing
   ConstCreator constCreator;
   constCreator.show();
+  Creator creator;
+  creator.show();
 
 
   //run the application

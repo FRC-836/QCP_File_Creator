@@ -8,6 +8,18 @@ SingleVarCreator::SingleVarCreator(QWidget* parent)
 {
   m_ui = new Ui_SingleVarCreator();
   m_ui->setupUi(this);
+
+  //connections
+  connect(m_ui->cmbType, &QComboBox::currentIndexChanged,
+          this, &SingleVarCreator::variableTypeChanged);
+  connect(m_ui->btnAdd, &QPushButton::clicked,
+          this, &SingleVarCreator::addButtonClicked);
+  connect(m_ui->btnClear, &QPushButton::clicked,
+          this, &SingleVarCreator::clearButtonClicked);
+  connect(m_ui->lneName, &QLineEdit::textChanged,
+          this, &SingleVarCreator::variableNameChanged);
+  connect(m_ui->txtValues, &QTextEdit::textChanged,
+          this, &SingleVarCreator::variableValuesChanged);
 } //end SingleVarCreator::SingleVarCreator(QWidget* parent)
 
 SingleVarCreator::~SingleVarCreator()

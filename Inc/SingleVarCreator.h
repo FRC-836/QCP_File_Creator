@@ -4,6 +4,8 @@
 //ui include
 #include "ui_SingleVarCreator.h"
 
+#include "QcpVariable.h"
+
 class SingleVarCreator: public QWidget
 {
   private:
@@ -20,6 +22,18 @@ class SingleVarCreator: public QWidget
     //getters
 
     //setters
+
+  signals:
+    void variableCreated(const QcpVariable& variable);
+    void valuesChanged();
+    void constRequest(const QString& varName, QcpVariable& variable);
+
+  public slots:
+    void variableTypeChanged(int index);
+    void addButtonClicked();
+    void clearButtonClicked();
+    void variableNameChanged(const QString& newText);
+    void variableValuesChanged();
 }; //end class SingleVarCreator: public QWidget
 
 #endif //end ifndef SINGLE_VAR_CREATOR_H

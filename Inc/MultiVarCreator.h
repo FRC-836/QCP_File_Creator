@@ -4,6 +4,10 @@
 //ui include
 #include "ui_MultiVarCreator.h"
 
+#include <QVector>
+
+#include "QcpVariable.h"
+
 class MultiVarCreator: public QWidget
 {
   private:
@@ -20,6 +24,20 @@ class MultiVarCreator: public QWidget
     //getters
 
     //setters
+
+  signals:
+    void variablesCreated(QVector<QcpVariable>& variables);
+    void valuesChanged();
+    void constRequest(const QString& varName, QcpVariable& variable);
+
+  public slots:
+    void commonTypeChanged(int index);
+    void suffixesChanged();
+    void valuesTabChanged(int newTabIndex);
+    void valuesChanged();
+    void addButtonClicked();
+    void clearButtonClicked();
+
 }; //end class MultiVarCreator: public QWidget
 
 #endif //end ifndef MULTI_VAR_CREATOR_H

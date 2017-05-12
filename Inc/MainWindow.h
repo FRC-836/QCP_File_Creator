@@ -26,13 +26,13 @@ class MainWindow: public QMainWindow
 
   signals:
     void createProject(const QString& filePath);
-    void openProject(const QString& filePath);
+    void openProject(const QString& filePath, bool openInEditor);
 
   public slots:
-    //void newButtonPressed();
-    //void openButtonPressed();
-    //void editorButtonPressed();
-    //void recentFileClicked(QListWidgetItem& item);
+    void newButtonPressed();
+    void openButtonPressed();
+    void editorButtonPressed();
+    void recentFileClicked(QListWidgetItem* item);
 
 }; //end class MainWindow: public QMainWindow
 
