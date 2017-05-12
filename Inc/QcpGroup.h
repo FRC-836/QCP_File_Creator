@@ -1,14 +1,14 @@
-#ifndef QCP_PROJECT_H
-#define QCP_PROJECT_H
+#ifndef QCP_GROUP_H
+#define QCP_GROUP_H
 
-class Project
+class QcpGroup
 {
   private:
     //member variables
 
   public:
     //constructors
-    Project();
+    QcpGroup();
 
     //public functions
 
@@ -19,6 +19,6 @@ class Project
   signals:
 
   public slots:
-};
+}; //end class QcpGroup
 
-#endif //end #ifndef QCP_PROJECT_H
+#endif //end #define QCP_GROUP_H

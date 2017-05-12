@@ -1,8 +1,8 @@
-#include "Manager.h"
+#include "QcpGroup.h"
 
 //--------------------------------------------------
 //constructors
 //--------------------------------------------------
-Manager::Manager()
+QcpGroup::QcpGroup()
 {
-} //end Manager::Manager()
+} //end QcpGroup::QcpGroup()

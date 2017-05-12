@@ -1,14 +1,14 @@
-#ifndef QCP_PROJECT_H
-#define QCP_PROJECT_H
+#ifndef QCP_VARIABLE_H
+#define QCP_VARIABLE_H
 
-class Project
+class QcpVariable
 {
   private:
     //member variables
 
   public:
     //constructors
-    Project();
+    QcpVariable();
 
     //public functions
 
@@ -21,4 +21,4 @@ class Project
   public slots:
 };
 
-#endif //end #ifndef QCP_PROJECT_H
+#endif //end #ifndef QCP_VARIABLE_H

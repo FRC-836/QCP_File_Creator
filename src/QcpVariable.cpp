@@ -1,8 +1,8 @@
-#include "Manager.h"
+#include "QcpVariable.h"
 
 //--------------------------------------------------
 //constructors
 //--------------------------------------------------
-Manager::Manager()
+QcpVariable::QcpVariable()
 {
-} //end Manager::Manager()
+} //end QcpVariable::QcpVariable()

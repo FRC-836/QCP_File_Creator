@@ -21,8 +21,8 @@ set(src src/main.cpp
         src/VarCreator.cpp
         src/SingleVarCreator.cpp
         src/MultiVarCreator.cpp
-        src/Variable.cpp
-        src/Group.cpp
+        src/QcpVariable.cpp
+        src/QcpGroup.cpp
         src/Project.cpp
         src/QcpFile.cpp
         src/ConstCreator.cpp
@@ -35,8 +35,8 @@ set(inc Inc/Creator.h
         Inc/VarCreator.h
         Inc/SingleVarCreator.h
         Inc/MultiVarCreator.h
-        Inc/Variable.h
-        Inc/Group.h
+        Inc/QcpVariable.h
+        Inc/QcpGroup.h
         Inc/Project.h
         Inc/QcpFile.h
         Inc/ConstCreator.h
