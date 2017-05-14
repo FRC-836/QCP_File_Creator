@@ -20,13 +20,6 @@ int main(int argc, char** argv)
   MainWindow mainWindow;
   mainWindow.show();
 
-  //testing
-  ConstCreator constCreator;
-  constCreator.show();
-  Creator creator;
-  creator.show();
-
-
   //run the application
   return app.exec();
 } //end int main(int argc, char** argv)

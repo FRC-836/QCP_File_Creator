@@ -15,10 +15,6 @@ class Project
     //getters
 
     //setters
-
-  signals:
-
-  public slots:
 };
 
 #endif //end #ifndef QCP_PROJECT_H

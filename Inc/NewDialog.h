@@ -6,6 +6,8 @@
 
 class NewDialog: public QWidget
 {
+    Q_OBJECT
+
   private:
     //member variables
     Ui_NewDialog* m_ui;

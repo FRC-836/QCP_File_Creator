@@ -15,10 +15,6 @@ class QcpVariable
     //getters
 
     //setters
-
-  signals:
-
-  public slots:
 };
 
 #endif //end #ifndef QCP_VARIABLE_H

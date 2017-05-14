@@ -10,6 +10,8 @@
 
 class MultiVarCreator: public QWidget
 {
+    Q_OBJECT
+
   private:
     //member variables
     Ui_MultiVarCreator* m_ui;
@@ -34,7 +36,6 @@ class MultiVarCreator: public QWidget
     void commonTypeChanged(int index);
     void suffixesChanged();
     void valuesTabChanged(int newTabIndex);
-    void valuesChanged();
     void addButtonClicked();
     void clearButtonClicked();
 

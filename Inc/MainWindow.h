@@ -9,6 +9,8 @@
 
 class MainWindow: public QMainWindow
 {
+    Q_OBJECT
+
   private:
     //member variables
     Ui_MainWindow* m_ui;

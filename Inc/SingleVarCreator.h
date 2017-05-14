@@ -8,6 +8,8 @@
 
 class SingleVarCreator: public QWidget
 {
+    Q_OBJECT
+
   private:
     //member variables
     Ui_SingleVarCreator* m_ui;

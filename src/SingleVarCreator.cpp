@@ -10,7 +10,7 @@ SingleVarCreator::SingleVarCreator(QWidget* parent)
   m_ui->setupUi(this);
 
   //connections
-  connect(m_ui->cmbType, &QComboBox::currentIndexChanged,
+  connect(m_ui->cmbType,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &SingleVarCreator::variableTypeChanged);
   connect(m_ui->btnAdd, &QPushButton::clicked,
           this, &SingleVarCreator::addButtonClicked);
@@ -26,3 +26,23 @@ SingleVarCreator::~SingleVarCreator()
 {
   delete m_ui;
 } //end SingleVarCreator::~SingleVarCreator()
+
+
+//--------------------------------------------------
+//public slots
+//--------------------------------------------------
+void SingleVarCreator::variableTypeChanged(int index)
+{
+}
+void SingleVarCreator::addButtonClicked()
+{
+}
+void SingleVarCreator::clearButtonClicked()
+{
+}
+void SingleVarCreator::variableNameChanged(const QString& newText)
+{
+}
+void SingleVarCreator::variableValuesChanged()
+{
+}

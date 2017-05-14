@@ -15,10 +15,6 @@ class Manager
     //getters
 
     //setters
-
-  signals:
-
-  public slots:
 }; //end class Manager
 
 #endif //end #ifndef MANAGER_H

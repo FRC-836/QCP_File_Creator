@@ -15,10 +15,6 @@ class QcpGroup
     //getters
 
     //setters
-
-  signals:
-
-  public slots:
 }; //end class QcpGroup
 
 #endif //end #define QCP_GROUP_H

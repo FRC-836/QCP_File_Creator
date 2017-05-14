@@ -15,10 +15,6 @@ class QcpFile
     //getters
 
     //setters
-
-  signals:
-
-  public slots:
 };
 
 #endif //end #ifndef QCP_FILE_H
