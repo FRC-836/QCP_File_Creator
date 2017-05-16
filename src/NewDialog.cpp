@@ -6,6 +6,9 @@
 NewDialog::NewDialog(QWidget* parent)
   :QWidget(parent)
 {
+  //setup member functions
+
+  //setup UI
   m_ui = new Ui_NewDialog();
   m_ui->setupUi(this);
 
