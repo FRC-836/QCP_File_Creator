@@ -1,3 +1,10 @@
+OVERALL
+=================================================================================================
 finish using designer to create all the UI files
 figure out how to deal with all the connections. probably need to draw up a diagram
 determine if a state manager is necessary for the whole application
+
+NEW DIALOG
+=================================================================================================
+Make it so that close events ask the user if they are sure if data is entered.
+On all close events (except create press) the MainWindow will show back up
