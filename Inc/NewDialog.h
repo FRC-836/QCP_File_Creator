@@ -6,8 +6,11 @@
 
 #include "Manager.h"
 
+#include <QMessageBox>
+
 #include <iostream>
-#include <memory>
+#include <memory> //shared_ptr
+#include <cctype> //isalnum
 
 class NewDialog: public QWidget
 {
@@ -40,7 +43,7 @@ class NewDialog: public QWidget
     void createButtonClicked();
     void cancelButtonClicked();
     void nameTextChanged(const QString& newText);
-    void locationTextChanged(const QString& newText);
+    void locationTextChanged();
     void projectTypeChanged();
 }; //end class NewDialog: public QWidget
 
