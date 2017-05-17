@@ -3,8 +3,8 @@
 //--------------------------------------------------
 //cconstructors
 //--------------------------------------------------
-NewDialog::NewDialog(QWidget* parent)
-  :QWidget(parent)
+NewDialog::NewDialog(std::shared_ptr<Manager> manager, QWidget* parent)
+  :m_manager(manager), QWidget(parent)
 {
   //setup UI
   m_ui = new Ui_NewDialog();
@@ -18,6 +18,7 @@ NewDialog::NewDialog(QWidget* parent)
   connect(m_ui->lneLocation, &QLineEdit::textEdited, this, &NewDialog::locationTextChanged);
   connect(m_ui->cmbProjectType, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &NewDialog::projectTypeChanged);
+  connect(this, &NewDialog::newProject, m_manager.get(), &Manager::createProject);
 } //end NewDialog::NewDialog(QWidget* parent)
 
 NewDialog::~NewDialog()
@@ -40,11 +41,16 @@ void NewDialog::createButtonClicked()
 }
 void NewDialog::cancelButtonClicked()
 {
+  if (parentWidget() != nullptr)
+  {
+    parentWidget()->show();
+  }
+  this->close();
 }
-void NewDialog::nameTextChanged()
+void NewDialog::nameTextChanged(const QString& newText)
 {
 }
-void NewDialog::locationTextChanged()
+void NewDialog::locationTextChanged(const QString& newText)
 {
 }
 void NewDialog::projectTypeChanged()
