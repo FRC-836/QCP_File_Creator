@@ -6,6 +6,7 @@
 #include "NewDialog.h"
 
 #include <QString>
+#include <QFileDialog>
 
 #include <memory>
 #include <iostream>

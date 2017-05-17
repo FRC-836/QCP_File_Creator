@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <vector>
+
 /**
  * @brief The Manager class
  */
@@ -11,9 +13,11 @@ class Manager : public QObject
     Q_OBJECT
 
   private:
-    //member variables
 
   public:
+    //constants
+    static const QString FILE_EXTENSION;
+
     //constructors
     Manager();
 
