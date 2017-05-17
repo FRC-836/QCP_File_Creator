@@ -6,6 +6,8 @@
 
 #include "QcpVariable.h"
 
+#include <iostream>
+
 class SingleVarCreator: public QWidget
 {
     Q_OBJECT

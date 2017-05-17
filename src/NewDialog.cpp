@@ -6,8 +6,6 @@
 NewDialog::NewDialog(QWidget* parent)
   :QWidget(parent)
 {
-  //setup member functions
-
   //setup UI
   m_ui = new Ui_NewDialog();
   m_ui->setupUi(this);
@@ -25,6 +23,9 @@ NewDialog::NewDialog(QWidget* parent)
 NewDialog::~NewDialog()
 {
   delete m_ui;
+
+  //debug
+  std::cout << "deleting new dialog" << std::endl;
 } //end NewDialog::~NewDialog()
 
 

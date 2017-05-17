@@ -4,6 +4,8 @@
 //ui include
 #include "ui_NewDialog.h"
 
+#include <iostream>
+
 class NewDialog: public QWidget
 {
     Q_OBJECT

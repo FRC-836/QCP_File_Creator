@@ -6,6 +6,8 @@
 #include "QcpVariable.h"
 #include "Creator.h"
 
+#include <iostream>
+
 class ConstCreator : public QWidget
 {
     Q_OBJECT

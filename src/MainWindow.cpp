@@ -24,13 +24,15 @@ MainWindow::MainWindow()
   connect(m_ui->btnOpen, &QPushButton::clicked, this, MainWindow::openButtonPressed);
   connect(m_ui->btnEditor, &QPushButton::clicked, this, MainWindow::editorButtonPressed);
   connect(m_ui->lstRecent, &QListWidget::itemClicked, this, MainWindow::recentFileClicked);
-  connect(this, &MainWindow::createProject, m_manager.get(), &Manager::createProject);
   connect(this, &MainWindow::openProject, m_manager.get(), &Manager::openProject);
 } //end MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
   delete m_ui;
+
+  //debug ipurposes
+  std::cout << "deleting main window" << std::endl;
 } //end MainWindow::~MainWindow()
 
 //--------------------------------------------------
@@ -38,6 +40,10 @@ MainWindow::~MainWindow()
 //--------------------------------------------------
 void MainWindow::newButtonPressed()
 {
+  NewDialog* newDialog= new NewDialog(this);
+  newDialog->setWindowFlags(Qt::Window);
+  newDialog->show();
+  this->hide();
 } //end void MainWindow::newButtonPressed()
 void MainWindow::openButtonPressed()
 {
@@ -54,4 +60,3 @@ void MainWindow::recentFileClicked(QListWidgetItem* item)
   QString filePath = item->text();
   emit openProject(filePath, false);
 } //end void MainWindow::recentFileClicked(QListWidgetItem* item)
-

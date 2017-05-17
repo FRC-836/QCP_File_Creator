@@ -25,6 +25,9 @@ MultiVarCreator::MultiVarCreator(QWidget* parent)
 MultiVarCreator::~MultiVarCreator()
 {
   delete m_ui;
+
+  //debug
+  std::cout << "deleting multi var creator" << std::endl;
 } //end MultiVarCreator::~MultiVarCreator()
 
 //--------------------------------------------------

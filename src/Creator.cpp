@@ -28,6 +28,9 @@ Creator::Creator()
 Creator::~Creator()
 {
   delete m_ui;
+
+  //debug
+  std::cout << "deleting creator" << std::endl;
 } //end Creator::~Creator()
 
 //--------------------------------------------------

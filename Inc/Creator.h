@@ -6,6 +6,8 @@
 
 #include "Project.h"
 
+#include <iostream>
+
 class Creator: public QMainWindow
 {
     Q_OBJECT

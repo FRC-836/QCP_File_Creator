@@ -19,6 +19,9 @@ ConstCreator::ConstCreator(Creator* caller, QWidget* parent)
 ConstCreator::~ConstCreator()
 {
   delete m_ui;
+
+  //debug
+  std::cout << "deleting const creator" << std::endl;
 } //end ConstCreator::~ConstCreator()
 
 //--------------------------------------------------

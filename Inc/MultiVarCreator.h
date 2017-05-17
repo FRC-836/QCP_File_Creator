@@ -4,9 +4,10 @@
 //ui include
 #include "ui_MultiVarCreator.h"
 
-#include <QVector>
-
 #include "QcpVariable.h"
+
+#include <vector>
+#include <iostream>
 
 class MultiVarCreator: public QWidget
 {
@@ -28,7 +29,7 @@ class MultiVarCreator: public QWidget
     //setters
 
   signals:
-    void variablesCreated(QVector<QcpVariable>& variables);
+    void variablesCreated(std::vector<QcpVariable>& variables);
     void valuesChanged();
     void constRequest(const QString& varName, QcpVariable& variable);
 

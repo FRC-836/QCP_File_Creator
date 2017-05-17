@@ -25,6 +25,9 @@ SingleVarCreator::SingleVarCreator(QWidget* parent)
 SingleVarCreator::~SingleVarCreator()
 {
   delete m_ui;
+
+  //debug
+  std::cout << "deleting single var creator" << std::endl;
 } //end SingleVarCreator::~SingleVarCreator()
 
 

@@ -3,10 +3,12 @@
 
 #include "ui_MainWindow.h"
 #include "Manager.h"
+#include "NewDialog.h"
 
 #include <QString>
 
 #include <memory>
+#include <iostream>
 
 /**
  * @brief The MainWindow class
@@ -41,19 +43,7 @@ class MainWindow: public QMainWindow
      */
     ~MainWindow();
 
-    //public functions
-
-    //getters
-
-    //setters
-
   signals:
-    /**
-     * @brief createProject
-     * @details emitted when the user wants to create a new project
-     * @param filePath: path where the project should be stored
-     */
-    void createProject(const QString& filePath);
     /**
      * @brief openProject
      * @details emitted when an already existing project needs opening
@@ -85,6 +75,13 @@ class MainWindow: public QMainWindow
      * @param item: pointer to the item that was pressed
      */
     void recentFileClicked(QListWidgetItem* item);
+    /**
+     * @brief newProjectChosen
+     * @details Called when a project is created new. Takes the information necessary
+     *          to create the project and passes it to Manager
+     * @param filePath: path where the project should be stored
+     * @param projectName: name of the project
+     */
 
 }; //end class MainWindow: public QMainWindow
 

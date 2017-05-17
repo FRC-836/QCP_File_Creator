@@ -6,6 +6,9 @@
 
 #include "QcpGroup.h"
 
+#include <iostream>
+#include <vector>
+
 class VarCreator: public QWidget
 {
     Q_OBJECT
@@ -37,7 +40,7 @@ class VarCreator: public QWidget
     void headerCommentChanged(const QString& newText);
     void groupNameChanged(const QString& newText);
     void variableCreated(const QcpVariable& variable);
-    void variablesCreated(const QVector<QcpVariable> variables);
+    void variablesCreated(const std::vector<QcpVariable> variables);
     void changeGroup(const QcpGroup& newGroup);
     void valuesChangedHandle();
     void constRequestHandle(const QString& varName, QcpVariable& variable);
