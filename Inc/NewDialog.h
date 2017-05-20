@@ -7,6 +7,8 @@
 #include "Manager.h"
 
 #include <QMessageBox>
+#include <QFileDialog>
+#include <QFileInfo> //checking if file exists
 
 #include <iostream>
 #include <memory> //shared_ptr
@@ -23,17 +25,12 @@ class NewDialog: public QWidget
 
     //private functions
     bool isGoodPath(const QString& filePath);
+    void normalizePath(QString& path);
 
   public:
     //constructors
     NewDialog(std::shared_ptr<Manager> manager, QWidget* parent = nullptr);
     ~NewDialog();
-
-    //public functions
-
-    //getters
-
-    //setters
 
   signals:
     void newProject(const QString& filePath); //name is part of the path

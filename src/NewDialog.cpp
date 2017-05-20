@@ -5,8 +5,21 @@
 //--------------------------------------------------
 bool NewDialog::isGoodPath(const QString& filePath)
 {
-  return false;
-}
+  QFileInfo checkExists(filePath);
+  return checkExists.exists() && checkExists.isDir();
+} //end bool NewDialog::isGoodPath(const QString& filePath)
+void normalizePath(QString& path)
+{
+  QChar prevChar = ' '; //used to check if double slashes exist
+  QString normalizedPath = "";
+  for (QChar currentChar : path)
+  {
+    if (prevChar != '/' && prevChar != '\\')
+    {
+
+    }
+  } //end  for (QChar currentChar : path)
+} //end void normalizePath(QString& path)
 
 
 //--------------------------------------------------
@@ -45,9 +58,20 @@ NewDialog::~NewDialog()
 //--------------------------------------------------
 void NewDialog::browseButtonClicked()
 {
+  QString filePath = QFileDialog::getExistingDirectory(this,
+                                                       "Choose location for project",
+                                                       "~/",
+                                                       QFileDialog::ShowDirsOnly |
+                                                       QFileDialog::DontResolveSymlinks);
+
+  if (isGoodPath(filePath))
+  {
+    m_ui->lneLocation->setText(filePath);
+  } //end  if (isGoodPath(filePath))
 } //end void NewDialog::browseButtonClicked()
 void NewDialog::createButtonClicked()
 {
+  QString fullPath = m_ui->lneLocation->text() + '/' + m_ui->lneName->text();
 } //end void NewDialog::createButtonClicked()
 void NewDialog::cancelButtonClicked()
 {
@@ -62,7 +86,6 @@ void NewDialog::nameTextChanged(const QString& newText)
   //allow the name if the newest character is a letter or number
   if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
   {
-    std::cout << "invalid character entered into name text field" << std::endl;
     QString tempText = m_ui->lneName->text();
     tempText.chop(1);
     m_ui->lneName->setText(tempText);
