@@ -1,8 +1,9 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-//ui include
 #include "QTextEdit"
+
+#include "CommandOptions.h"
 
 class Editor: public QTextEdit
 {

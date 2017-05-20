@@ -1,6 +1,8 @@
 #ifndef QCP_FILE_H
 #define QCP_FILE_H
 
+#include "CommandOptions.h"
+
 class QcpFile
 {
   private:

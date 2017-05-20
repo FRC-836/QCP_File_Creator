@@ -5,6 +5,7 @@
 
 #include "QcpVariable.h"
 #include "Creator.h"
+#include "CommandOptions.h"
 
 #include <iostream>
 

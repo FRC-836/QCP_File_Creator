@@ -21,7 +21,10 @@ ConstCreator::~ConstCreator()
   delete m_ui;
 
   //debug
-  std::cout << "deleting const creator" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting const creator" << std::endl;
+  }
 } //end ConstCreator::~ConstCreator()
 
 //--------------------------------------------------

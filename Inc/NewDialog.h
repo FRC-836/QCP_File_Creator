@@ -5,6 +5,7 @@
 #include "ui_NewDialog.h"
 
 #include "Manager.h"
+#include "CommandOptions.h"
 
 #include <QMessageBox>
 #include <QFileDialog>

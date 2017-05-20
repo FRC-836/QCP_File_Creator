@@ -27,7 +27,10 @@ SingleVarCreator::~SingleVarCreator()
   delete m_ui;
 
   //debug
-  std::cout << "deleting single var creator" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting single var creator" << std::endl;
+  }
 } //end SingleVarCreator::~SingleVarCreator()
 
 

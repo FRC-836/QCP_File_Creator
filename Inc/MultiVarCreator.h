@@ -5,6 +5,7 @@
 #include "ui_MultiVarCreator.h"
 
 #include "QcpVariable.h"
+#include "CommandOptions.h"
 
 #include <vector>
 #include <iostream>

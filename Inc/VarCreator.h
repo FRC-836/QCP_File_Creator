@@ -5,6 +5,7 @@
 #include "ui_VarCreator.h"
 
 #include "QcpGroup.h"
+#include "CommandOptions.h"
 
 #include <iostream>
 #include <vector>

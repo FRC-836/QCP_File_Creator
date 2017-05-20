@@ -1,6 +1,8 @@
 #ifndef QCP_PROJECT_H
 #define QCP_PROJECT_H
 
+#include "CommandOptions.h"
+
 class Project
 {
   private:

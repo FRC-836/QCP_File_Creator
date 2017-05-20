@@ -4,6 +4,7 @@
 #include "ui_MainWindow.h"
 #include "Manager.h"
 #include "NewDialog.h"
+#include "CommandOptions.h"
 
 #include <QString>
 #include <QFileDialog>

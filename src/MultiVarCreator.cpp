@@ -27,7 +27,10 @@ MultiVarCreator::~MultiVarCreator()
   delete m_ui;
 
   //debug
-  std::cout << "deleting multi var creator" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting multi var creator" << std::endl;
+  }
 } //end MultiVarCreator::~MultiVarCreator()
 
 //--------------------------------------------------

@@ -5,6 +5,7 @@
 #include "ui_SingleVarCreator.h"
 
 #include "QcpVariable.h"
+#include "CommandOptions.h"
 
 #include <iostream>
 

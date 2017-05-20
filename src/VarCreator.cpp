@@ -36,7 +36,10 @@ VarCreator::~VarCreator()
   delete m_ui;
 
   //debug purposes
-  std::cout << "deleting var creator" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting var creator" << std::endl;
+  }
 } //end VarCreator::~VarCreator()
 
 

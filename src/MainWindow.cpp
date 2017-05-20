@@ -37,7 +37,10 @@ MainWindow::~MainWindow()
   delete m_ui;
 
   //debug ipurposes
-  std::cout << "deleting main window" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting main window" << std::endl;
+  }
 } //end MainWindow::~MainWindow()
 
 //--------------------------------------------------

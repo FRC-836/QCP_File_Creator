@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include "CommandOptions.h"
+
 /**
  * @brief The Manager class
  */

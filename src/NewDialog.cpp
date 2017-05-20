@@ -48,8 +48,10 @@ NewDialog::~NewDialog()
 {
   delete m_ui;
 
-  //debug
-  std::cout << "deleting new dialog" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting new dialog" << std::endl;
+  }
 } //end NewDialog::~NewDialog()
 
 
@@ -99,7 +101,10 @@ void NewDialog::locationTextChanged()
     m_ui->lneLocation->setText("");
 
     //TODO replace with dialog box
-    std::cout << "clearing text because its not a good path" << std::endl;
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "clearing text because its not a good path" << std::endl;
+    }
   } //end  if (!isGoodPath(newText))
 } //end void NewDialog::locationTextChanged(const QString& newText)
 void NewDialog::projectTypeChanged()

@@ -30,7 +30,10 @@ Creator::~Creator()
   delete m_ui;
 
   //debug
-  std::cout << "deleting creator" << std::endl;
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "deleting creator" << std::endl;
+  }
 } //end Creator::~Creator()
 
 //--------------------------------------------------

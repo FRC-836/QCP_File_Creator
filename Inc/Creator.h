@@ -5,6 +5,7 @@
 #include "ui_Creator.h"
 
 #include "Project.h"
+#include "CommandOptions.h"
 
 #include <iostream>
 
