@@ -27,6 +27,7 @@ set(src src/main.cpp
         src/QcpFile.cpp
         src/ConstCreator.cpp
         src/Manager.cpp
+        src/CommandOptions.cpp
         )
 set(inc Inc/Creator.h
         Inc/Editor.h
@@ -41,6 +42,7 @@ set(inc Inc/Creator.h
         Inc/QcpFile.h
         Inc/ConstCreator.h
         Inc/Manager.h
+        Inc/CommandOptions.h
         )
 set(forms Inc/Creator.ui
           Inc/MainWindow.ui
