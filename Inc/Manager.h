@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include <vector>
+#include <iostream>
 
 #include "CommandOptions.h"
 

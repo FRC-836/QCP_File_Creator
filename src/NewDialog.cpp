@@ -8,17 +8,41 @@ bool NewDialog::isGoodPath(const QString& filePath)
   QFileInfo checkExists(filePath);
   return checkExists.exists() && checkExists.isDir();
 } //end bool NewDialog::isGoodPath(const QString& filePath)
-void normalizePath(QString& path)
+void NewDialog::normalizePath(QString& path)
 {
-  QChar prevChar = ' '; //used to check if double slashes exist
-  QString normalizedPath = "";
-  for (QChar currentChar : path)
-  {
-    if (prevChar != '/' && prevChar != '\\')
-    {
+  QString normalizedPath = ""; //empty path to put chars into
+  State curState = State::INIT; //initial state for narmalize path SM
 
-    }
-  } //end  for (QChar currentChar : path)
+  for (QChar curChar : path)
+  {
+    switch(curState)
+    {
+      case State::INIT:
+        normalizedPath += curChar;
+        curState = (curChar == '/' || curChar == '\\') ? State::PREV_WAS_SLASH :
+                                                         State::PREV_WAS_CHAR;
+        break;
+      case State::PREV_WAS_CHAR:
+        normalizedPath += curChar;
+        curState = (curChar == '/' || curChar == '\\') ? State::PREV_WAS_SLASH :
+                                                         State::PREV_WAS_CHAR;
+        break;
+      case State::PREV_WAS_SLASH:
+        if (curChar != '/' && curChar != '\\')
+        {
+          normalizedPath += curChar;
+          curState = State::PREV_WAS_CHAR;
+        } //end  if (prevChar != '/' && prevChar != '\\')
+        else
+        {
+          curState == State::PREV_WAS_SLASH;
+        } //end  else
+        break;
+    } //end  switch(curState)
+  } //end  for (QChar curChar : path)
+
+  //apply normalized path
+  path = normalizedPath;
 } //end void normalizePath(QString& path)
 
 
@@ -73,7 +97,35 @@ void NewDialog::browseButtonClicked()
 } //end void NewDialog::browseButtonClicked()
 void NewDialog::createButtonClicked()
 {
-  QString fullPath = m_ui->lneLocation->text() + '/' + m_ui->lneName->text();
+  //make sure both location and name are valid
+  if (!isGoodPath(m_ui->lneLocation->text()))
+  {
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "empty path can't be used" << std::endl;
+    } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    return;
+  } //end  if (!isGoodPath(m_ui->lneLocation->text()))
+  else if (m_ui->lneName->text().size() == 0)
+  {
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "can't use an empty name" << std::endl;
+    } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    return;
+  } //end  else if (m_ui->lneName->text().size() == 0)
+
+  QString fullPath = m_ui->lneLocation->text() + '/' + m_ui->lneName->text() +
+                     Manager::FILE_EXTENSION;
+  normalizePath(fullPath);
+
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "Emitting creation of file at: " << fullPath.toStdString() << std::endl;
+  } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+
+  emit newProject(fullPath);
+  this->close();
 } //end void NewDialog::createButtonClicked()
 void NewDialog::cancelButtonClicked()
 {
@@ -86,12 +138,15 @@ void NewDialog::cancelButtonClicked()
 void NewDialog::nameTextChanged(const QString& newText)
 {
   //allow the name if the newest character is a letter or number
-  if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
+  if (newText.size() != 0)
   {
-    QString tempText = m_ui->lneName->text();
-    tempText.chop(1);
-    m_ui->lneName->setText(tempText);
-  }
+    if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
+    {
+      QString tempText = m_ui->lneName->text();
+      tempText.chop(1);
+      m_ui->lneName->setText(tempText);
+    } //end  if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
+  } //end  if (newText.size() != 0)
 } //end void NewDialog::nameTextChanged(const QString& newText)
 void NewDialog::locationTextChanged()
 {
