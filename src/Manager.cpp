@@ -25,4 +25,18 @@ Manager::createProject(const QString& filePath)
 }
 Manager::openProject(const QString& filePath, bool openInEditor)
 {
+  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "recieving command to open project at: "
+              << filePath.toStdString() << " ";
+    if (openInEditor)
+    {
+      std::cout << "in editor mode";
+    } //end  if (openInEditor)
+    else
+    {
+      std::cout << "in normal mode";
+    } //end  else
+    std::cout << std::endl;
+  } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 }

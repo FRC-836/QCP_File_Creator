@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "CommandOptions.h"
+#include "Project.h"
 
 /**
  * @brief The Manager class
