@@ -45,14 +45,14 @@ class QcpFile
      * @details returns the number of groups contained in the file
      * @return size of group list
      */
-    size_t size();
+    size_t size() const;
     /**
      * @brief fileText
      * @details converts the object into file printable text
      * @return vector of vector of variable strings. first vector represents the file
      * @return the second vector represents each group in the file
      */
-    std::vector<std::vector<QString>> fileText();
+    std::vector<std::vector<QString>> fileText() const;
     /**
      * @brief addGroup
      * @details adds a group to the file
@@ -60,12 +60,6 @@ class QcpFile
      * @return true if the group was successfully added
      */
     bool addGroup(const QcpGroup& toAdd);
-    /**
-     * @brief removeGroup
-     * @details removes a group from the file
-     * @param toRemove: reference to the group to remove
-     */
-    void removeGroup(const QcpGroup& toRemove);
     /**
      * @brief removeGroup
      * @details removes a group from the file
@@ -90,7 +84,7 @@ class QcpFile
      * @details returns the comment at the top of the file
      * @return comment at the top of the file
      */
-    QString getComment();
+    QString getComment() const;
 
     //setters
     /**

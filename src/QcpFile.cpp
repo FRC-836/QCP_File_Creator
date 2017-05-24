@@ -13,16 +13,13 @@ QcpFile::QcpFile(std::vector<QcpGroup> groups, const QString& comment)
 //--------------------------------------------------
 //public functions
 //--------------------------------------------------
-size_t QcpFile::size()
+size_t QcpFile::size() const
 {
 }
-std::vector<std::vector<QString>> QcpFile::fileText()
+std::vector<std::vector<QString>> QcpFile::fileText() const
 {
 }
 bool QcpFile::addGroup(const QcpGroup& toAdd)
-{
-}
-void QcpFile::removeGroup(const QcpGroup& toRemove)
 {
 }
 void QcpFile::removeGroup(int index)
@@ -38,7 +35,7 @@ void QcpFile::clearGroups()
 //--------------------------------------------------
 //getters
 //--------------------------------------------------
-QString QcpFile::getComment()
+QString QcpFile::getComment() const
 {
 }
 
