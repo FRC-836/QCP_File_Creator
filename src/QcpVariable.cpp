@@ -16,17 +16,17 @@ QcpVariable::~QcpVariable()
 //--------------------------------------------------
 //public functions
 //--------------------------------------------------
-QString QcpVariable::fileText()
+QString QcpVariable::fileText() const
 {
 }
 
 //--------------------------------------------------
 //getters
 //--------------------------------------------------
-QcpVariable::Type QcpVariable::getType()
+QcpVariable::Type QcpVariable::getType() const
 {
 }
-QString QcpVariable::getName()
+QString QcpVariable::getName() const
 {
 }
 
