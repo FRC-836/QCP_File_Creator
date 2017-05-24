@@ -7,11 +7,11 @@ QcpGroup::QcpGroup()
 {
 }
 
-QcpGroup::QcpGroup(const QVector<QcpVariable>& vars, const QString& name)
+QcpGroup::QcpGroup(const std::vector<QcpVariable>& vars, const QString& name)
 {
 }
-QcpGroup::QcpGroup(const QVector<QcpVariable>& vars, const QString& name,
-                  const QString& comment)
+QcpGroup::QcpGroup(const std::vector<QcpVariable>& vars, const QString& name,
+                   const QString& comment)
 {
 }
 
@@ -21,7 +21,7 @@ QcpGroup::QcpGroup(const QVector<QcpVariable>& vars, const QString& name,
 size_t QcpGroup::size()
 {
 }
-QVector<QString> QcpGroup::fileText()
+std::vector<QString> QcpGroup::fileText()
 {
 }
 bool QcpGroup::addVar(const QcpVariable& toAdd)

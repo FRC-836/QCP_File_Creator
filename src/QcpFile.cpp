@@ -6,7 +6,7 @@
 QcpFile::QcpFile()
 {
 } //end QcpFile::QcpFile()
-QcpFile::QcpFile(QVector<QcpGroup> groups, const QString& comment)
+QcpFile::QcpFile(std::vector<QcpGroup> groups, const QString& comment)
 {
 }
 
@@ -16,7 +16,7 @@ QcpFile::QcpFile(QVector<QcpGroup> groups, const QString& comment)
 size_t QcpFile::size()
 {
 }
-QVector<QVector<QString>> QcpFile::fileText()
+std::vector<std::vector<QString>> QcpFile::fileText()
 {
 }
 bool QcpFile::addGroup(const QcpGroup& toAdd)
