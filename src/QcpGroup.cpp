@@ -5,8 +5,13 @@
 //--------------------------------------------------
 QcpGroup::QcpGroup()
 {
-} //end QcpGroup::QcpGroup()
-QcpGroup::QcpGroup(const QVector<QcpVariable>& vars)
+}
+
+QcpGroup::QcpGroup(const QVector<QcpVariable>& vars, const QString& name)
+{
+}
+QcpGroup::QcpGroup(const QVector<QcpVariable>& vars, const QString& name,
+                  const QString& comment)
 {
 }
 
@@ -16,7 +21,42 @@ QcpGroup::QcpGroup(const QVector<QcpVariable>& vars)
 size_t QcpGroup::size()
 {
 }
-QString QcpGroup::fileText()
+QVector<QString> QcpGroup::fileText()
+{
+}
+bool QcpGroup::addVar(const QcpVariable& toAdd)
+{
+}
+void QcpGroup::removeVar(const QcpVariable& toRemove)
+{
+}
+void QcpGroup::removeVar(int index)
+{
+}
+void QcpGroup::removeVar(const QString& toRemoveName)
+{
+}
+void QcpGroup::clearVars()
+{
+}
+
+//--------------------------------------------------
+//getters
+//--------------------------------------------------
+QString QcpGroup::getComment()
+{
+}
+QString QcpGroup::getName()
+{
+}
+
+//--------------------------------------------------
+//setters
+//--------------------------------------------------
+void QcpGroup::setComment(const QString& comment)
+{
+}
+void QcpGroup::setName(const QString& name)
 {
 }
 
