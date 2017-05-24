@@ -18,16 +18,13 @@ QcpGroup::QcpGroup(const std::vector<QcpVariable>& vars, const QString& name,
 //--------------------------------------------------
 //public functions
 //--------------------------------------------------
-size_t QcpGroup::size()
+size_t QcpGroup::size() const
 {
 }
-std::vector<QString> QcpGroup::fileText()
+std::vector<QString> QcpGroup::fileText() const
 {
 }
 bool QcpGroup::addVar(const QcpVariable& toAdd)
-{
-}
-void QcpGroup::removeVar(const QcpVariable& toRemove)
 {
 }
 void QcpGroup::removeVar(int index)
@@ -43,10 +40,10 @@ void QcpGroup::clearVars()
 //--------------------------------------------------
 //getters
 //--------------------------------------------------
-QString QcpGroup::getComment()
+QString QcpGroup::getComment() const
 {
 }
-QString QcpGroup::getName()
+QString QcpGroup::getName() const
 {
 }
 
