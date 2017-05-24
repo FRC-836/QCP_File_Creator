@@ -23,7 +23,17 @@ QString QcpVariable::fileText()
 //--------------------------------------------------
 //getters
 //--------------------------------------------------
-Type getType()
+QcpVariable::Type QcpVariable::getType()
+{
+}
+QString QcpVariable::getName()
+{
+}
+
+//--------------------------------------------------
+//setters
+//--------------------------------------------------
+void QcpVariable::setName(const QString& name)
 {
 }
 

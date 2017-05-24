@@ -14,6 +14,7 @@ class QcpVariable
     //member variables
     QVariant m_value; //value the variable holds
     Type m_type; //type of the variable
+    QString m_name; //name of the variable
 
   public:
     //public enums
@@ -25,7 +26,7 @@ class QcpVariable
 
     //constructors
     QcpVariable();
-    template <typename T> QcpVariable(Type type, T value)
+    template <typename T> QcpVariable(Type type, T value, const QString& name)
     {
     } //end  template <typename T> QcpVariable(Type type, T value)
     QcpVariable(const QcpVariable& toCopy);
@@ -42,6 +43,10 @@ class QcpVariable
     template <typename T> getValue()
     {
     }
+    QString getName();
+
+    //setters
+    void setName(const QString& name);
 
     //op overloads
     QcpVariable& operator=(const QcpVariable& toCopy);
