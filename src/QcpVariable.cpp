@@ -1,51 +1,155 @@
 #include "QcpVariable.h"
 
 //--------------------------------------------------
+//private functions
+//--------------------------------------------------
+QString QcpVariable::doubleText() const
+{
+  return QString(std::to_string(m_value.value<double>()).c_str());
+} //end QString QcpVariable::doubleText()
+QString QcpVariable::doubleArrayText() const
+{
+  std::stringstream ss;
+
+  QVector<double> vals = m_value.value<QVector<double>>();
+
+  //write all the elements to the stream
+  for (double val : vals)
+  {
+    ss << std::to_string(val);
+
+    //only write comma if the element is not the last one
+    if (val != vals[vals.size() - 1])
+    {
+      ss << ", ";
+    } //end  if (val != vals[vals.size() - 1])
+  } //end  for (double val : vals)
+
+  return QString(ss.str().c_str());
+} //end QString QcpVariable::doubleArrayText()
+
+//--------------------------------------------------
 //constructors
 //--------------------------------------------------
 QcpVariable::QcpVariable()
 {
+  init("Var", Type::DOUBLE, QVariant(0.0));
 } //end QcpVariable::QcpVariable()
 QcpVariable::QcpVariable(const QcpVariable& toCopy)
 {
-}
+  init(toCopy.m_name, toCopy.m_type, toCopy.m_value);
+} //end QcpVariable::QcpVariable(const QcpVariable& toCopy)
 QcpVariable::~QcpVariable()
 {
-}
+  //does nothing
+} //end QcpVariable::~QcpVariable()
 
 //--------------------------------------------------
 //public functions
 //--------------------------------------------------
 QString QcpVariable::fileText() const
 {
-}
+  std::stringstream ss;
+  ss << m_name.toStdString() << ", ";
+
+  //call the proper text conversion function based on type
+  switch(m_type)
+  {
+    case Type::DOUBLE:
+      //check that conversion is possible, if not error out:
+      if (m_value.canConvert<double>())
+      {
+        ss << doubleText().toStdString();
+      } //end  if (m_value.canConvert<double>())
+      else
+      {
+        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        {
+          std::cout << "ERROR: typing information for variable " << m_name.toStdString()
+                    << " has been corrupted, can't convert to file text" << std::endl
+                    << "Returning blank string instead of file text" << std::endl;
+        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        return "";
+      } //end  else
+      break; //end  case Type::DOUBLE:
+
+    case Type::DOUBLE_ARRAY:
+      //check that conversion is possible, if not error out
+      if (m_value.canConvert<QVector<double>>())
+      {
+        ss << doubleArrayText().toStdString();
+      } //end  if (m_value.canConvert<QVector<double>>())
+      else
+      {
+        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        {
+          std::cout << "ERROR: typing information for variable " << m_name.toStdString()
+                    << " has been corrupted, can't convert to file text" << std::endl
+                    << "Returning blank string instead of file text" << std::endl;
+        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        return "";
+      } //end  else
+      break; //end  case Type::DOUBLE_ARRAY:
+  } //end  switch(m_type)
+
+  //add newline because variable is done being converted
+  ss << std::endl;
+
+  return QString(ss.str().c_str());
+} //end QString QcpVariable::fileText() const
 
 //--------------------------------------------------
 //getters
 //--------------------------------------------------
 QcpVariable::Type QcpVariable::getType() const
 {
-}
+  return m_type;
+} //end QcpVariable::Type QcpVariable::getType() const
 QString QcpVariable::getName() const
 {
-}
+  return m_name;
+} //end QString QcpVariable::getName() const
 
 //--------------------------------------------------
 //setters
 //--------------------------------------------------
 void QcpVariable::setName(const QString& name)
 {
-}
+  if (name.length() > 0)
+  {
+    m_name = name;
+  } //end  if (name.length() > 0)
+  else
+  {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    {
+      std::cout << "Warning: attempting to set variable " << m_name.toStdString()
+                << "'s name to an empty string. Name will remane unchanged" << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+  } //end  else
+} //end void QcpVariable::setName(const QString& name)
 
 //--------------------------------------------------
 //op overloads
 //--------------------------------------------------
 QcpVariable& QcpVariable::operator=(const QcpVariable& toCopy)
 {
-}
+  m_name = toCopy.m_name;
+  m_value = toCopy.m_value;
+  m_type = toCopy.m_type;
+} //end QcpVariable& QcpVariable::operator=(const QcpVariable& toCopy)
 QcpVariable& QcpVariable::operator=(double value)
 {
-}
+  m_type = Type::DOUBLE;
+  m_value = value;
+} //end QcpVariable& QcpVariable::operator=(double value)
 QcpVariable& QcpVariable::operator=(const QVector<double>& value)
 {
-}
+  m_type = Type::DOUBLE_ARRAY;
+  m_value = QVariant::fromValue(value);
+} //end QcpVariable& QcpVariable::operator=(const QVector<double>& value)
+QcpVariable& QcpVariable::operator=(const std::vector<double>& value)
+{
+  QVector<double> temp = QVector<double>::fromStdVector(value);
+  *this = temp;
+} //end QcpVariable& QcpVariable::operator=(const std::vector<double>& value)

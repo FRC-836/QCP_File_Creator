@@ -4,18 +4,14 @@
 #include <QVariant>
 #include <QVector>
 
-#include "CommandOptions.h"
+#include <iostream>
+#include <sstream>
+#include <typeinfo>
 
-enum class Type;
+#include "CommandOptions.h"
 
 class QcpVariable
 {
-  private:
-    //member variables
-    QVariant m_value; //value the variable holds
-    Type m_type; //type of the variable
-    QString m_name; //name of the variable
-
   public:
     //public enums
     enum class Type
@@ -24,6 +20,32 @@ class QcpVariable
       DOUBLE_ARRAY
     };
 
+  private:
+    //member variables
+    QVariant m_value; //value the variable holds
+    Type m_type; //type of the variable
+    QString m_name; //name of the variable
+
+    //private functions
+    template <typename T> init(const QString& name, Type type, T value)
+    {
+      setName(name);
+      changeValue(type, value);
+    } //end  template <typename T> init(const QString& name, Type type, T value)
+    /**
+     * @brief doubleText
+     * @details responsible for converting m_value to text when m_type is double
+     * @return QCP file compatible text representation of m_value
+     */
+    QString doubleText() const;
+    /**
+     * @brief doubleArrayText
+     * @details responsible for converting m_value to text when m_type is double array
+     * @return QCP file compatible text representation of m_value
+     */
+    QString doubleArrayText() const;
+
+  public:
     //constructors
     /**
      * @brief QcpVariable
@@ -37,8 +59,9 @@ class QcpVariable
      * @param value: the value to be stored inside the QVariant
      * @param name: The name of the variable
      */
-    template <typename T> QcpVariable(Type type, T value, const QString& name)
+    template <typename T> QcpVariable(const QString& name, Type type, T value)
     {
+      init(name, type, value);
     } //end  template <typename T> QcpVariable(Type type, T value)
     /**
      * @brief QcpVariable
@@ -57,6 +80,7 @@ class QcpVariable
      * @brief fileText
      * @details Generates the text to be written to the file for this variable
      * @return QString containing this variable in file ready text format
+     * @return or blank if the typeing information got messed up
      */
     QString fileText() const;
     /**
@@ -69,6 +93,9 @@ class QcpVariable
      */
     template <typename T> bool changeValue(Type newType, T newValue)
     {
+      //TODO figure out a way to ensure type is correct for value, may be impossible
+      m_type = newType;
+      m_value = QVariant::fromValue(newValue);
     }
 
     //getters
@@ -85,7 +112,21 @@ class QcpVariable
      */
     template <typename T> T getValue() const
     {
-    }
+      if (m_value.canConvert<T>())
+      {
+        return m_value.value<T>();
+      } //end  if (m_value.canConvert<T>())
+      else
+      {
+        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        {
+          std::cout << "ERROR: Cannot convert " << m_name.toStdString()
+                    << " to type " << typeid(T).name() << std::endl;
+          std::cout << "Returning a default construction of the type" << std::endl;
+        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        return T();
+      } //end  else
+    } //end  template <typename T> T getValue() const
     /**
      * @brief getName
      * @details Returns the name of the variable
@@ -123,6 +164,13 @@ class QcpVariable
      * @return Reference to the newly copied object
      */
     QcpVariable& operator=(const QVector<double>& value);
+    /**
+     * @brief operator =
+     * @details Assignment operator for storing an array of doubles from std vector
+     * @param value: std::vector containing desired values to store in variable
+     * @return  Reference to the newly copied object
+     */
+    QcpVariable& operator=(const std::vector<double>& value);
 };
 
 #endif //end #ifndef QCP_VARIABLE_H
