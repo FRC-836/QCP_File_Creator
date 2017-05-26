@@ -40,7 +40,7 @@ class QcpGroup
      * @param vars: variables to store in the group
      * @param name: name of the group
      */
-    QcpGroup(const std::vector<QcpVariable>& vars, const QString& name);
+    QcpGroup(const QString& name, const std::vector<QcpVariable>& vars);
     /**
      * @brief QcpGroup
      * @details Constructor that takes a group of variables, name, and comment
@@ -48,7 +48,7 @@ class QcpGroup
      * @param name Name of the group
      * @param comment Comment for the top of the group
      */
-    QcpGroup(const std::vector<QcpVariable>& vars, const QString& name,
+    QcpGroup(const QString& name, const std::vector<QcpVariable>& vars,
              const QString& comment);
 
     //public functions
@@ -123,6 +123,7 @@ class QcpGroup
      * @details provides direct access to the variables array
      * @param index: index of desired variable
      * @return reference to the requested variable
+     * @throws out_of_range
      */
     QcpVariable& operator[](const int index);
     /**
@@ -130,8 +131,25 @@ class QcpGroup
      * @details provides a way to grab const refs from the variables array
      * @param index: index of desired variable
      * @return const ref to the requested variable
+     * @throws out_of_range
      */
     const QcpVariable& operator[](const int index) const;
+    /**
+     * @brief operator []
+     * @details provides direct access to the variables array
+     * @param index: name of desired variable
+     * @return reference to the requested variable
+     * @throws out_of_range
+     */
+    QcpVariable& operator[](const QString& index);
+    /**
+     * @brief operator []
+     * @details provides a way to grab const refs from the variables array
+     * @param index: name of desired variable
+     * @return const ref to the requested variable
+     * @throws out_of_range
+     */
+    const QcpVariable& operator[](const QString& index) const;
 }; //end class QcpGroup
 
 #endif //end #define QCP_GROUP_H

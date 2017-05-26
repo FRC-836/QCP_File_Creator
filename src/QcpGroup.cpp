@@ -7,10 +7,10 @@ QcpGroup::QcpGroup()
 {
 }
 
-QcpGroup::QcpGroup(const std::vector<QcpVariable>& vars, const QString& name)
+QcpGroup::QcpGroup(const QString& name, const std::vector<QcpVariable>& vars)
 {
 }
-QcpGroup::QcpGroup(const std::vector<QcpVariable>& vars, const QString& name,
+QcpGroup::QcpGroup(const QString& name, const std::vector<QcpVariable>& vars,
                    const QString& comment)
 {
 }
