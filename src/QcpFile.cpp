@@ -1,12 +1,19 @@
 #include "QcpFile.h"
 
 //--------------------------------------------------
+//private functions
+//--------------------------------------------------
+void QcpFile::init(const std::vector<QcpGroup>& groups, const QString& comment)
+{
+}
+
+//--------------------------------------------------
 //constructors
 //--------------------------------------------------
 QcpFile::QcpFile()
 {
 } //end QcpFile::QcpFile()
-QcpFile::QcpFile(std::vector<QcpGroup> groups, const QString& comment)
+QcpFile::QcpFile(const std::vector<QcpGroup>& groups, const QString& comment)
 {
 }
 

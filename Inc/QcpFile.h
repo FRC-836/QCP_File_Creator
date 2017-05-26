@@ -22,7 +22,7 @@ class QcpFile
      * @param groups: list of groups the file contains
      * @param comment: comment displayed at top of the file
      */
-    void init(std::vector<QcpGroup> groups, const QString& comment);
+    void init(const std::vector<QcpGroup>& groups, const QString& comment);
 
   public:
     //constructors
@@ -37,7 +37,7 @@ class QcpFile
      * @param groups: groups contained in the file
      * @param comment: comment displayed at the top of the file
      */
-    QcpFile(std::vector<QcpGroup> groups, const QString& comment = "");
+    QcpFile(const std::vector<QcpGroup>& groups, const QString& comment = "");
 
     //public functions
     /**
@@ -100,6 +100,7 @@ class QcpFile
      * @details provides direct access to the internal group vector
      * @param index: index of desired element
      * @return refernce to the desired element
+     * @throws out_of_range
      */
     QcpGroup& operator[](const int index);
     /**
@@ -107,8 +108,25 @@ class QcpFile
      * @details const version of operator[]
      * @param index: index of desired element
      * @return const ref to the desired element
+     * @throws out_of_range
      */
     const QcpGroup& operator[](const int index) const;
+    /**
+     * @brief operator []
+     * @details provides direct access to the internal group vector
+     * @param index: name of desired element
+     * @return refernce to the desired element
+     * @throws out_of_range
+     */
+    QcpGroup& operator[](const QString& index);
+    /**
+     * @brief operator []
+     * @details const version of operator[]
+     * @param index: name of desired element
+     * @return const ref to the desired element
+     * @throws out_of_range
+     */
+    const QcpGroup& operator[](const QString& index) const;
 };
 
 #endif //end #ifndef QCP_FILE_H
