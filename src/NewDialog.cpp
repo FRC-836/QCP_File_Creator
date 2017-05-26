@@ -13,6 +13,7 @@ void NewDialog::normalizePath(QString& path)
   QString normalizedPath = ""; //empty path to put chars into
   State curState = State::INIT; //initial state for narmalize path SM
 
+  //TODO spin off in own thread
   for (QChar curChar : path)
   {
     switch(curState)
