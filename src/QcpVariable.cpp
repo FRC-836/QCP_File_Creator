@@ -1,6 +1,11 @@
 #include "QcpVariable.h"
 
 //--------------------------------------------------
+//static variables
+//--------------------------------------------------
+int QcpVariable::defaultVarNum = 1;
+
+//--------------------------------------------------
 //private functions
 //--------------------------------------------------
 QString QcpVariable::doubleText() const
@@ -33,7 +38,7 @@ QString QcpVariable::doubleArrayText() const
 //--------------------------------------------------
 QcpVariable::QcpVariable()
 {
-  init("Var", Type::DOUBLE, QVariant(0.0));
+  init("", Type::DOUBLE, QVariant(0.0));
 } //end QcpVariable::QcpVariable()
 QcpVariable::QcpVariable(const QcpVariable& toCopy)
 {

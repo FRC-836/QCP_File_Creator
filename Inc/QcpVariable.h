@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 #include <typeinfo>
+#include <algorithm>
+#include <cctype>
 
 #include "CommandOptions.h"
 
@@ -25,10 +27,27 @@ class QcpVariable
     QVariant m_value; //value the variable holds
     Type m_type; //type of the variable
     QString m_name; //name of the variable
+    static int defaultVarNum;
 
     //private functions
     template <typename T> init(const QString& name, Type type, T value)
     {
+      QString actualName; //handles the case when name is not provided
+      //handle blank names
+      if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
+      {
+        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+        {
+          std::cout << "default variable name being used due to empty name" << std::endl;
+        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+        actualName = "Var" + defaultVarNum;
+        defaultVarNum++;
+      }//end if(!std::all_of(name.toStdString().begin(),name.toStdString().end(),isspace))
+      else
+      {
+        actualName = name;
+      } //end  else
+
       setName(name);
       changeValue(type, value);
     } //end  template <typename T> init(const QString& name, Type type, T value)
