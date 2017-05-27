@@ -3,7 +3,7 @@
 //--------------------------------------------------
 //static variables
 //--------------------------------------------------
-int QcpVariable::defaultVarNum = 1;
+int QcpVariable::m_defaultVarNum = 1;
 
 //--------------------------------------------------
 //private functions
@@ -120,10 +120,10 @@ QString QcpVariable::getName() const
 //--------------------------------------------------
 void QcpVariable::setName(const QString& name)
 {
-  if (name.length() > 0)
+  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   {
     m_name = name;
-  } //end  if (name.length() > 0)
+  } //end  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   else
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)

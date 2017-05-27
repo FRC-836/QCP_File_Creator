@@ -27,7 +27,7 @@ class QcpVariable
     QVariant m_value; //value the variable holds
     Type m_type; //type of the variable
     QString m_name; //name of the variable
-    static int defaultVarNum;
+    static int m_defaultVarNum;
 
     //private functions
     template <typename T> init(const QString& name, Type type, T value)
@@ -40,8 +40,9 @@ class QcpVariable
         {
           std::cout << "default variable name being used due to empty name" << std::endl;
         } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
-        actualName = "Var" + defaultVarNum;
-        defaultVarNum++;
+        actualName = QString("Var");
+        actualName += QString::fromStdString(std::to_string(m_defaultVarNum));
+        m_defaultVarNum++;
       }//end if(!std::all_of(name.toStdString().begin(),name.toStdString().end(),isspace))
       else
       {
