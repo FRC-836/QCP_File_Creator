@@ -83,6 +83,7 @@ class QcpVariable
     {
       init(name, type, value);
     } //end  template <typename T> QcpVariable(Type type, T value)
+    QcpVariable(const QString& name);
     /**
      * @brief QcpVariable
      * @details copy constructor

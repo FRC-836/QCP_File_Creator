@@ -40,6 +40,10 @@ QcpVariable::QcpVariable()
 {
   init("", Type::DOUBLE, QVariant(0.0));
 } //end QcpVariable::QcpVariable()
+QcpVariable::QcpVariable(const QString& name)
+{
+  init(name, Type::DOUBLE, QVariant(0.0));
+}
 QcpVariable::QcpVariable(const QcpVariable& toCopy)
 {
   init(toCopy.m_name, toCopy.m_type, toCopy.m_value);
