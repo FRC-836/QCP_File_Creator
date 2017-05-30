@@ -2,8 +2,10 @@
 #define QCP_GROUP_H
 
 #include <QString>
+#include <QVector>
 
-#include <vector>
+#include <cctype>
+#include <algorithm>
 
 #include "CommandOptions.h"
 #include "QcpVariable.h"
@@ -12,9 +14,10 @@ class QcpGroup
 {
   private:
     //member variables
-    std::vector<QcpVariable> m_vars;
-    QString m_comment;
-    QString m_name;
+    QVector<QcpVariable> m_vars; //list of variables in the group
+    QString m_comment; //comment at the top of the group
+    QString m_name; //shared prefix for all vars, also name of the group
+    static int m_defaultGroupNum; //used for when no group name is provided
 
     //private functions
     /**
@@ -24,8 +27,9 @@ class QcpGroup
      * @param name Name of the group
      * @param comment Comment for the top of the group
      */
-    init(const std::vector<QcpVariable>& vars, const QString& name,
-         const QString& comment);
+    void init(const QString& name, const QVector<QcpVariable>& vars,
+              const QString& comment);
+    int findVar(const QString& name) const;
 
   public:
     //constructors
@@ -40,7 +44,7 @@ class QcpGroup
      * @param vars: variables to store in the group
      * @param name: name of the group
      */
-    QcpGroup(const QString& name, const std::vector<QcpVariable>& vars);
+    QcpGroup(const QString& name, const QVector<QcpVariable>& vars);
     /**
      * @brief QcpGroup
      * @details Constructor that takes a group of variables, name, and comment
@@ -48,7 +52,7 @@ class QcpGroup
      * @param name Name of the group
      * @param comment Comment for the top of the group
      */
-    QcpGroup(const QString& name, const std::vector<QcpVariable>& vars,
+    QcpGroup(const QString& name, const QVector<QcpVariable>& vars,
              const QString& comment);
 
     //public functions
@@ -63,7 +67,7 @@ class QcpGroup
      * @details Generates the proper text to be stored in the QCP file fo the group
      * @return Vector of strings where each element represents the text of a given variable from the group
      */
-    std::vector<QString> fileText() const;
+    QVector<QString> fileText() const;
     /**
      * @brief addVar
      * @details add a variable to the group
@@ -141,15 +145,7 @@ class QcpGroup
      * @return reference to the requested variable
      * @throws out_of_range
      */
-    QcpVariable& operator[](const QString& index);
-    /**
-     * @brief operator []
-     * @details provides a way to grab const refs from the variables array
-     * @param index: name of desired variable
-     * @return const ref to the requested variable
-     * @throws out_of_range
-     */
-    const QcpVariable& operator[](const QString& index) const;
+    QcpVariable& operator[](const QString& name);
 }; //end class QcpGroup
 
 #endif //end #define QCP_GROUP_H
