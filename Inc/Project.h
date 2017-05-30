@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QVector>
-#include <QMap>
 
 #include <utility>
 #include <fstream>
@@ -15,7 +14,7 @@ class Project
 {
   private:
     //member variables
-    QMap<QString, QcpFile> m_files; //first: name of file | second: file ADT
+    QVector<QcpFile> m_files; //list of files in the project
     QString m_name; //name of the project
 
     //private functions
@@ -28,14 +27,13 @@ class Project
     Project(const QString& name, const QMap<QString, QcpFile>& files);
 
     //public functions
-    void addFile(const QString& name, const QcpFile& file);
+    void addFile(const QcpFile& file);
     QcpFile removeFile(const QString& name);
     void clearFiles();
-    QcpFile& at(const QString& name);
-    const QcpFile& at(const QString& name) const;
 
     //getters
     QString getName() const;
+    QcpFile& getFile(const QString& name);
 
     //setters
     void setName(const QString& name);
