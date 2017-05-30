@@ -13,6 +13,8 @@ class QcpFile
     //member variables
     QVector<QcpGroup> m_groups; //groups contained within the file
     QString m_comment; //comment displayed at the top of the file
+    QString m_location; //location of the file
+    QString m_name; //name of the file, purely for searching, no relation to location
 
     //private functions
     /**
@@ -84,6 +86,9 @@ class QcpFile
      * @return comment at the top of the file
      */
     QString getComment() const;
+    QString getName() const;
+    QString getLocation() const;
+    QcpGroup at(const QString& name) const;
 
     //setters
     /**
@@ -92,6 +97,8 @@ class QcpFile
      * @param comment: new comment at the top of the file
      */
     void setComment(const QString& comment);
+    void setName(const QString& name);
+    void setLocation(const QString& location);
 
     //op overloads
     /**
@@ -104,28 +111,13 @@ class QcpFile
     QcpGroup& operator[](const int index);
     /**
      * @brief operator []
-     * @details const version of operator[]
-     * @param index: index of desired element
-     * @return const ref to the desired element
-     * @throws out_of_range
-     */
-    const QcpGroup& operator[](const int index) const;
-    /**
-     * @brief operator []
      * @details provides direct access to the internal group vector
+     * @details adds the group if it doesn't exist
      * @param index: name of desired element
      * @return refernce to the desired element
      * @throws out_of_range
      */
-    QcpGroup& operator[](const QString& index);
-    /**
-     * @brief operator []
-     * @details const version of operator[]
-     * @param index: name of desired element
-     * @return const ref to the desired element
-     * @throws out_of_range
-     */
-    const QcpGroup& operator[](const QString& index) const;
+    QcpGroup& operator[](const QString& name);
 };
 
 #endif //end #ifndef QCP_FILE_H
