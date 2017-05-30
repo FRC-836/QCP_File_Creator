@@ -46,7 +46,9 @@ class Manager : public QObject
      * @param filePath: path where the project exists
      * @param openInEditor: true if the project should be opened in editor view
      */
-    openProject(const QString&filePath, bool openInEditor);
+    openProject(const QString& filePath, bool openInEditor);
+    exportToQcp(const Project& projectName);
+    saveProject(const Project& toSave, const QString& location);
 }; //end class Manager
 
 #endif //end #ifndef MANAGER_H
