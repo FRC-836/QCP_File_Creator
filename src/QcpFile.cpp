@@ -3,7 +3,7 @@
 //--------------------------------------------------
 //private functions
 //--------------------------------------------------
-void QcpFile::init(const std::vector<QcpGroup>& groups, const QString& comment)
+void QcpFile::init(const QVector<QcpGroup>& groups, const QString& comment)
 {
 }
 
@@ -13,7 +13,7 @@ void QcpFile::init(const std::vector<QcpGroup>& groups, const QString& comment)
 QcpFile::QcpFile()
 {
 } //end QcpFile::QcpFile()
-QcpFile::QcpFile(const std::vector<QcpGroup>& groups, const QString& comment)
+QcpFile::QcpFile(const QVector<QcpGroup>& groups, const QString& comment)
 {
 }
 
@@ -23,7 +23,7 @@ QcpFile::QcpFile(const std::vector<QcpGroup>& groups, const QString& comment)
 size_t QcpFile::size() const
 {
 }
-std::vector<std::vector<QString>> QcpFile::fileText() const
+QVector<QVector<QString>> QcpFile::fileText() const
 {
 }
 bool QcpFile::addGroup(const QcpGroup& toAdd)

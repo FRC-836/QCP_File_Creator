@@ -157,8 +157,3 @@ QcpVariable& QcpVariable::operator=(const QVector<double>& value)
   m_type = Type::DOUBLE_ARRAY;
   m_value = QVariant::fromValue(value);
 } //end QcpVariable& QcpVariable::operator=(const QVector<double>& value)
-QcpVariable& QcpVariable::operator=(const std::vector<double>& value)
-{
-  QVector<double> temp = QVector<double>::fromStdVector(value);
-  *this = temp;
-} //end QcpVariable& QcpVariable::operator=(const std::vector<double>& value)

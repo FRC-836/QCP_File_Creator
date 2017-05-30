@@ -2,9 +2,9 @@
 #define QCP_PROJECT_H
 
 #include <QString>
+#include <QVector>
+#include <QMap>
 
-#include <vector>
-#include <map>
 #include <utility>
 #include <fstream>
 
@@ -15,17 +15,17 @@ class Project
 {
   private:
     //member variables
-    std::map<QString, QcpFile> m_files; //first: name of file | second: file ADT
+    QMap<QString, QcpFile> m_files; //first: name of file | second: file ADT
     QString m_name; //name of the project
 
     //private functions
-    void init(const QString& name, const std::map<QString, QcpFile>& files);
+    void init(const QString& name, const QMap<QString, QcpFile>& files);
 
   public:
     //constructors
     Project();
     Project(const QString& name);
-    Project(const QString& name, const std::map<QString, QcpFile>& files);
+    Project(const QString& name, const QMap<QString, QcpFile>& files);
 
     //public functions
     void addFile(const QString& name, const QcpFile& file);

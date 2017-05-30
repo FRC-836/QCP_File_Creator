@@ -185,13 +185,6 @@ class QcpVariable
      * @return Reference to the newly copied object
      */
     QcpVariable& operator=(const QVector<double>& value);
-    /**
-     * @brief operator =
-     * @details Assignment operator for storing an array of doubles from std vector
-     * @param value: std::vector containing desired values to store in variable
-     * @return  Reference to the newly copied object
-     */
-    QcpVariable& operator=(const std::vector<double>& value);
 };
 
 #endif //end #ifndef QCP_VARIABLE_H

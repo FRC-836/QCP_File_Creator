@@ -61,7 +61,7 @@ void VarCreator::groupNameChanged(const QString& newText)
 void VarCreator::variableCreated(const QcpVariable& variable)
 {
 }
-void VarCreator::variablesCreated(const std::vector<QcpVariable> variables)
+void VarCreator::variablesCreated(const QVector<QcpVariable> variables)
 {
 }
 void VarCreator::changeGroup(const QcpGroup& newGroup)

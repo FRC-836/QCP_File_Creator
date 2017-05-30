@@ -2,8 +2,7 @@
 #define QCP_FILE_H
 
 #include <QString>
-
-#include <vector>
+#include <QVector>
 
 #include "CommandOptions.h"
 #include "QcpGroup.h"
@@ -12,7 +11,7 @@ class QcpFile
 {
   private:
     //member variables
-    std::vector<QcpGroup> m_groups; //groups contained within the file
+    QVector<QcpGroup> m_groups; //groups contained within the file
     QString m_comment; //comment displayed at the top of the file
 
     //private functions
@@ -22,7 +21,7 @@ class QcpFile
      * @param groups: list of groups the file contains
      * @param comment: comment displayed at top of the file
      */
-    void init(const std::vector<QcpGroup>& groups, const QString& comment);
+    void init(const QVector<QcpGroup>& groups, const QString& comment);
 
   public:
     //constructors
@@ -37,7 +36,7 @@ class QcpFile
      * @param groups: groups contained in the file
      * @param comment: comment displayed at the top of the file
      */
-    QcpFile(const std::vector<QcpGroup>& groups, const QString& comment = "");
+    QcpFile(const QVector<QcpGroup>& groups, const QString& comment = "");
 
     //public functions
     /**
@@ -52,7 +51,7 @@ class QcpFile
      * @return vector of vector of variable strings. first vector represents the file
      * @return the second vector represents each group in the file
      */
-    std::vector<std::vector<QString>> fileText() const;
+    QVector<QVector<QString>> fileText() const;
     /**
      * @brief addGroup
      * @details adds a group to the file

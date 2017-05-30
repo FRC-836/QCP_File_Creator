@@ -3,7 +3,7 @@
 //--------------------------------------------------
 //private functions
 //--------------------------------------------------
-void Project::init(const QString& name, const std::map<QString, QcpFile>& files)
+void Project::init(const QString& name, const QMap<QString, QcpFile>& files)
 {
 }
 
@@ -16,7 +16,7 @@ Project::Project()
 Project::Project(const QString& name)
 {
 }
-Project::Project(const QString& name, const std::map<QString, QcpFile>& files)
+Project::Project(const QString& name, const QMap<QString, QcpFile>& files)
 {
 }
 

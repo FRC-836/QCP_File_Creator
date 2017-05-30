@@ -2,8 +2,8 @@
 #define MANAGER_H
 
 #include <QObject>
+#include <QVector>
 
-#include <vector>
 #include <iostream>
 
 #include "CommandOptions.h"

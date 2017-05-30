@@ -7,7 +7,8 @@
 #include "QcpVariable.h"
 #include "CommandOptions.h"
 
-#include <vector>
+#include <QVector>
+
 #include <iostream>
 
 class MultiVarCreator: public QWidget
@@ -30,7 +31,7 @@ class MultiVarCreator: public QWidget
     //setters
 
   signals:
-    void variablesCreated(std::vector<QcpVariable>& variables);
+    void variablesCreated(QVector<QcpVariable>& variables);
     void valuesChanged();
     void constRequest(const QString& varName, QcpVariable& variable);
 
