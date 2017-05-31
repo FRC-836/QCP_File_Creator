@@ -39,16 +39,16 @@ class Manager : public QObject
      * @details Creates a new QCP File Creator project.
      * @param filePath: path where the project sbould be created
      */
-    createProject(const QString& filePath);
+    void createProject(const QString& filePath);
     /**
      * @brief openProject
      * @details opens an alerady existing QCP File Creator project
      * @param filePath: path where the project exists
      * @param openInEditor: true if the project should be opened in editor view
      */
-    openProject(const QString& filePath, bool openInEditor);
-    exportToQcp(const Project& projectName);
-    saveProject(const Project& toSave, const QString& location);
+    void openProject(const QString& filePath, bool openInEditor);
+    void exportToQcp(const Project& projectName);
+    void saveProject(const Project& toSave, const QString& location);
 }; //end class Manager
 
 #endif //end #ifndef MANAGER_H

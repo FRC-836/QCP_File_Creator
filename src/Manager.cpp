@@ -15,7 +15,7 @@ Manager::Manager()
 //--------------------------------------------------
 //public slots
 //--------------------------------------------------
-Manager::createProject(const QString& filePath)
+void Manager::createProject(const QString& filePath)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
@@ -23,7 +23,7 @@ Manager::createProject(const QString& filePath)
               << filePath.toStdString() << std::endl;
   }//end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 }
-Manager::openProject(const QString& filePath, bool openInEditor)
+void Manager::openProject(const QString& filePath, bool openInEditor)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
@@ -39,4 +39,10 @@ Manager::openProject(const QString& filePath, bool openInEditor)
     } //end  else
     std::cout << std::endl;
   } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+}
+void Manager::exportToQcp(const Project& projectName)
+{
+}
+void Manager::saveProject(const Project& toSave, const QString& location)
+{
 }
