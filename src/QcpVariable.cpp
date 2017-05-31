@@ -32,6 +32,15 @@ QString QcpVariable::doubleArrayText() const
 
   return QString(ss.str().c_str());
 } //end QString QcpVariable::doubleArrayText()
+void QcpVariable::errorConverting()
+{
+  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+  {
+    std::cout << "ERROR: typing information for variable " << m_name.toStdString()
+              << " has been corrupted, can't convert to file text" << std::endl
+              << "Returning blank string instead of file text" << std::endl;
+  } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+} //end void QcpVariable::errorConverting(const QString& name)
 
 //--------------------------------------------------
 //constructors
@@ -72,12 +81,7 @@ QString QcpVariable::fileText() const
       } //end  if (m_value.canConvert<double>())
       else
       {
-        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
-        {
-          std::cout << "ERROR: typing information for variable " << m_name.toStdString()
-                    << " has been corrupted, can't convert to file text" << std::endl
-                    << "Returning blank string instead of file text" << std::endl;
-        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        errorConverting();
         return "";
       } //end  else
       break; //end  case Type::DOUBLE:
@@ -90,12 +94,7 @@ QString QcpVariable::fileText() const
       } //end  if (m_value.canConvert<QVector<double>>())
       else
       {
-        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
-        {
-          std::cout << "ERROR: typing information for variable " << m_name.toStdString()
-                    << " has been corrupted, can't convert to file text" << std::endl
-                    << "Returning blank string instead of file text" << std::endl;
-        } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+        errorConverting();
         return "";
       } //end  else
       break; //end  case Type::DOUBLE_ARRAY:
@@ -124,17 +123,18 @@ QString QcpVariable::getName() const
 //--------------------------------------------------
 void QcpVariable::setName(const QString& name)
 {
-  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
+  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
+                   std::isspace))
   {
     m_name = name;
   } //end  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   else
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "Warning: attempting to set variable " << m_name.toStdString()
+      std::cout << "ERROR: attempting to set variable " << m_name.toStdString()
                 << "'s name to an empty string. Name will remane unchanged" << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end  else
 } //end void QcpVariable::setName(const QString& name)
 

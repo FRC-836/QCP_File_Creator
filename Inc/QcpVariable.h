@@ -34,7 +34,8 @@ class QcpVariable
     {
       QString actualName; //handles the case when name is not provided
       //handle blank names
-      if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
+      if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
+                       std::isspace))
       {
         if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
         {
@@ -52,6 +53,7 @@ class QcpVariable
       setName(name);
       changeValue(type, value);
     } //end  template <typename T> init(const QString& name, Type type, T value)
+    void errorConverting();
     /**
      * @brief doubleText
      * @details responsible for converting m_value to text when m_type is double
