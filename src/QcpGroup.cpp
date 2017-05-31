@@ -13,7 +13,8 @@ void QcpGroup::init(const QString& name, const QVector<QcpVariable>& vars,
 {
   //correct for name blanking
   QString realName;
-  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
+  if (std::all_of(name.toStdString().begin(), name.toStdString().end(),
+                  std::isspace))
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
@@ -79,7 +80,8 @@ QVector<QString> QcpGroup::fileText() const
   QVector<QString> varsText; //stores each variables file writeable text
 
   //add the comment to the file text, if it is blank use a default comment
-  if (m_comment.toStdString().begin(), m_comment.toStdString().end(), isspace)
+  if (m_comment.toStdString().begin(), m_comment.toStdString().end(),
+      std::isspace)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
@@ -107,9 +109,10 @@ QVector<QString> QcpGroup::fileText() const
 bool QcpGroup::addVar(const QcpVariable& toAdd)
 {
   //only add the variable if the name doesn't already exist
-  if (!findVar(toAdd.getName()))
+  if (findVar(toAdd.getName()) != -1)
   {
     m_vars.push_back(toAdd);
+    return true;
   } //end  if (!findVar(toAdd.getName()))
   else
   {
@@ -118,17 +121,18 @@ bool QcpGroup::addVar(const QcpVariable& toAdd)
       std::cout << "ERROR: cannot add variable " << toAdd.getName().toStdString()
                 << " because variable with that name already exists" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    return false;
   } //end  else
 }
 void QcpGroup::removeVar(int index)
 {
   if (index < 0 || index >= m_vars.size())
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "ERROR: No variable found at index " << index << " in group "
-                << m_name.toStdString() << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+      std::cout << "WARNING: No variable found at index " << index << " in group "
+                << m_name.toStdString() << " to remove" << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
   } //end  if (index < 0 || index >= m_vars.size())
   else
   {
@@ -144,12 +148,12 @@ void QcpGroup::removeVar(const QString& toRemoveName)
   } //end  if (foundAt != -1)
   else
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "ERROR: cannot remove variable " << toRemoveName.toStdString()
+      std::cout << "WARNING: cannot remove variable " << toRemoveName.toStdString()
                 << " because no variable with that name exists in group "
                 << m_name.toStdString() << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
   } //end  else
 }
 void QcpGroup::clearVars()
@@ -185,17 +189,18 @@ void QcpGroup::setComment(const QString& comment)
 void QcpGroup::setName(const QString& name)
 {
   //ensure the name is not being blanked
-  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
+  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
+                   std::isspace))
   {
     m_name = name;
   } //end  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   else
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "Warning: Variable " << name.toStdString() << " not set. "
-                << "Name not being updated" << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+      std::cout << "ERROR: attempting to set variable " << m_name.toStdString()
+                << "'s name to an empty string. Name will remane unchanged" << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end  else
 }
 
