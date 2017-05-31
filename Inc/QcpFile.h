@@ -3,6 +3,9 @@
 
 #include <QString>
 #include <QVector>
+#include <QDir>
+
+#include <cctype>
 
 #include "CommandOptions.h"
 #include "QcpGroup.h"
@@ -15,6 +18,7 @@ class QcpFile
     QString m_comment; //comment displayed at the top of the file
     QString m_location; //location of the file
     QString m_name; //name of the file, purely for searching, no relation to location
+    static int m_defaultFileNumber; //used in default
 
     //private functions
     /**
@@ -23,7 +27,9 @@ class QcpFile
      * @param groups: list of groups the file contains
      * @param comment: comment displayed at top of the file
      */
-    void init(const QVector<QcpGroup>& groups, const QString& comment);
+    void init(const QString& name, const QString& location,
+              const QVector<QcpGroup>& groups, const QString& comment);
+    int findGroup(const QString& name) const;
 
   public:
     //constructors
@@ -32,13 +38,15 @@ class QcpFile
      * @details default constructor
      */
     QcpFile();
+    QcpFile(const QString& name, const QString& location);
     /**
      * @brief QcpFile
      * @details constructor that takes a list of gropus and optional comment
      * @param groups: groups contained in the file
      * @param comment: comment displayed at the top of the file
      */
-    QcpFile(const QVector<QcpGroup>& groups, const QString& comment = "");
+    QcpFile(const QString& name, const QString& location,
+            const QVector<QcpGroup>& groups, const QString& comment = "");
 
     //public functions
     /**
@@ -78,6 +86,7 @@ class QcpFile
      * @details removes all the groups from the file
      */
     void clearGroups();
+    QcpGroup& at(const QString& name) const;
 
     //getters
     /**
@@ -88,7 +97,6 @@ class QcpFile
     QString getComment() const;
     QString getName() const;
     QString getLocation() const;
-    QcpGroup at(const QString& name) const;
 
     //setters
     /**
