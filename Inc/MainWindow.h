@@ -8,6 +8,7 @@
 
 #include <QString>
 #include <QFileDialog>
+#include <QDir>
 
 #include <memory>
 #include <iostream>

@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QFileInfo> //checking if file exists
+#include <QDir>
 
 #include <iostream>
 #include <memory> //shared_ptr
