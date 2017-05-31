@@ -5,9 +5,10 @@
 //--------------------------------------------------
 QString MainWindow::getOpenPath()
 {
-  return QFileDialog::getOpenFileName(this, "Select QCP Project", "~/",
-                                                  "Project (*"+Manager::FILE_EXTENSION+")");
-
+  return QFileDialog::getOpenFileName(this,
+                                      "Select QCP Project",
+                                      QDir::homePath,
+                                      "Project (*"+Manager::FILE_EXTENSION+")");
 }
 
 //--------------------------------------------------

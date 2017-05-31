@@ -87,7 +87,7 @@ void NewDialog::browseButtonClicked()
 {
   QString filePath = QFileDialog::getExistingDirectory(this,
                                                        "Choose location for project",
-                                                       "~/",
+                                                       QDir::homePath(),
                                                        QFileDialog::ShowDirsOnly |
                                                        QFileDialog::DontResolveSymlinks);
 
