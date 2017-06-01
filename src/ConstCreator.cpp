@@ -35,9 +35,20 @@ void ConstCreator::createClicked()
 }
 void ConstCreator::cancelClicked()
 {
+  close();
 }
 void ConstCreator::nameChanged(const QString& newText)
 {
+  //allow the name if the newest character is a letter or number
+  if (newText.size() != 0)
+  {
+    if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
+    {
+      QString tempText = m_ui->lneName->text();
+      tempText.chop(1);
+      m_ui->lneName->setText(tempText);
+    } //end  if (!std::isalnum(newText.at(newText.size() - 1).toLatin1()))
+  } //end  if (newText.size() != 0)
 }
 void ConstCreator::valueChanged(const QString& newText)
 {

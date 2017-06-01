@@ -32,7 +32,7 @@ QString QcpVariable::doubleArrayText() const
 
   return QString(ss.str().c_str());
 } //end QString QcpVariable::doubleArrayText()
-void QcpVariable::errorConverting()
+void QcpVariable::errorConverting() const
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   {
@@ -124,7 +124,7 @@ QString QcpVariable::getName() const
 void QcpVariable::setName(const QString& name)
 {
   if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
-                   std::isspace))
+                   isspace))
   {
     m_name = name;
   } //end  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))

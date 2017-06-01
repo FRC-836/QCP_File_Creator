@@ -13,9 +13,9 @@ void QcpFile::init(const QString& name, const QString& location,
 {
   //handle blank name
   QString realName;
-  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), std::isspace))
+  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   {
-    realName = "QcpFile" + std::to_string(m_defaultFileNumber);
+    realName = QString::fromStdString("QcpFile" + std::to_string(m_defaultFileNumber));
     m_defaultFileNumber++;
   } //end  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), std::isspace))
   else
@@ -26,7 +26,7 @@ void QcpFile::init(const QString& name, const QString& location,
   //handle blank file location
   QString realLocation;
   if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
-                  std::std::isspace))
+                  isspace))
   {
     realLocation = QDir::homePath();
   } //end  if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
@@ -39,7 +39,7 @@ void QcpFile::init(const QString& name, const QString& location,
   //set values
   setName(name);
 }
-int QcpGroup::findGroup(const QString& name) const
+int QcpFile::findGroup(const QString& name) const
 {
   bool found = false;
   int index = 0;
@@ -86,19 +86,19 @@ QVector<QVector<QString>> QcpFile::fileText() const
   QVector<QVector<QString>> groupTexts; //used to store each group's file text
 
   //handle blank comment
-  if (std::all_of(m_comment.toStdString().begin(), m_comment.toStdString.end(),
-                  std::isspace))
+  if (std::all_of(m_comment.toStdString().begin(), m_comment.toStdString().end(),
+                  isspace))
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
       std::cout << "Comment was left blank for " << m_name.toStdString()
                 << " file, providing a default one" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
-    groupTexts.push_back((m_name + " file"));
+    groupTexts.push_back({m_name + " file"});
   } //end  if (std::all_of(m_comment.toStdString().begin(), m_comment.toStdString.end(),
   else
   {
-    groupTexts.push_back(m_comment);
+    groupTexts.push_back({m_comment});
   } //end  else
 
   //push back each groups file text
@@ -165,7 +165,7 @@ void QcpFile::clearGroups()
 {
   m_groups.clear();
 }
-QcpGroup& QcpFile::at(const QString& name) const
+QcpGroup& QcpFile::at(const QString& name)
 {
   int foundAt = findGroup(name);
   if (foundAt == -1)
@@ -201,7 +201,8 @@ void QcpFile::setComment(const QString& comment)
 }
 void QcpFile::setName(const QString& name)
 {
-  if (std::all_of(m_name.toStdString().begin(), m_name.toStdString().end(), std::isspace))
+  if (std::all_of(m_name.toStdString().begin(), m_name.toStdString().end(),
+                  isspace))
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {

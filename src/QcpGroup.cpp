@@ -14,7 +14,7 @@ void QcpGroup::init(const QString& name, const QVector<QcpVariable>& vars,
   //correct for name blanking
   QString realName;
   if (std::all_of(name.toStdString().begin(), name.toStdString().end(),
-                  std::isspace))
+                  isspace))
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
@@ -81,7 +81,7 @@ QVector<QString> QcpGroup::fileText() const
 
   //add the comment to the file text, if it is blank use a default comment
   if (m_comment.toStdString().begin(), m_comment.toStdString().end(),
-      std::isspace)
+      isspace)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
@@ -190,7 +190,7 @@ void QcpGroup::setName(const QString& name)
 {
   //ensure the name is not being blanked
   if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
-                   std::isspace))
+                   isspace))
   {
     m_name = name;
   } //end  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))

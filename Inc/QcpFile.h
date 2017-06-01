@@ -86,7 +86,7 @@ class QcpFile
      * @details removes all the groups from the file
      */
     void clearGroups();
-    QcpGroup& at(const QString& name) const;
+    QcpGroup& at(const QString& name);
 
     //getters
     /**
