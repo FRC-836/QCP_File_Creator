@@ -78,12 +78,6 @@ class QcpGroup
     /**
      * @brief removeVar
      * @details Remove a variable from the group
-     * @param index: index of the variable to be removed
-     */
-    void removeVar(int index);
-    /**
-     * @brief removeVar
-     * @details Remove a variable from the group
      * @param toRemoveName: Name of the variable to remove
      */
     void removeVar(const QString& toRemoveName);

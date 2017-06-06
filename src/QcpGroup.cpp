@@ -111,6 +111,11 @@ bool QcpGroup::addVar(const QcpVariable& toAdd)
   //only add the variable if the name doesn't already exist
   if (findVar(toAdd.getName()) != -1)
   {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "INFO: adding variable :" << toAdd.getName().toStdString()
+                << " to group " << m_name.toStdString() << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_vars.push_back(toAdd);
     return true;
   } //end  if (!findVar(toAdd.getName()))
@@ -124,26 +129,16 @@ bool QcpGroup::addVar(const QcpVariable& toAdd)
     return false;
   } //end  else
 }
-void QcpGroup::removeVar(int index)
-{
-  if (index < 0 || index >= m_vars.size())
-  {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
-    {
-      std::cout << "WARNING: No variable found at index " << index << " in group "
-                << m_name.toStdString() << " to remove" << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
-  } //end  if (index < 0 || index >= m_vars.size())
-  else
-  {
-    m_vars.erase(m_vars.begin() + index);
-  } //end  else
-}
 void QcpGroup::removeVar(const QString& toRemoveName)
 {
   int foundAt = findVar(toRemoveName);
   if (foundAt != -1)
   {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "INFO: removing variable " << toRemoveName.toStdString()
+                << " from group " << m_name.toStdString() << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_vars.erase(m_vars.begin() + foundAt);
   } //end  if (foundAt != -1)
   else
@@ -158,6 +153,11 @@ void QcpGroup::removeVar(const QString& toRemoveName)
 }
 void QcpGroup::clearVars()
 {
+  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "Clearing all variables from group " << m_name.toStdString()
+              << std::endl;
+  } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   m_vars.clear();
 }
 

@@ -16,7 +16,7 @@ class QcpFile
     //member variables
     QVector<QcpGroup> m_groups; //groups contained within the file
     QString m_comment; //comment displayed at the top of the file
-    QString m_location; //location of the file
+    QString m_location; //location of the file for exportation (doesn't have to exist)
     QString m_name; //name of the file, purely for searching, no relation to location
     static int m_defaultFileNumber; //used in default
 
@@ -69,12 +69,6 @@ class QcpFile
      * @return true if the group was successfully added
      */
     bool addGroup(const QcpGroup& toAdd);
-    /**
-     * @brief removeGroup
-     * @details removes a group from the file
-     * @param index location of group in the list to remove
-     */
-    void removeGroup(int index);
     /**
      * @brief removeGroup
      * @details removes a group from the file

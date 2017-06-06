@@ -23,21 +23,14 @@ void QcpFile::init(const QString& name, const QString& location,
     realName = name;
   }
 
-  //handle blank file location
-  QString realLocation;
-  if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
-                  isspace))
-  {
-    realLocation = QDir::homePath();
-  } //end  if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
-  else
-  {
-    //only check if the location is empty, setLocation checks for validity of path
-    realLocation = location;
-  } //end  else
-
   //set values
-  setName(name);
+  setName(realName);
+  setLocation(location);
+  setComment(comment);
+  for (QcpGroup group : groups)
+  {
+    addGroup(group);
+  } //end  for (QcpGroup group : groups)
 }
 int QcpFile::findGroup(const QString& name) const
 {
@@ -114,6 +107,11 @@ bool QcpFile::addGroup(const QcpGroup& toAdd)
   if (foundAt == -1)
   {
     //not found, okay to add
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "INFO: Adding group " << toAdd.getName().toStdString() << " to file "
+                << m_name.toStdString() << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_groups.push_back(toAdd);
     return true;
   } //end  if (foundAt == -1)
@@ -128,27 +126,17 @@ bool QcpFile::addGroup(const QcpGroup& toAdd)
     return false;
   } //end  else
 }
-void QcpFile::removeGroup(int index)
-{
-  if (index <0 || index >= m_groups.size())
-  {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
-    {
-      std::cout << "No Group at index " + std::to_string(index) << "in group "
-                << m_name.toStdString() << " to remove" << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
-  } //end  if (index <0 || index >= m_groups.size())
-  else
-  {
-    m_groups.erase(m_groups.begin() + index);
-  } //end  else
-}
 void QcpFile::removeGroup(const QString& toRemoveName)
 {
   int foundAt = findGroup(toRemoveName);
 
   if (foundAt != -1)
   {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << "INFO: removing group " << toRemoveName.toStdString() << " from file "
+                << m_name.toStdString() << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_groups.erase(m_groups.begin() + foundAt);
   } //end  if (foundAt != -1)
   else
@@ -163,6 +151,11 @@ void QcpFile::removeGroup(const QString& toRemoveName)
 }
 void QcpFile::clearGroups()
 {
+  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+  {
+    std::cout << "INFO: Clearing all groups from file " << m_name.toStdString()
+              << std::endl;
+  } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   m_groups.clear();
 }
 QcpGroup& QcpFile::at(const QString& name)
@@ -217,6 +210,20 @@ void QcpFile::setName(const QString& name)
 }
 void QcpFile::setLocation(const QString& location)
 {
+  //handle blank file location
+  QString realLocation;
+  if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
+                  isspace))
+  {
+    realLocation = QDir::homePath();
+  } //end  if (std::all_of(location.toStdString().begin(), location.toStdString().end(),
+  else
+  {
+    //only check if the location is empty, setLocation checks for validity of path
+    realLocation = location;
+  } //end  else
+
+  m_location = realLocation;
 }
 
 //--------------------------------------------------
@@ -233,5 +240,19 @@ QcpGroup& QcpFile::operator[](const int index)
 }
 QcpGroup& QcpFile::operator[](const QString& name)
 {
-  return at(name);
+  int foundAt = findGroup(name);
+  if (foundAt == -1)
+  {
+    //not found
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    {
+      std::cout << name.toStdString() << " not found in file " << m_name.toStdString()
+                << ", adding it" << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    m_groups.push_back(QcpGroup(name, {}));
+  } //end  if (foundAt == -1)
+  else
+  {
+    return m_groups[foundAt];
+  } //end  else
 }
