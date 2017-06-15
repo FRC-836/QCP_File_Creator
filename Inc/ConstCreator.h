@@ -7,7 +7,10 @@
 #include "Creator.h"
 #include "CommandOptions.h"
 
+#include <QVector>
+
 #include <iostream>
+#include <utility> //std::pair
 
 class ConstCreator : public QWidget
 {
@@ -17,9 +20,15 @@ class ConstCreator : public QWidget
     //member variables
     Ui_ConstCreatorDialog* m_ui;
 
+    //private functions
+    std::pair<bool, double> isValidDouble();
+    std::pair<bool, QVector<double>> isValidDoubleArr();
+
   public:
     //constructors
     ConstCreator(Creator* caller, QWidget* parent = nullptr);
+    ConstCreator(ConstCreator&) = delete;
+    ConstCreator(ConstCreator&&) = delete;
     ~ConstCreator();
 
     //public functions
@@ -27,6 +36,10 @@ class ConstCreator : public QWidget
     //getters
 
     //setters
+
+    //op overloads
+    ConstCreator& operator=(const ConstCreator&) = delete;
+    ConstCreator& operator=(ConstCreator&) = delete;
 
   signals:
     void newConstant(const QcpVariable& value);
@@ -36,6 +49,7 @@ class ConstCreator : public QWidget
     void cancelClicked();
     void nameChanged(const QString& newText);
     void valueChanged(const QString& newText);
+    void typeChanged();
 }; //end class ConstCreator
 
 #endif //end #ifndef CONST_CREATOR_H
