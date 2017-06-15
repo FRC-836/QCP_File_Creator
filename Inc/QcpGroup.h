@@ -137,7 +137,6 @@ class QcpGroup
      * @details provides direct access to the variables array
      * @param index: name of desired variable
      * @return reference to the requested variable
-     * @throws out_of_range
      */
     QcpVariable& operator[](const QString& name);
 }; //end class QcpGroup
