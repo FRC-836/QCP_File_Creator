@@ -15,12 +15,15 @@
 class QcpVariable
 {
   public:
-    //public enums
+    //public enums and associated variables/functions
     enum class Type
     {
       DOUBLE,
       DOUBLE_ARRAY
     };
+    static const QVector<std::string> typeStr;
+    static std::string typeToStr(Type toConvert);
+    static Type strToType(const std::string& toConvert);
 
   private:
     //member variables
@@ -188,5 +191,8 @@ class QcpVariable
      */
     QcpVariable& operator=(const QVector<double>& value);
 };
+
+//enum output operators
+std::ostream& operator<<(std::ostream& os, const QcpVariable::Type& type);
 
 #endif //end #ifndef QCP_VARIABLE_H

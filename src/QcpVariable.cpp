@@ -1,6 +1,35 @@
 #include "QcpVariable.h"
 
 //--------------------------------------------------
+//enum related stuff
+//--------------------------------------------------
+const QVector<std::string> QcpVariable::typeStr
+{
+  "Double",
+  "Array of Doubles"
+};
+std::string QcpVariable::typeToStr(Type toConvert)
+{
+  return typeStr[static_cast<int>(toConvert)];
+}
+QcpVariable::Type QcpVariable::strToType(const std::string& toConvert)
+{
+  auto foundAt = std::find(typeStr.begin(), typeStr.end(), toConvert);
+  if (foundAt != typeStr.end())
+  {
+    return static_cast<Type>(foundAt - typeStr.begin());
+  } //end  if (foundAt != typeStr.end())
+  else
+  {
+    throw std::out_of_range("No type " + toConvert + " is supported by this application");
+  } //end  else
+}
+std::ostream& operator<<(std::ostream& os, const QcpVariable::Type& type)
+{
+  std::cout << QcpVariable::typeStr[static_cast<int>(type)];
+}
+
+//--------------------------------------------------
 //static variables
 //--------------------------------------------------
 int QcpVariable::m_defaultVarNum = 1;
@@ -47,11 +76,11 @@ void QcpVariable::errorConverting() const
 //--------------------------------------------------
 QcpVariable::QcpVariable()
 {
-  init("", Type::DOUBLE, QVariant(0.0));
+  init("", Type::DOUBLE, 0.0);
 } //end QcpVariable::QcpVariable()
 QcpVariable::QcpVariable(const QString& name)
 {
-  init(name, Type::DOUBLE, QVariant(0.0));
+  init(name, Type::DOUBLE, 0.0);
 } //end QcpVariable::QcpVariable(const QString& name)
 QcpVariable::QcpVariable(const QcpVariable& toCopy)
 {
@@ -123,7 +152,8 @@ QString QcpVariable::getName() const
 //--------------------------------------------------
 void QcpVariable::setName(const QString& name)
 {
-  if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
+  std::string testName = name.toStdString();
+  if (!std::all_of(testName.begin(), testName.end(),
                    isspace))
   {
     m_name = name;
