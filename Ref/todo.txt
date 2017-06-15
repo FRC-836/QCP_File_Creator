@@ -6,6 +6,7 @@ determine if a state manager is necessary for the whole application
 Go back through the following files and add ALL_INFO worth printouts
   NewDialog
   MainWindow
+go back through and add deletion of copy and move ctors and assignment operators
 
 NEW DIALOG
 =================================================================================================
@@ -15,3 +16,7 @@ On all close events (except create press) the MainWindow will show back up
 CONST CREATOR
 =================================================================================================
 Add drop down option for selecting data type of constant
+
+QCP VARIABLE
+=================================================================================================
+add move ctor and assignment
