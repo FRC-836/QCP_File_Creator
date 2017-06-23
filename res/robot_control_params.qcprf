@@ -1,0 +1,24 @@
+<!--refer to auto_vars.qcprf for documentation-->
+<QcpFile>
+  <Name>Robot_Control_Params</Name>
+  <Location>
+    C:\Users\Cheeto\Robotics\Tools\QCP_File_Creator\res\autogen\Robot_Control_Params
+  </Location>
+  <Comment>
+    This file contains all robot mechanism configuration QCP variables
+  </Comment>
+  <DefaultNumber>0</DefaultNumber>
+  <GroupList>
+    <QcpGroup Location="robot_control_params\BotWheel"/>
+    <QcpGroup Location="robot_control_params\FMS"/>
+    <QcpGroup Location="robot_control_params\Gear"/>
+    <QcpGroup Location="robot_control_params\GearDelivery"/>
+    <QcpGroup Location="robot_control_params\GearStall"/>
+    <QcpGroup Location="robot_control_params\TopWheel"/>
+    <QcpGroup Location="robot_control_params\Turret"/>
+    <QcpGroup Location="robot_control_params\TurretGuess"/>
+    <QcpGroup Location="robot_control_params\TurretSearch"/>
+    <QcpGroup Location="robot_control_params\TurretValid"/>
+    <QcpGroup Location="robot_control_params\Vision"/>
+  </GroupList>
+</QcpFile>

@@ -1,0 +1,32 @@
+<QcpGroup>
+  <Name>Hopper</Name>
+  <Comment>Hopper auto values</Comment>
+  <DefaultNumber>0</DefaultNumber>
+  <VariableList>
+    <QcpVariableArray name="Close_X" type="DOUBLE">
+      <Value>0</Value>
+      <Value>0</Value>
+      <Value>-42</Value>
+    </QcpVariableArray>
+    <QcpVariableArray name="Close_Y" type="DOUBLE">
+      <Value>0</Value>
+      <Value>71</Value>
+      <Value>91</Value>
+    </QcpVariableArray>
+    <QcpVariableArray name="Far_Y_Offset" type="DOUBLE">
+      <Value>0</Value>
+      <Value>47</Value>
+      <Value>47</Value>
+    </QcpVariableArray>
+    <QcpVariable name="Theta_Initial" type="DOUBLE" value="1.570796"/>
+    <QcpVariable name="Theta_Final" type="DOUBLE" value="3.14159"/>
+    <QcpVariable name="Time_Taken" type="DOUBLE" value="3.5"/>
+    <QcpVariable name="Blue_Turret" type="DOUBLE" value="95"/>
+    <QcpVariable name="Red_Turret" type="DOUBLE" value="-90"/>
+    <QcpVariableArray name="Y_Trigger_Offset" type="DOUBLE">
+      <Value>0</Value>
+      <Value>7</Value>
+      <Value>7</Value>
+    </QcpVariableArray>
+  </VariableList>
+</QcpGroup>

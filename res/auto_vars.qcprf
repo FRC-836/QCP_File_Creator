@@ -1,0 +1,24 @@
+<QcpFile>
+  <!--not the name of the file, name used in project-->
+  <Name>Auto_Vars</Name> 
+
+  <!--export location of file, include name of file here-->
+  <Location>C:\Users\Cheeto\Robotics\Tools\QCP_File_Creator\res\autogen\Auto_Vars</Location> 
+
+  <!--Comment to be displayed at the top of the file-->
+  <Comment>
+    This file contains all auto related QCP variables
+  </Comment>
+
+  <!--This was the last number used by the auto-namming routine-->
+  <DefaultNumber>0</DefaultNumber>
+
+  <!--List of all the groups that this file contains and where their project files are stored-->
+  <GroupList>
+    <QcpGroup Location="auto_vars\CenterPeg"/>
+    <QcpGroup Location="auto_vars\Hopper"/>
+    <QcpGroup Location="auto_vars\LeftPeg"/>
+    <QcpGroup Location="auto_vars\Misc"/>
+    <QcpGroup Location="auto_vars\RightPeg"/>
+  </GropuList>
+</QcpFile>

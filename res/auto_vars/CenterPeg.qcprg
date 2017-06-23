@@ -1,0 +1,20 @@
+<QcpGroup>
+  <Name>Center_Peg</Name>
+  <Comment>
+    Gear auto center peg
+  </Comment>
+  <DefaultNumber>0</DefaultNumber>
+  <VariableList>
+    <QcpVariableArray name="X" type="DOUBLE">
+      <Value>112</Value>
+      <Value>112</Value>
+    </QcpVariableArray>
+    <QcpVariableArray name="Y" type="DOUBLE">
+      <value>0</Value>
+      <value>35</Value>
+    </QcpVariableArray>
+    <QcpVariable name="Theta_Init" type="DOUBLE" value="1.570796"/>
+    <QcpVariable name="Theta_final" type="DOUBLE" value="1.5708"/>
+    <QcpVariable name="Time_Taken" type="DOUBLE" value="1"/>
+  </VariableList>
+</QcpGroup>

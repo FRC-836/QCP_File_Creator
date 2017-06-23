@@ -1,0 +1,29 @@
+<QcpProject>
+  <!--Overall project metadata-->
+  <Name>TestProject</Name>
+
+  <!--Directory under which all project files are stored-->
+  <ProjectRootDirectory>
+    C:\Users\Cheeto\Robotics\Tools\QCP_File_Creator\res\
+  </ProjectRootDirectory><!--Root path where all project metadata files are stored-->
+
+  <!--Contians a list of all constants the project contains-->
+  <ConstantList>
+    <Constant name="ConstantOne" type="DOUBLE" value="10.0"/>
+    <ArrayConstant name="ArrConstantOne" type="DOUBLE">
+      <Value>10.0</Value>
+      <Value>20.0</Value>
+      <Value>30.0</Value>
+      <Value>40.0</Value>
+      <Value>50.0</Value>
+      <Value>60.0</Value>
+    </ArrayConstnat>
+  </ConstantList>
+
+  <!--List of where each QCP file's metadata is stored. These files are stored
+      in additional XML files-->
+  <FileList>
+    <QcpFile Location="auto_vars"/>
+    <QcpFile Location="robot_control_params"/>
+  </FileList>
+</QcpProject>
