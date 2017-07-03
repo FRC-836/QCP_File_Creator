@@ -85,6 +85,13 @@ int Project::findFile(const QString& name) const
 }
 
 //--------------------------------------------------
+//static constants
+//--------------------------------------------------
+const QString Project::PROJECT_FILE_EXTENSION = ".qcprj";
+const QString Project::QCP_FILE_FILE_EXTENSION = ".qcprf";
+const QString Project::GROUP_FILE_EXTENSION = ".qcprg";
+
+//--------------------------------------------------
 //constructors
 //--------------------------------------------------
 Project::Project()

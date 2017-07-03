@@ -8,6 +8,9 @@
 #include "CommandOptions.h"
 
 #include <iostream>
+#include <memory>
+
+#include "Manager.h"
 
 class Creator: public QMainWindow
 {
@@ -16,10 +19,14 @@ class Creator: public QMainWindow
   private:
     //member variables
     Ui_creator* m_ui;
+    std::unique_ptr<Project> m_project;
+
+    //private functions
+    void loadProject();
 
   public:
     //constructors
-    Creator();
+    Creator(std::unique_ptr<Project> project = nullptr);
     ~Creator();
 
     //public functions
@@ -45,6 +52,8 @@ class Creator: public QMainWindow
     void projectItemClicked(QTreeWidgetItem* item);
     void constItemClicked(QListWidgetItem* item);
     void createConst(const QcpVariable& value);
+    static void createProject(const QString& filePath);
+    static void openProject(const QString& filePath, bool openInEditor);
 }; //end class Creator: public QMainWindow
 
 #endif //end ifndef CREATOR_H

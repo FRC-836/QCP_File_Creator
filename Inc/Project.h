@@ -25,6 +25,11 @@ class Project
     int findFile(const QString& fileName) const;
 
   public:
+    //constants
+    static const QString PROJECT_FILE_EXTENSION;
+    static const QString QCP_FILE_FILE_EXTENSION;
+    static const QString GROUP_FILE_EXTENSION;
+
     //constructors
     Project();
     Project(const QString& name, const QString& location);

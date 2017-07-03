@@ -1,17 +1,19 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include "ui_MainWindow.h"
-#include "Manager.h"
-#include "NewDialog.h"
-#include "CommandOptions.h"
-
 #include <QString>
 #include <QFileDialog>
 #include <QDir>
 
+#include "ui_MainWindow.h"
+#include "NewDialog.h"
+#include "Creator.h"
+
 #include <memory>
 #include <iostream>
+
+#include "CommandOptions.h"
+#include "Project.h"
 
 /**
  * @brief The MainWindow class
@@ -25,7 +27,6 @@ class MainWindow: public QMainWindow
   private:
     //member variables
     Ui_MainWindow* m_ui; //UI container
-    std::shared_ptr<Manager> m_manager;
 
     //private functions
     /**

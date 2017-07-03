@@ -50,8 +50,8 @@ void NewDialog::normalizePath(QString& path)
 //--------------------------------------------------
 //cconstructors
 //--------------------------------------------------
-NewDialog::NewDialog(std::shared_ptr<Manager> manager, QWidget* parent)
-  :m_manager(manager), QWidget(parent)
+NewDialog::NewDialog(QWidget* parent)
+  :QWidget(parent)
 {
   //setup UI
   m_ui = new Ui_NewDialog();
@@ -66,7 +66,7 @@ NewDialog::NewDialog(std::shared_ptr<Manager> manager, QWidget* parent)
           this, &NewDialog::locationTextChanged);
   connect(m_ui->cmbProjectType, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &NewDialog::projectTypeChanged);
-  connect(this, &NewDialog::newProject, m_manager.get(), &Manager::createProject);
+  connect(this, &NewDialog::newProject, &Creator::createProject);
 } //end NewDialog::NewDialog(QWidget* parent)
 
 NewDialog::~NewDialog()
@@ -117,7 +117,7 @@ void NewDialog::createButtonClicked()
   } //end  else if (m_ui->lneName->text().size() == 0)
 
   QString fullPath = m_ui->lneLocation->text() + '/' + m_ui->lneName->text() +
-                     Manager::FILE_EXTENSION;
+                     Project::PROJECT_FILE_EXTENSION;
   normalizePath(fullPath);
 
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)

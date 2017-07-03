@@ -2,19 +2,20 @@
 #define NEW_DIALOG_H
 
 //ui include
-#include "ui_NewDialog.h"
-
-#include "Manager.h"
-#include "CommandOptions.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QFileInfo> //checking if file exists
 #include <QDir>
 
+#include "ui_NewDialog.h"
+#include "Creator.h"
+
 #include <iostream>
 #include <memory> //shared_ptr
 #include <cctype> //isalnum
+
+#include "CommandOptions.h"
 
 class NewDialog: public QWidget
 {
@@ -30,7 +31,6 @@ class NewDialog: public QWidget
     }; //end  enum class STATE
     //member variables
     Ui_NewDialog* m_ui; //user interface
-    std::shared_ptr<Manager> m_manager; //reference to global manager
 
     //private functions
     /**
@@ -56,7 +56,7 @@ class NewDialog: public QWidget
      * @param manager: reference to the global manager for the project
      * @param parent: parent who created this widget
      */
-    NewDialog(std::shared_ptr<Manager> manager, QWidget* parent = nullptr);
+    NewDialog(QWidget* parent = nullptr);
     /**
      * @brief ~NewDialog
      * @details destructor for the NewDialog

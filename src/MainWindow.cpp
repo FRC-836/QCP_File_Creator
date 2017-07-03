@@ -8,7 +8,7 @@ QString MainWindow::getOpenPath()
   return QFileDialog::getOpenFileName(this,
                                       "Select QCP Project",
                                       QDir::homePath(),
-                                      "Project (*"+Manager::FILE_EXTENSION+")");
+                                      "Project (*"+Project::PROJECT_FILE_EXTENSION+")");
 }
 
 //--------------------------------------------------
@@ -17,7 +17,6 @@ QString MainWindow::getOpenPath()
 MainWindow::MainWindow()
 {
   //create the manager that all other widgets will use
-  m_manager = std::make_shared<Manager>();
 
   //TODO load recently opened files
 
@@ -30,7 +29,7 @@ MainWindow::MainWindow()
   connect(m_ui->btnOpen, &QPushButton::clicked, this, MainWindow::openButtonPressed);
   connect(m_ui->btnEditor, &QPushButton::clicked, this, MainWindow::editorButtonPressed);
   connect(m_ui->lstRecent, &QListWidget::itemClicked, this, MainWindow::recentFileClicked);
-  connect(this, &MainWindow::openProject, m_manager.get(), &Manager::openProject);
+  connect(this, &MainWindow::openProject, &Creator::openProject);
 } //end MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
@@ -50,7 +49,7 @@ MainWindow::~MainWindow()
 void MainWindow::newButtonPressed()
 {
   //create a NewDialog for the user to create the new project with
-  NewDialog* newDialog= new NewDialog(m_manager, this);
+  NewDialog* newDialog= new NewDialog(this);
   newDialog->setWindowFlags(Qt::Window); //make its own window
   newDialog->show();
 
