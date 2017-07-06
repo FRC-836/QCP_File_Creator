@@ -66,7 +66,6 @@ NewDialog::NewDialog(QWidget* parent)
           this, &NewDialog::locationTextChanged);
   connect(m_ui->cmbProjectType, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &NewDialog::projectTypeChanged);
-  connect(this, &NewDialog::newProject, &Creator::createProject);
 } //end NewDialog::NewDialog(QWidget* parent)
 
 NewDialog::~NewDialog()

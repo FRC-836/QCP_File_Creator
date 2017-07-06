@@ -4,6 +4,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QDir>
+#include <QVector>
 
 #include "ui_MainWindow.h"
 #include "NewDialog.h"
@@ -27,6 +28,7 @@ class MainWindow: public QMainWindow
   private:
     //member variables
     Ui_MainWindow* m_ui; //UI container
+    QVector<Creator*> m_creators; //Holdss all the creators that were spawned
 
     //private functions
     /**
@@ -79,13 +81,8 @@ class MainWindow: public QMainWindow
      * @param item: pointer to the item that was pressed
      */
     void recentFileClicked(QListWidgetItem* item);
-    /**
-     * @brief newProjectChosen
-     * @details Called when a project is created new. Takes the information necessary
-     *          to create the project and passes it to Manager
-     * @param filePath: path where the project should be stored
-     * @param projectName: name of the project
-     */
+
+    void newProjectCreated(const QString& filePath);
 
 }; //end class MainWindow: public QMainWindow
 

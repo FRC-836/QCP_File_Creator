@@ -10,16 +10,9 @@ void Creator::loadProject()
 //--------------------------------------------------
 //constructors
 //--------------------------------------------------
-Creator::Creator(std::unique_ptr<Project> project)
+Creator::Creator(std::unique_ptr<Project> project, bool openInEditor)
 {
   //assign memeber variables
-  if (project == nullptr)
-  {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
-    {
-      std::cout << "INFO: Creator: Creating new project" << std::endl;
-    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
-  } //end  if (project == nullptr)
 
   //setup UI
   m_ui = new Ui_creator();

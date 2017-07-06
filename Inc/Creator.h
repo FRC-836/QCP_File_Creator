@@ -26,7 +26,7 @@ class Creator: public QMainWindow
 
   public:
     //constructors
-    Creator(std::unique_ptr<Project> project = nullptr);
+    Creator(std::unique_ptr<Project> project = nullptr, bool openInEditor = false);
     ~Creator();
 
     //public functions
@@ -52,8 +52,8 @@ class Creator: public QMainWindow
     void projectItemClicked(QTreeWidgetItem* item);
     void constItemClicked(QListWidgetItem* item);
     void createConst(const QcpVariable& value);
-    static void createProject(const QString& filePath);
-    static void openProject(const QString& filePath, bool openInEditor);
+    void createProject(const QString& filePath);
+    void openProject(const QString& filePath, bool openInEditor);
 }; //end class Creator: public QMainWindow
 
 #endif //end ifndef CREATOR_H
