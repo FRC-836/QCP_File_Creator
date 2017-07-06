@@ -12,6 +12,9 @@ void Creator::loadProject()
 //--------------------------------------------------
 Creator::Creator(std::unique_ptr<Project> project, bool openInEditor)
 {
+  Q_UNUSED(project);
+  Q_UNUSED(openInEditor); //TODO implement this ability
+
   //assign memeber variables
 
   //setup UI
@@ -79,7 +82,7 @@ void Creator::constItemClicked(QListWidgetItem* item)
 void Creator::createConst(const QcpVariable& value)
 {
 }
-void Creator::createProject(const QString& filePath)
+void Creator::createProject(const QString& name, const QString& filePath)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
@@ -87,19 +90,9 @@ void Creator::createProject(const QString& filePath)
               << filePath.toStdString() << std::endl;
   }//end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 
-  QFile projectFile(filePath);
-  if (!projectFile.open(QIODevice::Text | QIODevice::ReadWrite))
-  {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
-    {
-      std::cout << "ERROR: Manager: Couldn't create file " << filePath.toStdString()
-                << ". Please ensure the permissions are correct." << std::endl
-                << "Exiting application." << std::endl;
-    }
-    exit(-1);
-  } //end  if (!projectFile.open(QIODevice::Text | QIODevice::ReadWrite))
+  m_project = std::make_unique<Project>(name, filePath);
 }
-void Creator::openProject(const QString& filePath, bool openInEditor)
+void Creator::openProject(const QString& name, const QString& filePath, bool openInEditor)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {

@@ -52,8 +52,8 @@ class Creator: public QMainWindow
     void projectItemClicked(QTreeWidgetItem* item);
     void constItemClicked(QListWidgetItem* item);
     void createConst(const QcpVariable& value);
-    void createProject(const QString& filePath);
-    void openProject(const QString& filePath, bool openInEditor);
+    void createProject(const QString& name, const QString& filePath);
+    void openProject(const QString& name, const QString& filePath, bool openInEditor);
 }; //end class Creator: public QMainWindow
 
 #endif //end ifndef CREATOR_H

@@ -40,6 +40,7 @@ class Project
     QcpFile removeFile(const QString& name);
     void clearFiles();
     QcpFile& at(const QString& name);
+    static QString nameFromPath(const QString& filePath);
 
     //getters
     QString getName() const;

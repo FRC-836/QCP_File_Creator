@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(QCP_File_Creator)
 
+#setup c++14 standard
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set (CMAKE_CXX_EXTENSIONS OFF)
+
 #instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)

@@ -176,6 +176,10 @@ QcpFile& Project::at(const QString& name)
   } //end  if (foundAt == -1)
   return m_files[foundAt];
 }
+QString Project::nameFromPath(const QString& filePath)
+{
+  //TODO implement
+}
 
 //--------------------------------------------------
 //getters

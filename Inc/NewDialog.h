@@ -69,7 +69,7 @@ class NewDialog: public QWidget
      * @details Signals that a new project is to be creates at a given location
      * @param filePath: path where project should be created. contains the projects name
      */
-    void newProject(const QString& filePath); //name is part of the path
+    void newProject(const QString& name, const QString& filePath);
 
   public slots:
     /**

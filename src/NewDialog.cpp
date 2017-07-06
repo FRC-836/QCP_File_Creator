@@ -124,7 +124,7 @@ void NewDialog::createButtonClicked()
     std::cout << "Emitting creation of file at: " << fullPath.toStdString() << std::endl;
   } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 
-  emit newProject(fullPath);
+  emit newProject(m_ui->lneName->text(), fullPath);
   this->close();
 } //end void NewDialog::createButtonClicked()
 void NewDialog::cancelButtonClicked()
