@@ -84,7 +84,7 @@ QVector<QVector<QString>> QcpFile::fileText() const
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "Comment was left blank for " << m_name.toStdString()
+      std::cout << "INFO: QcpFile: Comment was left blank for " << m_name.toStdString()
                 << " file, providing a default one" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     groupTexts.push_back({m_name + " file"});
@@ -109,7 +109,7 @@ bool QcpFile::addGroup(const QcpGroup& toAdd)
     //not found, okay to add
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: Adding group " << toAdd.getName().toStdString() << " to file "
+      std::cout << "INFO: QcpFile: Adding group " << toAdd.getName().toStdString() << " to file "
                 << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_groups.push_back(toAdd);
@@ -120,7 +120,7 @@ bool QcpFile::addGroup(const QcpGroup& toAdd)
     //found, can't add
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR:Can't add group " << toAdd.getName().toStdString() << "to file "
+      std::cout << "ERROR: QcpFile: Can't add group " << toAdd.getName().toStdString() << "to file "
                 << m_name.toStdString() << " because it already exists" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     return false;
@@ -134,7 +134,7 @@ void QcpFile::removeGroup(const QString& toRemoveName)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: removing group " << toRemoveName.toStdString() << " from file "
+      std::cout << "INFO: QcpFile: removing group " << toRemoveName.toStdString() << " from file "
                 << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_groups.erase(m_groups.begin() + foundAt);
@@ -143,7 +143,7 @@ void QcpFile::removeGroup(const QString& toRemoveName)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "WARNING: cannot remove group " << toRemoveName.toStdString()
+      std::cout << "WARNING: QcpFile: cannot remove group " << toRemoveName.toStdString()
                 << " from file " << m_name.toStdString() << " because it doesn't exist"
                 << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
@@ -153,7 +153,7 @@ void QcpFile::clearGroups()
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "INFO: Clearing all groups from file " << m_name.toStdString()
+    std::cout << "INFO: QcpFile: Clearing all groups from file " << m_name.toStdString()
               << std::endl;
   } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   m_groups.clear();
@@ -199,7 +199,7 @@ void QcpFile::setName(const QString& name)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: attempting to set variable " << m_name.toStdString()
+      std::cout << "ERROR: QcpFile: attempting to set variable " << m_name.toStdString()
                 << "'s name to an empty string. Name will remane unchanged" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end if(std::all_of(m_name.toStdString().begin(),m_name.toStdString().end(),isspace))
@@ -246,7 +246,7 @@ QcpGroup& QcpFile::operator[](const QString& name)
     //not found
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << name.toStdString() << " not found in file " << m_name.toStdString()
+      std::cout << "INFO: QcpFile: " << name.toStdString() << " not found in file " << m_name.toStdString()
                 << ", adding it" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_groups.push_back(QcpGroup(name, {}));

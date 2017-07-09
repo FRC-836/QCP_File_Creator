@@ -18,7 +18,7 @@ void QcpGroup::init(const QString& name, const QVector<QcpVariable>& vars,
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "dfault group name being used due to empty name" << std::endl;
+      std::cout << "INFO: QcpGroupp: dfault group name being used due to empty name" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     realName = "Group";
     realName += QString::fromStdString(std::to_string(m_defaultGroupNum));
@@ -85,7 +85,7 @@ QVector<QString> QcpGroup::fileText() const
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "No comment provided for group " << m_name.toStdString()
+      std::cout << "INFO: QcpGroup: No comment provided for group " << m_name.toStdString()
                 << ", provideing default comment" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     varsText.push_back("#" + m_name + " Group Variables\n");
@@ -113,7 +113,7 @@ bool QcpGroup::addVar(const QcpVariable& toAdd)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: adding variable :" << toAdd.getName().toStdString()
+      std::cout << "INFO: QcpGroup: adding variable :" << toAdd.getName().toStdString()
                 << " to group " << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_vars.push_back(toAdd);
@@ -123,7 +123,7 @@ bool QcpGroup::addVar(const QcpVariable& toAdd)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: cannot add variable " << toAdd.getName().toStdString()
+      std::cout << "ERROR: QcpGroup: cannot add variable " << toAdd.getName().toStdString()
                 << " because variable with that name already exists" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     return false;
@@ -136,7 +136,7 @@ void QcpGroup::removeVar(const QString& toRemoveName)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: removing variable " << toRemoveName.toStdString()
+      std::cout << "INFO: QcpGroup: removing variable " << toRemoveName.toStdString()
                 << " from group " << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_vars.erase(m_vars.begin() + foundAt);
@@ -145,7 +145,7 @@ void QcpGroup::removeVar(const QString& toRemoveName)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "WARNING: cannot remove variable " << toRemoveName.toStdString()
+      std::cout << "WARNING: QcpGroup: cannot remove variable " << toRemoveName.toStdString()
                 << " because no variable with that name exists in group "
                 << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
@@ -155,7 +155,7 @@ void QcpGroup::clearVars()
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "Clearing all variables from group " << m_name.toStdString()
+    std::cout << "INFO: QcpGroup: Clearing all variables from group " << m_name.toStdString()
               << std::endl;
   } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   m_vars.clear();
@@ -198,7 +198,7 @@ void QcpGroup::setName(const QString& name)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: attempting to set variable " << m_name.toStdString()
+      std::cout << "ERROR: QcpGroup: attempting to set variable " << m_name.toStdString()
                 << "'s name to an empty string. Name will remane unchanged" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end  else
@@ -233,7 +233,7 @@ QcpVariable& QcpGroup::operator[](const QString& name)
     //not found
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << name.toStdString() << " not found in group " << m_name.toStdString()
+      std::cout << "INFO: QcpGroup: " << name.toStdString() << " not found in group " << m_name.toStdString()
                 << ", adding it" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_vars.push_back(QcpVariable(name));

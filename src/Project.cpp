@@ -17,7 +17,7 @@ void Project::init(const QString& name, const QString& location,
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "Default name being used for Qcp Project because one wasn't provided"
+      std::cout << "INFO: Project: Default name being used for Qcp Project because one wasn't provided"
                 << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     realName = "QcpProject" + QString::fromStdString(std::to_string(m_defaultNameNum));
@@ -35,7 +35,7 @@ void Project::init(const QString& name, const QString& location,
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: Blank locaiton provided to project " << m_name.toStdString()
+      std::cout << "ERROR: Projeect: Blank locaiton provided to project " << m_name.toStdString()
                 << ". File will be saved in " << QDir::homePath().toStdString()
                 << " by default." << std::endl;
     }
@@ -50,7 +50,7 @@ void Project::init(const QString& name, const QString& location,
     {
       if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
       {
-        std::cout << "ERROR: Invalid file location " << location.toStdString()
+        std::cout << "ERROR: Project: Invalid file location " << location.toStdString()
                   << "provided for project " << m_name.toStdString() << "." << std::endl
                   << "Project will be saved in " << QDir::homePath().toStdString()
                   << " instead." << std::endl;
@@ -119,7 +119,7 @@ void Project::addFile(const QcpFile& file)
     //file exists, can't add it again
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: cannot add file " << file.getName().toStdString()
+      std::cout << "ERROR: Project: cannot add file " << file.getName().toStdString()
                 << " to project " << m_name.toStdString() << " because it already exists"
                 << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
@@ -128,7 +128,7 @@ void Project::addFile(const QcpFile& file)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: adding file " << file.getName().toStdString() << " to project "
+      std::cout << "INFO: Project: adding file " << file.getName().toStdString() << " to project "
                 << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_files.push_back(file);
@@ -141,7 +141,7 @@ QcpFile Project::removeFile(const QString& name)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     {
-      std::cout << "INFO: removing file " << m_files[foundAt].getName().toStdString()
+      std::cout << "INFO: Project: removing file " << m_files[foundAt].getName().toStdString()
                 << " from project " << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     m_files.erase(m_files.begin() + foundAt);
@@ -151,7 +151,7 @@ QcpFile Project::removeFile(const QString& name)
     //file not found, inform user if debug level is high enough
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "WARNING: << cannot remove file " << name.toStdString()
+      std::cout << "WARNING: Project: << cannot remove file " << name.toStdString()
                 << "from project " << m_name.toStdString()
                 << " because it doesn't exist." << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
@@ -161,7 +161,7 @@ void Project::clearFiles()
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "INFO: Clearing all files from project " << m_name.toStdString()
+    std::cout << "INFO: Project: Clearing all files from project " << m_name.toStdString()
               << std::endl;
   } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   m_files.clear();
@@ -199,7 +199,7 @@ void Project::setName(const QString& name)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: Attempt to set project " << m_name.toStdString()
+      std::cout << "ERROR: Project: Attempt to set project " << m_name.toStdString()
                 << " to an empty string. Name not being updated" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
@@ -220,7 +220,7 @@ void Project::setLocation(const QString& location)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: Attempt to set project " << m_name.toStdString()
+      std::cout << "ERROR: Project: Attempt to set project " << m_name.toStdString()
                 << "'s locaiton to" << location.toStdString()
                 << " failed because that location doesn't exist" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)

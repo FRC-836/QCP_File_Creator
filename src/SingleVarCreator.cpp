@@ -29,7 +29,7 @@ SingleVarCreator::~SingleVarCreator()
   //debug
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting single var creator" << std::endl;
+    std::cout << "INFO: SingleVarCreator: deleting single var creator" << std::endl;
   }
 } //end SingleVarCreator::~SingleVarCreator()
 

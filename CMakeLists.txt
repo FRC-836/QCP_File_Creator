@@ -29,7 +29,6 @@ set(src src/main.cpp
         src/Project.cpp
         src/QcpFile.cpp
         src/ConstCreator.cpp
-        src/Manager.cpp
         src/CommandOptions.cpp
         src/XmlHelper.cpp
         )
@@ -45,7 +44,6 @@ set(inc Inc/Creator.h
         Inc/Project.h
         Inc/QcpFile.h
         Inc/ConstCreator.h
-        Inc/Manager.h
         Inc/CommandOptions.h
         Inc/XmlHelper.h
         )

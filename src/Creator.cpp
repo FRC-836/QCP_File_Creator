@@ -45,7 +45,7 @@ Creator::~Creator()
   //debug
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting creator" << std::endl;
+    std::cout << "INFO: Creator: deleting creator" << std::endl;
   }
 } //end Creator::~Creator()
 
@@ -86,7 +86,7 @@ void Creator::createProject(const QString& name, const QString& filePath)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "recieving command to create project at: "
+    std::cout << "INFO: Creator: recieving command to create project at: "
               << filePath.toStdString() << std::endl;
   }//end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 
@@ -96,7 +96,7 @@ void Creator::openProject(const QString& filePath, bool openInEditor)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "recieving command to open project at: "
+    std::cout << "INFO: Creator: recieving command to open project at: "
               << filePath.toStdString() << " ";
     if (openInEditor)
     {

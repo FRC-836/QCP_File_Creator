@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "debug level: " << CmdOptions::verbosity << std::endl;
+    std::cout << "INFO: Main: debug level: " << CmdOptions::verbosity << std::endl;
   }
 
   //create and run main window

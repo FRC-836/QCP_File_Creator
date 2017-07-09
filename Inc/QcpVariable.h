@@ -41,9 +41,9 @@ class QcpVariable
       if (!std::all_of(name.toStdString().begin(), name.toStdString().end(),
                        isspace))
       {
-        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+        if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
         {
-          std::cout << "default variable name being used due to empty name" << std::endl;
+          std::cout << "WARNING: QcpVariable: default variable name being used due to empty name" << std::endl;
         } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
         actualName = QString("Var");
         actualName += QString::fromStdString(std::to_string(m_defaultVarNum));
@@ -147,9 +147,9 @@ class QcpVariable
       {
         if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
         {
-          std::cout << "ERROR: Cannot convert " << m_name.toStdString()
+          std::cout << "ERROR: QcpVariable: Cannot convert " << m_name.toStdString()
                     << " to type " << typeid(T).name() << std::endl;
-          std::cout << "Returning a default construction of the type" << std::endl;
+          std::cout << "ERROR: QcpVariable: Returning a default construction of the type" << std::endl;
         } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
         return T();
       } //end  else

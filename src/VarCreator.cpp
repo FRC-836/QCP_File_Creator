@@ -38,7 +38,7 @@ VarCreator::~VarCreator()
   //debug purposes
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting var creator" << std::endl;
+    std::cout << "INFO: VarCreator: deleting var creator" << std::endl;
   }
 } //end VarCreator::~VarCreator()
 

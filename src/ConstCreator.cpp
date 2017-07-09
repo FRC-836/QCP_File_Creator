@@ -61,7 +61,7 @@ ConstCreator::~ConstCreator()
   //debug
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting const creator" << std::endl;
+    std::cout << "INFO: ConstCreator: deleting const creator" << std::endl;
   }
 } //end ConstCreator::~ConstCreator()
 
@@ -75,17 +75,17 @@ void ConstCreator::createClicked()
   //check text sizes to ensure they are nonzero
   if (m_ui->lneName->text().size() == 0)
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "Cannot create a constant with a blank name." << std::endl;
+      std::cout << "ERROR: ConstCreator: Cannot create a constant with a blank name." << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     return;
   } //end  if (m_ui->lneName->size() == 0)
   if (m_ui->lneValue->text().size() == 0)
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "Cannot create a constant with a blank value." << std::endl;
+      std::cout << "ERROR: ConstCreator: Cannot create a constant with a blank value." << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     return;
   } //end  if (m_ui->lneName->size() == 0)
@@ -107,7 +107,7 @@ void ConstCreator::createClicked()
         //value text invalid
         if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
         {
-          std::cout << "ERROR: Value is invalid for the selected type. "
+          std::cout << "ERROR: ConstCreator: Value is invalid for the selected type. "
                     << "Please use only numbers that are seperated by commas."
                     << std::endl;
         } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
@@ -127,7 +127,7 @@ void ConstCreator::createClicked()
       {
         if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
         {
-          std::cout << "ERROR: Value is invalid for the selected type. "
+          std::cout << "ERROR: ConstCreator: Value is invalid for the selected type. "
                     << "Please enter a number for the value." << std::endl;
         } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
         return;
@@ -139,7 +139,7 @@ void ConstCreator::createClicked()
   //all checks passed
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "ConstCreator: emitting newConstant singal" << std::endl;
+    std::cout << "INFO: ConstCreator: emitting newConstant singal" << std::endl;
   } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   emit newConstant(constant);
   //close(); TEST uncomment when testing is done
@@ -157,7 +157,7 @@ void ConstCreator::nameChanged(const QString& newText)
     {
       if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
       {
-        std::cout << "WARNING: Only alphanumeric characters are allowed in constant names."
+        std::cout << "WARNING: ConstCreator: Only alphanumeric characters are allowed in constant names."
                   << " Not updating constant name." << std::endl;
       } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
       QString tempText = m_ui->lneName->text();

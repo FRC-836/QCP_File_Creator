@@ -74,7 +74,7 @@ NewDialog::~NewDialog()
 
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting new dialog" << std::endl;
+    std::cout << "INFO: NewDialog: deleting new dialog" << std::endl;
   }
 } //end NewDialog::~NewDialog()
 
@@ -100,17 +100,17 @@ void NewDialog::createButtonClicked()
   //make sure both location and name are valid
   if (!isGoodPath(m_ui->lneLocation->text()))
   {
-    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "empty path can't be used" << std::endl;
+      std::cout << "ERROR: NewDialog: empty path can't be used" << std::endl;
     } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
     return;
   } //end  if (!isGoodPath(m_ui->lneLocation->text()))
   else if (m_ui->lneName->text().size() == 0)
   {
-    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "can't use an empty name" << std::endl;
+      std::cout << "ERROR: NewDialog: can't use an empty name" << std::endl;
     } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
     return;
   } //end  else if (m_ui->lneName->text().size() == 0)
@@ -121,7 +121,7 @@ void NewDialog::createButtonClicked()
 
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "Emitting creation of file at: " << fullPath.toStdString() << std::endl;
+    std::cout << "INFO: NewDialog: Emitting creation of file at: " << fullPath.toStdString() << std::endl;
   } //end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 
   emit newProject(m_ui->lneName->text(), fullPath);
@@ -156,9 +156,9 @@ void NewDialog::locationTextChanged()
     m_ui->lneLocation->setText("");
 
     //TODO replace with dialog box
-    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "clearing text because its not a good path" << std::endl;
+      std::cout << "ERROR: NewDialog: clearing text because its not a good path" << std::endl;
     }
   } //end  if (!isGoodPath(newText))
 } //end void NewDialog::locationTextChanged(const QString& newText)

@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
   //debug ipurposes
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
-    std::cout << "deleting main window" << std::endl;
+    std::cout << "INFO: MainWindow: deleting main window" << std::endl;
   }
 } //end MainWindow::~MainWindow()
 

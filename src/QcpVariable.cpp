@@ -65,7 +65,7 @@ void QcpVariable::errorConverting() const
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   {
-    std::cout << "ERROR: typing information for variable " << m_name.toStdString()
+    std::cout << "ERROR: QcpVariable: typing information for variable " << m_name.toStdString()
               << " has been corrupted, can't convert to file text" << std::endl
               << "Returning blank string instead of file text" << std::endl;
   } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
@@ -162,7 +162,7 @@ void QcpVariable::setName(const QString& name)
   {
     if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
     {
-      std::cout << "ERROR: attempting to set variable " << m_name.toStdString()
+      std::cout << "ERROR: QcpVariable: attempting to set variable " << m_name.toStdString()
                 << "'s name to an empty string. Name will remane unchanged" << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
   } //end  else
