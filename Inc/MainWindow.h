@@ -82,7 +82,7 @@ class MainWindow: public QMainWindow
      */
     void recentFileClicked(QListWidgetItem* item);
 
-    void newProjectCreated(const QString& filePath);
+    void newProjectCreated(const QString& name, const QString& filePath);
 
 }; //end class MainWindow: public QMainWindow
 

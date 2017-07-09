@@ -90,9 +90,9 @@ void Creator::createProject(const QString& name, const QString& filePath)
               << filePath.toStdString() << std::endl;
   }//end  if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
 
-  m_project = std::make_unique<Project>(name, filePath);
+  m_project = std::make_shared<Project>(name, filePath);
 }
-void Creator::openProject(const QString& name, const QString& filePath, bool openInEditor)
+void Creator::openProject(const QString& filePath, bool openInEditor)
 {
   if (CmdOptions::verbosity == CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {

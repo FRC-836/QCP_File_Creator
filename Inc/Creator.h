@@ -19,7 +19,7 @@ class Creator: public QMainWindow
   private:
     //member variables
     Ui_creator* m_ui;
-    std::unique_ptr<Project> m_project;
+    std::shared_ptr<Project> m_project;
 
     //private functions
     void loadProject();
@@ -53,7 +53,7 @@ class Creator: public QMainWindow
     void constItemClicked(QListWidgetItem* item);
     void createConst(const QcpVariable& value);
     void createProject(const QString& name, const QString& filePath);
-    void openProject(const QString& name, const QString& filePath, bool openInEditor);
+    void openProject(const QString& filePath, bool openInEditor);
 }; //end class Creator: public QMainWindow
 
 #endif //end ifndef CREATOR_H

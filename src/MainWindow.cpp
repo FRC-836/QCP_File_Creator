@@ -68,11 +68,10 @@ void MainWindow::openButtonPressed()
   }
 
   QString filePath = getOpenPath();
-  QString name = Project::nameFromPath(filePath);
 
   Creator* creator = new Creator();
   m_creators.push_back(creator);
-  creator->openProject(name, filePath, false);
+  creator->openProject(filePath, false);
   creator->show();
 
   this->hide();
@@ -85,11 +84,10 @@ void MainWindow::editorButtonPressed()
   }
 
   QString filePath = getOpenPath();
-  QString name = Project::nameFromPath(filePath);
 
   Creator* creator = new Creator();
   m_creators.push_back(creator);
-  creator->openProject(name, filePath, true);
+  creator->openProject(filePath, true);
   creator->show();
 
   this->hide();
@@ -102,21 +100,18 @@ void MainWindow::recentFileClicked(QListWidgetItem* item)
   }
 
   QString filePath = item->text();
-  QString name = Project::nameFromPath(filePath);
 
   Creator* creator = new Creator();
   m_creators.push_back(creator);
-  creator->openProject(name, filePath, false);
+  creator->openProject(filePath, false);
   creator->show();
 } //end void MainWindow::recentFileClicked(QListWidgetItem* item)
-void MainWindow::newProjectCreated(const QString& filePath)
+void MainWindow::newProjectCreated(const QString& name, const QString& filePath)
 {
   if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
   {
     std::cout << "INFO: MainWindow: Recieved new project creation call" << std::endl;
   }
-
-  QString name = Project::nameFromPath(filePath);
 
   Creator* creator = new Creator();
   m_creators.push_back(creator);
