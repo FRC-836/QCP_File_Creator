@@ -47,10 +47,10 @@ ConstCreator::ConstCreator(Creator* caller, QWidget* parent)
 
   //connections
   connect(this, &ConstCreator::newConstant, caller, &Creator::createConst);
-  connect(m_ui->btnCreate, &QPushButton::clicked, this, createClicked);
-  connect(m_ui->btnCancel, &QPushButton::clicked, this, cancelClicked);
-  connect(m_ui->lneName, &QLineEdit::textEdited, this, nameChanged);
-  connect(m_ui->lneValue, &QLineEdit::textEdited, this, valueChanged);
+  connect(m_ui->btnCreate, &QPushButton::clicked, this, &ConstCreator::createClicked);
+  connect(m_ui->btnCancel, &QPushButton::clicked, this, &ConstCreator::cancelClicked);
+  connect(m_ui->lneName, &QLineEdit::textEdited, this, &ConstCreator::nameChanged);
+  connect(m_ui->lneValue, &QLineEdit::textEdited, this, &ConstCreator::valueChanged);
   connect(m_ui->cmbType, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &ConstCreator::typeChanged);
 } //end ConstCreator::ConstCreator(QWidget* parent)

@@ -16,8 +16,6 @@ set(CMAKE_AUTOUIC_OPTIONS -o Inc/)
 #Find the QtWidgets library
 find_package(Qt5Widgets)
 
-include_directories(Inc forms)
-
 set(src src/main.cpp
         src/Creator.cpp
         src/Editor.cpp
@@ -61,7 +59,8 @@ set(forms Inc/Creator.ui
           )
 
 #setup inc as a valid include directory
-include_directories(${CMAKE_SOURCE_DIR}/inc)
+include_directories(${CMAKE_SOURCE_DIR}/Inc
+                    ${CMAKE_CURRENT_BINARY_DIR})
 
 #create executable
 add_executable(QCP_File_Creator ${src} ${inc} ${forms})

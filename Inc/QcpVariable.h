@@ -33,7 +33,8 @@ class QcpVariable
     static int m_defaultVarNum;
 
     //private functions
-    template <typename T> init(const QString& name, Type type, T value)
+    template <typename T>
+    void init(const QString& name, Type type, T value)
     {
       QString actualName; //handles the case when name is not provided
       //handle blank names
