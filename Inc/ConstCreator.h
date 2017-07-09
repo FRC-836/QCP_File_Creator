@@ -1,5 +1,5 @@
-#ifndef CONST_CREATOR_H
-#define CONST_CREATOR_H
+#ifndef QCP_FILE_CREATOR_CONST_CREATOR_H
+#define QCP_FILE_CREATOR_CONST_CREATOR_H
 
 #include "ui_ConstCreatorDialog.h"
 
