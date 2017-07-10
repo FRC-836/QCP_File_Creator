@@ -1,6 +1,6 @@
-<QcpProject>
+<QcpProject version="1.0">
   <!--Overall project metadata-->
-  <Name>TestProject</Name>
+  <Name>2017_QCP_Project</Name>
 
   <!--Directory under which all project files are stored-->
   <ProjectRootDirectory>

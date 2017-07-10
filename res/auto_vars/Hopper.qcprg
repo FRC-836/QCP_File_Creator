@@ -1,4 +1,4 @@
-<QcpGroup>
+<QcpGroup version="1.0">
   <Name>Hopper</Name>
   <Comment>Hopper auto values</Comment>
   <DefaultNumber>0</DefaultNumber>

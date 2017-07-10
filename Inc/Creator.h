@@ -10,8 +10,6 @@
 #include <iostream>
 #include <memory>
 
-#include "Manager.h"
-
 class Creator: public QMainWindow
 {
     Q_OBJECT

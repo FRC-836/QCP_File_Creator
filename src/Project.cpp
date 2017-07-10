@@ -15,12 +15,13 @@ void Project::init(const QString& name, const QString& location,
   QString realName;
   if (std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   {
-    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
     {
-      std::cout << "INFO: Project: Default name being used for Qcp Project because one wasn't provided"
+      std::cout << "WARNING: Project: Default name being used for Qcp Project because one wasn't provided"
                 << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
     realName = "QcpProject" + QString::fromStdString(std::to_string(m_defaultNameNum));
+    m_defaultNameNum++;
   } //end  if (std::all_of(name.toStdString().begin(), name.toStdString().end(), isspace))
   else
   {
@@ -51,8 +52,8 @@ void Project::init(const QString& name, const QString& location,
       if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
       {
         std::cout << "ERROR: Project: Invalid file location " << location.toStdString()
-                  << "provided for project " << m_name.toStdString() << "." << std::endl
-                  << "Project will be saved in " << QDir::homePath().toStdString()
+                  << " provided for project " << m_name.toStdString() << "." << std::endl
+                  << "\tProject will be saved in " << QDir::homePath().toStdString()
                   << " instead." << std::endl;
       }
     } //end  else
