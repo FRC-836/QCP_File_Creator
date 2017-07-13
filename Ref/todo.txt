@@ -29,3 +29,8 @@ add ability to change the default number for naming on project load
   withouth this between working on projects the default number will reset back to 1, allowing for multiple "name_1" in a file
 add ability to turn off name prepending
   this should be done by having a specific group name that way name collision prevention still works
+  
+XML HELPER CLASS
+=================================================================================================
+switch xml parsing to a visitor paradigm
+create classes for each tag (maybe) that take in a parent as well as process the info that they are supposed to

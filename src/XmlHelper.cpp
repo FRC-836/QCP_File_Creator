@@ -6,6 +6,7 @@ std::unique_ptr<XmlHelper::ProjectData_t> XmlHelper::parseProjectXmlOne()
   std::unique_ptr<ProjectData_t> data = std::make_unique<ProjectData_t>();
   QStack<Project::Tags::Tags> tags;
   bool processAttributes = false;
+  bool processChars = false;
 
   while (!m_reader.atEnd())
   {
@@ -43,6 +44,7 @@ std::unique_ptr<XmlHelper::ProjectData_t> XmlHelper::parseProjectXmlOne()
 
       case QXmlStreamReader::Characters:
       {
+        processChars = true;
         break;
       } //end  case QXmlStreamReader::Characters:
 
@@ -61,15 +63,39 @@ std::unique_ptr<XmlHelper::ProjectData_t> XmlHelper::parseProjectXmlOne()
       {
         case Project::Tags::CONSTANT:
         {
+          //get attributes
           break;
         } //end  case Project::Tags::CONSTANT:
         case Project::Tags::ARRAY_CONSTANT:
         {
+          //get attributes
+          auto attribs = m_reader.attributes();
+
+          //make sure all the required attributes exist
+          if (!attribs.hasAttribute(Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::NAME]))
+          {
+            m_reader.raiseError("Required attribute \"" +
+                                Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::NAME] +
+                                " not found at line: " +
+                                QString::number(m_reader.lineNumber()));
+            break;
+          } //end  if (!attribs.hasAttribute(Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::NAME]))
+          if (!attribs.hasAttribute(Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::TYPE]))
+          {
+            m_reader.raiseError("Required attribute \"" +
+                                Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::TYPE] +
+                                " not found at line: " +
+                                QString::number(m_reader.lineNumber()));
+            break;
+          } //end  if (!attribs.hasAttribute(Project::ArrayConstant::AttrStr[Project::ArrayConstant::Attributes::TYPE]))
+
+          std::get<static_cast<int>(ProjectTuple::CONSTANT_LIST)>(*data);
           break;
         } //end  case Project::Tags::ARRAY_CONSTANT:
         case Project::Tags::QCP_FILE:
         {
           QString fileLocation = m_reader.attributes().value(Project::QcpFile::AttrStr[Project::QcpFile::Attributes::Location]).toString();
+          //figure out which version of QcpFile XML it is then call appropriate parser
           break;
         } //end  case Project::Tags::QCP_FILE:
         default:
@@ -77,6 +103,16 @@ std::unique_ptr<XmlHelper::ProjectData_t> XmlHelper::parseProjectXmlOne()
           //the remaining tags have no attributes to process
           break;
         } //end  default:
+      } //end  switch(tags.top())
+    } //end  if (processAttributes)
+
+    //handle characters that need to be processed
+    if (processChars)
+    {
+      processChars = false;
+      switch(tags.top())
+      {
+        case
       }
     }
   } //end  while (!m_reader.atEnd())
