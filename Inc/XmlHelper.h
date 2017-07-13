@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "QcpVariable.h"
+
 namespace Project
 {
   namespace Tags
@@ -234,60 +235,133 @@ namespace Gruop
   } //end  namespace Variable
 } //end namespace Gruop
 
-class XmlHelper
+using VariableList_t = QVector<QcpVariable>; //acts as both variable and constant lists
+
+//<group name, group comment, default number, variable list>
+using GroupData_t = std::tuple<QString, QString, int, VariableList_t>;
+enum class GroupTuple
+{
+  NAME,
+  COMMENT,
+  DEFAULT_NUMBER,
+  VARIABLE_LIST
+}; //end  enum class GroupTuple
+using GroupList_t = QVector<GroupData_t>;
+
+//<file name, export location, file comment, default number, group list>
+using FileData_t = std::tuple<QString, QString, QString, int, GroupList_t>;
+enum class FileTuple
+{
+  NAME,
+  EXPORT_LOCATION,
+  COMMENT,
+  DEFAULT_NUMBER,
+  GROUP_LIST
+}; //end  enum class FileTuple
+using FileList_t = QVector<FileData_t>;
+
+//<project name, project directory, constant list, file list>
+using ProjectData_t = std::tuple<QString, QString, VariableList_t, FileList_t>;
+enum class ProjectTuple
+{
+  NAME,
+  ROOT_DIRECTORY,
+  CONSTANT_LIST,
+  FILE_LIST
+};
+
+class Visitor
 {
   public:
-    //type alliases
-    using VariableList_t = QVector<QcpVariable>; //acts as both variable and constant lists
-
-    //<group name, group comment, default number, variable list>
-    using GroupData_t = std::tuple<QString, QString, int, VariableList_t>;
-    enum class GroupTuple
-    {
-      NAME,
-      COMMENT,
-      DEFAULT_NUMBER,
-      VARIABLE_LIST
-    }; //end  enum class GroupTuple
-    using GroupList_t = QVector<GroupData_t>;
-
-    //<file name, export location, file comment, default number, group list>
-    using FileData_t = std::tuple<QString, QString, QString, int, GroupList_t>;
-    enum class FileTuple
-    {
-      NAME,
-      EXPORT_LOCATION,
-      COMMENT,
-      DEFAULT_NUMBER,
-      GROUP_LIST
-    }; //end  enum class FileTuple
-    using FileList_t = QVector<FileData_t>;
-
-    //<project name, project directory, constant list, file list>
-    using ProjectData_t = std::tuple<QString, QString, VariableList_t, FileList_t>;
-    enum class ProjectTuple
-    {
-      NAME,
-      ROOT_DIRECTORY,
-      CONSTANT_LIST,
-      FILE_LIST
-    };
-
-  private:
-    //member variables
-    QXmlStreamReader m_reader;
-
-    //private functions
-    std::unique_ptr<ProjectData_t> parseProjectXmlOne(); //version 1.0 files
-    std::unique_ptr<FileData_t> parseFileXmlOne(); //version 1.0 files
-    std::unique_ptr<GroupData_t> parseGroupXmlOne(); //version 1.0 files
-
-  public:
     //constructors
-    XmlHelper();
+    virtual ~Visitor();
 
     //public functions
-    std::unique_ptr<ProjectData_t> parseXml(const QString& projectLocation);
+    virtual void accept(std::unique_ptr<Visitor> nextElement) = 0;
+};
+
+//beggining file parsers
+class QcpProjectVisitor : public Visitor
+{
+  public:
+    //constructors
+    QcpProjectVisitor(ProjectData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~QcpProjectVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+class QcpFileVisitor : public Visitor
+{
+  public:
+    //constructors
+    QcpFileVisitor(FileData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~QcpFileVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+class QcpGroupVisitor : public Visitor
+{
+  public:
+    //constructors
+    QcpGroupVisitor(GroupData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~QcpGroupVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+template <typename T>
+class CharactersVisitor : public Visitor
+{
+  public:
+    //constructors
+    CharactersVisitor(T& characters, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~CharactersVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+template <typename T>
+class ListVisitor : public Visitor
+{
+  public:
+    //constructors
+    ListVisitor(QVector<T>& list, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~ListVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+class VariableVisitor : public Visitor
+{
+  public:
+    //constructors
+    VariableVisitor(QcpVariable& variable, std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual ~VariableVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+class QcPfileCallVisitor : public Visitor
+{
+  public:
+    //constructors
+    QcPfileCallVisitor(std::unique_ptr<QXmlStreamReader> nextElement);
+    virtual ~QcPfileCallVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+};
+class QcpGroupCallVisitor : public Visitor
+{
+  public:
+    //constructors
+    QcpGroupCallVisitor(std::unique_ptr<QXmlStreamReader> nextElement);
+    virtual ~QcpGroupCallVisitor();
+
+    //public functions
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
 };
 
 #endif
