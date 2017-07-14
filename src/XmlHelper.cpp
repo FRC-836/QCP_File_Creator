@@ -24,7 +24,7 @@ QcpFileVisitor::QcpFileVisitor(FileData_t& data)
 void QcpFileVisitor::accept(std::unique_ptr<Visitor> nextElement)
 {
 }
-bool QcpFileVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader>)
+bool QcpFileVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
 }
 
@@ -38,7 +38,7 @@ QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data)
 void QcpGroupVisitor::accept(std::unique_ptr<Visitor> nextElement)
 {
 }
-bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader>)
+bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
 }
 
@@ -52,7 +52,7 @@ VariableVisitor::VariableVisitor(QcpVariable& variable)
 void VariableVisitor::accept(std::unique_ptr<Visitor> nextElement)
 {
 }
-bool VariableVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader>)
+bool VariableVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
 }
 
