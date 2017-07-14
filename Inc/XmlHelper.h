@@ -274,94 +274,130 @@ class Visitor
 {
   public:
     //constructors
-    virtual ~Visitor();
+    virtual ~Visitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement) = 0;
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
 };
 
-//beggining file parsers
+//top level visitors
 class QcpProjectVisitor : public Visitor
 {
   public:
+    //member variables
+    ProjectData_t& m_data;
+
     //constructors
-    QcpProjectVisitor(ProjectData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~QcpProjectVisitor();
+    QcpProjectVisitor(ProjectData_t& data);
+    virtual ~QcpProjectVisitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpFileVisitor : public Visitor
 {
   public:
+    //member variables
+    FileData_t& m_data;
+
     //constructors
-    QcpFileVisitor(FileData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~QcpFileVisitor();
+    QcpFileVisitor(FileData_t& data);
+    virtual ~QcpFileVisitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpGroupVisitor : public Visitor
 {
   public:
+    //member variables
+    GroupData_t& m_data;
+
     //constructors
-    QcpGroupVisitor(GroupData_t& data, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~QcpGroupVisitor();
+    QcpGroupVisitor(GroupData_t& data);
+    virtual ~QcpGroupVisitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
+
 template <typename T>
 class CharactersVisitor : public Visitor
 {
   public:
+    //member variables
+    T& m_characters;
+
     //constructors
-    CharactersVisitor(T& characters, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~CharactersVisitor();
+    CharactersVisitor(T& characters)
+      : m_characters(characters)
+    {
+    }
+    virtual ~CharactersVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual void accept(std::unique_ptr<Visitor> nextElement)
+    {
+    }
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+    {
+    }
 };
+
 template <typename T>
 class ListVisitor : public Visitor
 {
   public:
+    //member variables
+    QVector<T>& m_list;
+
     //constructors
-    ListVisitor(QVector<T>& list, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~ListVisitor();
+    ListVisitor(QVector<T>& list)
+      : m_list(list)
+    {
+    }
+    virtual ~ListVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual void accept(std::unique_ptr<Visitor> nextElement)
+    {
+    }
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+    {
+    }
 };
+
 class VariableVisitor : public Visitor
 {
   public:
+    //member variables
+    QcpVariable& m_variable;
+
     //constructors
-    VariableVisitor(QcpVariable& variable, std::unique_ptr<QXmlStreamReader> xmlReader);
-    virtual ~VariableVisitor();
+    VariableVisitor(QcpVariable& variable);
+    virtual ~VariableVisitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
-class QcPfileCallVisitor : public Visitor
+
+class CallVisitor: public Visitor
 {
   public:
+    //member variables
+    std::unique_ptr<Visitor> m_newHandler;
+
     //constructors
-    QcPfileCallVisitor(std::unique_ptr<QXmlStreamReader> nextElement);
-    virtual ~QcPfileCallVisitor();
+    CallVisitor(std::unique_ptr<Visitor> newHandler);
+    virtual ~CallVisitor() = default;
 
     //public functions
     virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
-class QcpGroupCallVisitor : public Visitor
-{
-  public:
-    //constructors
-    QcpGroupCallVisitor(std::unique_ptr<QXmlStreamReader> nextElement);
-    virtual ~QcpGroupCallVisitor();
-
-    //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
-};
-
 #endif
