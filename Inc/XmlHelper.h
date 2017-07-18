@@ -273,12 +273,18 @@ enum class ProjectTuple
 class Visitor
 {
   public:
+    //member variables
+    QString version;
+
     //constructors
     virtual ~Visitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement) = 0;
+    virtual void accept(std::unique_ptr<Visitor> nextElement)
+    {
+    }
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
+    virtual bool hasError();
 };
 
 //top level visitors

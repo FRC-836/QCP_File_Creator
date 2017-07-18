@@ -12,6 +12,37 @@ void QcpProjectVisitor::accept(std::unique_ptr<Visitor> nextElement)
 }
 bool QcpProjectVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
+  if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_PROJECT])
+  {
+    auto attribs = xmlReader->attributes();
+    if (!attribs.hasAttribute(Project::QcpProject::AttrStr[Project::QcpProject::Attributes::VERSION]))
+    {
+      xmlReader->raiseError("Version attribute not found " + QString::number(xmlReader->lineNumber()));
+      return false;
+    }
+    return true;
+  } //end  if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_PROJECT])
+  else
+  {
+    if (xmlReader->name() == Project::TagsStr[Project::Tags::NAME])
+    {
+      QString name;
+      std::unique_ptr<Visitor> chars =
+          std::make_unique<CharactersVisitor<QString>>(name);
+      accept(std::move(chars));
+      std::get<static_cast<int>(ProjectTuple::NAME)>(m_data);
+    }
+    else if (xmlReader->name() == Project::TagsStr[Project::Tags::PROJECT_ROOT_DIRECTORY])
+    {
+    }
+    else if (xmlReader->name() == Project::TagsStr[Project::Tags::CONSTANT_LIST])
+    {
+    }
+    else if (xmlReader->name() == Project::TagsStr[Project::Tags::FILE_LIST])
+    {
+    }
+    return false;
+  } //end  else
 }
 
 //--------------------------------------------------
