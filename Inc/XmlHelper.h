@@ -391,19 +391,4 @@ class VariableVisitor : public Visitor
     virtual void accept(std::unique_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
-
-class CallVisitor: public Visitor
-{
-  public:
-    //member variables
-    std::unique_ptr<Visitor> m_newHandler;
-
-    //constructors
-    CallVisitor(std::unique_ptr<Visitor> newHandler);
-    virtual ~CallVisitor() = default;
-
-    //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
-};
 #endif
