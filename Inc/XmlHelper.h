@@ -284,7 +284,9 @@ class Visitor
     {
     }
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
-    virtual bool hasError();
+    virtual bool hasError()
+    {
+    }
 };
 
 //top level visitors
@@ -346,9 +348,6 @@ class CharactersVisitor : public Visitor
     virtual ~CharactersVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement)
-    {
-    }
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
     {
     }
@@ -369,9 +368,6 @@ class ListVisitor : public Visitor
     virtual ~ListVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement)
-    {
-    }
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
     {
     }
