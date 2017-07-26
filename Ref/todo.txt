@@ -8,6 +8,8 @@ Go back through the following files and add ALL_INFO worth printouts
   MainWindow
 go back through and add deletion of copy and move ctors and assignment operators
 Add Type:From qualifiers to all outputs
+Change all error outputing to cout
+  cout should be done how it was done in LAFFS_Monitor
 
 NEW DIALOG
 =================================================================================================

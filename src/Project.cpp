@@ -145,7 +145,7 @@ QcpFile Project::removeFile(const QString& name)
       std::cout << "INFO: Project: removing file " << m_files[foundAt].getName().toStdString()
                 << " from project " << m_name.toStdString() << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ALL_INFO)
-    m_files.erase(m_files.begin() + foundAt);
+    return *m_files.erase(m_files.begin() + foundAt);
   } //end  if (foundAt != -1)
   else
   {
@@ -156,6 +156,7 @@ QcpFile Project::removeFile(const QString& name)
                 << "from project " << m_name.toStdString()
                 << " because it doesn't exist." << std::endl;
     } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_AND_WARNINGS)
+    return QcpFile();
   } //end  else
 }
 void Project::clearFiles()

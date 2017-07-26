@@ -123,6 +123,7 @@ class QcpVariable
       //TODO figure out a way to ensure type is correct for value, may be impossible
       m_type = newType;
       m_value = QVariant::fromValue(newValue);
+      return true; //TODO implement actual return value
     }
 
     //getters

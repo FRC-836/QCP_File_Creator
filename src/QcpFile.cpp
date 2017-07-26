@@ -99,6 +99,8 @@ QVector<QVector<QString>> QcpFile::fileText() const
   {
     groupTexts.push_back(group.fileText());
   } //end  for (QcpGroup group : m_groups)
+
+  return groupTexts;
 }
 bool QcpFile::addGroup(const QcpGroup& toAdd)
 {

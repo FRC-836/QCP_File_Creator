@@ -26,7 +26,8 @@ QcpVariable::Type QcpVariable::strToType(const std::string& toConvert)
 }
 std::ostream& operator<<(std::ostream& os, const QcpVariable::Type& type)
 {
-  std::cout << QcpVariable::typeStr[static_cast<int>(type)];
+  os << QcpVariable::typeStr[static_cast<int>(type)];
+  return os;
 }
 
 //--------------------------------------------------
@@ -176,14 +177,17 @@ QcpVariable& QcpVariable::operator=(const QcpVariable& toCopy)
   m_name = toCopy.m_name;
   m_value = toCopy.m_value;
   m_type = toCopy.m_type;
+  return *this;
 } //end QcpVariable& QcpVariable::operator=(const QcpVariable& toCopy)
 QcpVariable& QcpVariable::operator=(double value)
 {
   m_type = Type::DOUBLE;
   m_value = value;
+  return *this;
 } //end QcpVariable& QcpVariable::operator=(double value)
 QcpVariable& QcpVariable::operator=(const QVector<double>& value)
 {
   m_type = Type::DOUBLE_ARRAY;
   m_value = QVariant::fromValue(value);
+  return *this;
 } //end QcpVariable& QcpVariable::operator=(const QVector<double>& value)
