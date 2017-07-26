@@ -286,6 +286,8 @@ class Visitor
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
     virtual bool hasError()
     {
+      //TODO implement
+      return false;
     }
 };
 
@@ -301,7 +303,6 @@ class QcpProjectVisitor : public Visitor
     virtual ~QcpProjectVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpFileVisitor : public Visitor
@@ -315,7 +316,6 @@ class QcpFileVisitor : public Visitor
     virtual ~QcpFileVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpGroupVisitor : public Visitor
@@ -329,7 +329,6 @@ class QcpGroupVisitor : public Visitor
     virtual ~QcpGroupVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 
@@ -350,6 +349,8 @@ class CharactersVisitor : public Visitor
     //public functions
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
     {
+      //TODO implement
+      return false;
     }
 };
 
@@ -370,6 +371,8 @@ class ListVisitor : public Visitor
     //public functions
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
     {
+      //TODO implement
+      return false;
     }
 };
 
@@ -384,7 +387,6 @@ class VariableVisitor : public Visitor
     virtual ~VariableVisitor() = default;
 
     //public functions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 #endif

@@ -87,6 +87,8 @@ QcpFileVisitor::QcpFileVisitor(FileData_t& data)
 }
 bool QcpFileVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
+  //TODO implement
+  return false;
 }
 
 //--------------------------------------------------
@@ -98,6 +100,8 @@ QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data)
 }
 bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
+  //TODO implement
+  return false;
 }
 
 //--------------------------------------------------
@@ -109,4 +113,6 @@ VariableVisitor::VariableVisitor(QcpVariable& variable)
 }
 bool VariableVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
+  //TODO implement
+  return false;
 }
