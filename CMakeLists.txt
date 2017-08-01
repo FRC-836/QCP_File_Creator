@@ -16,6 +16,26 @@ set(CMAKE_AUTOUIC_OPTIONS -o Inc/)
 #Find the QtWidgets library
 find_package(Qt5Widgets)
 
+#configure output directories
+if(WIN32)
+  if(CMAKE_CL_64)
+    set(ARCH "64")
+  else(CMAKE_CL_64)
+    set(ARCH "32")
+  endif(CMAKE_CL_64)
+else(WIN32)
+  string(REGEX MATCH ".*[86|32]$" matches "${CMAKE_SYSTEM_PROCESSOR}")
+  if(matches)
+    set(ARCH "32")
+  else(matches)
+    set(ARCH "64")
+  endif(matches)
+endif(WIN32)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_SYSTEM_NAME}${ARCH}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_SYSTEM_NAME}${ARCH}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_SYSTEM_NAME}${ARCH}/lib)
+
 set(src src/main.cpp
         src/Creator.cpp
         src/Editor.cpp

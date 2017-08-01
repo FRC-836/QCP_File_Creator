@@ -3,16 +3,16 @@
 //--------------------------------------------------
 //enum related stuff
 //--------------------------------------------------
-const QVector<std::string> QcpVariable::typeStr
+const QStringList QcpVariable::typeStr
 {
   "Double",
   "Array of Doubles"
 };
-std::string QcpVariable::typeToStr(Type toConvert)
+QString QcpVariable::typeToStr(Type toConvert)
 {
   return typeStr[static_cast<int>(toConvert)];
 }
-QcpVariable::Type QcpVariable::strToType(const std::string& toConvert)
+QcpVariable::Type QcpVariable::strToType(const QString& toConvert)
 {
   auto foundAt = std::find(typeStr.begin(), typeStr.end(), toConvert);
   if (foundAt != typeStr.end())
@@ -21,12 +21,13 @@ QcpVariable::Type QcpVariable::strToType(const std::string& toConvert)
   } //end  if (foundAt != typeStr.end())
   else
   {
-    throw std::out_of_range("No type " + toConvert + " is supported by this application");
+    throw std::out_of_range("No type " + toConvert.toStdString() + 
+                            " is supported by this application");
   } //end  else
 }
 std::ostream& operator<<(std::ostream& os, const QcpVariable::Type& type)
 {
-  os << QcpVariable::typeStr[static_cast<int>(type)];
+  os << QcpVariable::typeStr[static_cast<int>(type)].toStdString();
   return os;
 }
 

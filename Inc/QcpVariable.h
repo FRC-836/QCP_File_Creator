@@ -21,9 +21,9 @@ class QcpVariable
       DOUBLE,
       DOUBLE_ARRAY
     };
-    static const QVector<std::string> typeStr;
-    static std::string typeToStr(Type toConvert);
-    static Type strToType(const std::string& toConvert);
+    static const QStringList typeStr;
+    static QString typeToStr(Type toConvert);
+    static Type strToType(const QString& toConvert);
 
   private:
     //member variables

@@ -159,7 +159,7 @@ namespace File
   } //end  namespace QcpGroup
 } //end namespace File
 
-namespace Gruop
+namespace Group
 {
   namespace Tags
   {
@@ -270,25 +270,22 @@ enum class ProjectTuple
   FILE_LIST
 };
 
+//TODO figure out how to add single xmlStreamReader on doc accept
 class Visitor
 {
   public:
     //member variables
-    QString version;
+    QString version = "";
 
     //constructors
     virtual ~Visitor() = default;
 
-    //public functions
+    //public funcions
     virtual void accept(std::unique_ptr<Visitor> nextElement)
     {
+      //TODO implement
     }
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
-    virtual bool hasError()
-    {
-      //TODO implement
-      return false;
-    }
 };
 
 //top level visitors
@@ -340,8 +337,8 @@ class CharactersVisitor : public Visitor
     T& m_characters;
 
     //constructors
-    CharactersVisitor(T& characters)
-      : m_characters(characters)
+    CharactersVisitor(T& characters) :
+      m_characters(characters)
     {
     }
     virtual ~CharactersVisitor() = default;
@@ -360,10 +357,12 @@ class ListVisitor : public Visitor
   public:
     //member variables
     QVector<T>& m_list;
-
+    std::unique_ptr<Visitor> m_handler;
+    
     //constructors
-    ListVisitor(QVector<T>& list)
-      : m_list(list)
+    ListVisitor(QVector<T>& list, std::unique_ptr<Visitor> handler) :
+      m_list(list),
+      m_handler(handler)
     {
     }
     virtual ~ListVisitor() = default;
@@ -381,6 +380,7 @@ class VariableVisitor : public Visitor
   public:
     //member variables
     QcpVariable& m_variable;
+    QcpVariable::Type m_type;
 
     //constructors
     VariableVisitor(QcpVariable& variable);
@@ -388,5 +388,28 @@ class VariableVisitor : public Visitor
 
     //public functions
     virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+};
+
+class NewXmlVisitor : public Visitor
+{
+public:
+  //member variables
+  QString& m_path;
+  QString m_attribName;
+
+  //constructors
+  NewXmlVisitor(QString& path, const QString& attribName) :
+    m_path(path),
+    m_attribName(attribName)
+  {
+  }
+  virtual ~NewXmlVisitor() = default;
+
+  //public functions
+  virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+  {
+    //TODO implement
+    return false;
+  }
 };
 #endif

@@ -91,7 +91,7 @@ void ConstCreator::createClicked()
   } //end  if (m_ui->lneName->size() == 0)
 
   //check that value is valid for the given cconstant type
-  switch(QcpVariable::strToType(m_ui->cmbType->currentText().toStdString()))
+  switch(QcpVariable::strToType(m_ui->cmbType->currentText()))
   {
     case QcpVariable::Type::DOUBLE_ARRAY:
     {
