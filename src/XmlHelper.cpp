@@ -198,8 +198,69 @@ QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data) :
 }
 bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 {
-  //TODO implement
-  return false;
+  if (xmlReader->name() == Group::TagsStr[Group::Tags::QCP_GROUP])
+  {
+    auto attribs = xmlReader->attributes();
+    QString attribName = Group::QcpGroup::AttrStr[Group::QcpGroup::Attributes::VERSION];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("Version tag not found on line " + xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+    m_version = attribs.value(attribName).toString();
+    return true;
+  }
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::NAME])
+  {
+    QString name;
+    std::unique_ptr<CharactersVisitor<QString>> chars =
+      std::make_unique<CharactersVisitor<QString>>(name);
+    accept(std::move(chars));
+
+    std::get<static_cast<int>(GroupTuple::NAME)>(m_data) = name;
+    return false;
+  }
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::COMMENT])
+  {
+    QString comment;
+    std::unique_ptr<CharactersVisitor<QString>> chars =
+      std::make_unique<CharactersVisitor<QString>>(comment);
+    accept(std::move(chars));
+
+    std::get<static_cast<int>(GroupTuple::COMMENT)>(m_data) = comment;
+    return false;
+  }
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::DEFAULT_NUMBER])
+  {
+    int defaultNum;
+    std::unique_ptr<CharactersVisitor<int>> chars =
+      std::make_unique<CharactersVisitor<int>>(defaultNum);
+    accept(std::move(chars));
+
+    std::get<static_cast<int>(GroupTuple::DEFAULT_NUMBER)>(m_data) = defaultNum;
+    return false;
+  }
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_LIST])
+  {
+    //doesn't actually do anything
+    return true;
+  }
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE] ||
+           xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_ARRAY])
+  {
+    QcpVariable var;
+    std::unique_ptr<VariableVisitor> variable = std::make_unique<VariableVisitor>(var);
+    accept(std::move(variable));
+
+    std::get<static_cast<int>(GroupTuple::VARIABLE_LIST)>(m_data).push_back(var);
+    return false;
+  }
+  else
+  {
+    xmlReader->raiseError("Unrecognized tag " + xmlReader->name() + " at " +
+                          xmlReader->lineNumber());
+    return false;
+  }
 }
 
 //--------------------------------------------------
