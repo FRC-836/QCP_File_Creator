@@ -275,7 +275,7 @@ class Visitor
 {
   public:
     //member variables
-    QString version = "";
+    QString m_version = "";
 
     //constructors
     virtual ~Visitor() = default;
@@ -351,30 +351,6 @@ class CharactersVisitor : public Visitor
     }
 };
 
-template <typename T>
-class ListVisitor : public Visitor
-{
-  public:
-    //member variables
-    QVector<T>& m_list;
-    std::unique_ptr<Visitor> m_handler;
-    
-    //constructors
-    ListVisitor(QVector<T>& list, std::unique_ptr<Visitor> handler) :
-      m_list(list),
-      m_handler(handler)
-    {
-    }
-    virtual ~ListVisitor() = default;
-
-    //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
-    {
-      //TODO implement
-      return false;
-    }
-};
-
 class VariableVisitor : public Visitor
 {
   public:
@@ -398,18 +374,10 @@ public:
   QString m_attribName;
 
   //constructors
-  NewXmlVisitor(QString& path, const QString& attribName) :
-    m_path(path),
-    m_attribName(attribName)
-  {
-  }
+  NewXmlVisitor(QString& path, const QString& attribName);
   virtual ~NewXmlVisitor() = default;
 
   //public functions
-  virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
-  {
-    //TODO implement
-    return false;
-  }
+  virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
 };
 #endif
