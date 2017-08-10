@@ -1,4 +1,4 @@
-<QcpGroup>
+<QcpGroup version="1.0">
   <Name>Center_Peg</Name>
   <Comment>
     Gear auto center peg
