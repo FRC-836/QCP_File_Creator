@@ -14,6 +14,8 @@
 
 #include "QcpVariable.h"
 
+class Visitor;
+
 namespace Project
 {
   namespace Tags
@@ -271,21 +273,42 @@ enum class ProjectTuple
   FILE_LIST
 };
 
-//TODO figure out how to add single xmlStreamReader on doc accept
+class XmlReader
+{
+public:
+  //member variables
+  QStack<std::shared_ptr<Visitor>> m_visitors;
+  std::unique_ptr<QXmlStreamReader> m_reader;
+
+  //constructors
+
+  //public functions
+  void setNextVisitor(std::shared_ptr<Visitor> nextVisitor);
+  bool acceptDoc(const QString& path);
+  void accept(std::shared_ptr<Visitor> visitor);
+
+  //getters
+  QXmlStreamReader::Error getError() const;
+  QString getErrorString() const;
+};
+
 class Visitor
 {
   public:
     //member variables
     QString m_version = "";
-    std::shared_ptr<QXmlStreamReader> m_reader;
+    std::shared_ptr<XmlReader> m_reader;
 
     //constructors
+    Visitor(std::shared_ptr<XmlReader> reader);
     virtual ~Visitor() = default;
 
     //public funcions
-    virtual void accept(std::unique_ptr<Visitor> nextElement);
-    virtual bool acceptDoc(const QString& path);
+    virtual void accept(std::shared_ptr<Visitor> nextElement);
     virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader) = 0;
+
+    //setters
+    void setReader(std::shared_ptr<XmlReader> reader);
 };
 
 //top level visitors
@@ -296,7 +319,7 @@ class QcpProjectVisitor : public Visitor
     ProjectData_t& m_data;
 
     //constructors
-    QcpProjectVisitor(ProjectData_t& data);
+    QcpProjectVisitor(ProjectData_t& data, std::shared_ptr<XmlReader> reader);
     virtual ~QcpProjectVisitor() = default;
 
     //public functions
@@ -309,7 +332,7 @@ class QcpFileVisitor : public Visitor
     FileData_t& m_data;
 
     //constructors
-    QcpFileVisitor(FileData_t& data);
+    QcpFileVisitor(FileData_t& data, std::shared_ptr<XmlReader> reader);
     virtual ~QcpFileVisitor() = default;
 
     //public functions
@@ -322,7 +345,7 @@ class QcpGroupVisitor : public Visitor
     GroupData_t& m_data;
 
     //constructors
-    QcpGroupVisitor(GroupData_t& data);
+    QcpGroupVisitor(GroupData_t& data, std::shared_ptr<XmlReader> reader);
     virtual ~QcpGroupVisitor() = default;
 
     //public functions
@@ -337,7 +360,8 @@ class CharactersVisitor : public Visitor
     T& m_characters;
 
     //constructors
-    CharactersVisitor(T& characters) :
+    CharactersVisitor(T& characters, std::shared_ptr<XmlReader> reader) :
+      Visitor(reader),
       m_characters(characters)
     {
     }
@@ -378,7 +402,7 @@ class VariableVisitor : public Visitor
     QcpVariable::Type m_type;
 
     //constructors
-    VariableVisitor(QcpVariable& variable);
+    VariableVisitor(QcpVariable& variable, std::shared_ptr<XmlReader> reader);
     virtual ~VariableVisitor() = default;
 
     //public functions
@@ -393,7 +417,7 @@ public:
   QString m_attribName;
 
   //constructors
-  NewXmlVisitor(QString& path, const QString& attribName);
+  NewXmlVisitor(QString& path, const QString& attribName, std::shared_ptr<XmlReader> reader);
   virtual ~NewXmlVisitor() = default;
 
   //public functions

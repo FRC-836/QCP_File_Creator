@@ -1,22 +1,13 @@
 #include "XmlHelper.h"
 
 //--------------------------------------------------
-//Visitor
+//Xml Reader
 //--------------------------------------------------
-void Visitor::accept(std::unique_ptr<Visitor> nextElement)
+void XmlReader::setNextVisitor(std::shared_ptr<Visitor> nextVisitor)
 {
-  m_reader->readNext();
-  if (nextElement->visitorEnter(m_reader))
-  {
-    //continue reading document with this element
-    accept(std::move(nextElement));
-  } //end  if (nextElement->visitorEnter(m_reader))
-  else
-  {
-    m_reader->skipCurrentElement();
-  } //end  else
+  m_visitors.push(nextVisitor);
 }
-bool Visitor::acceptDoc(const QString& path)
+bool XmlReader::acceptDoc(const QString& path)
 {
   QFile* xmlFile = new QFile(path);
 
@@ -39,18 +30,46 @@ bool Visitor::acceptDoc(const QString& path)
     return false;
   } //end  if (!xmlFile->isReadable())
 
-  m_reader = std::make_shared<QXmlStreamReader>(xmlFile);
+  m_reader = std::make_unique<QXmlStreamReader>(xmlFile);
   while (m_reader->isStartDocument())
   {
     m_reader->readNext();
   } //end  while (m_reader->isStartDocument())
   return true;
 }
+void XmlReader::accept(std::shared_ptr<Visitor> visitor)
+{
+}
+QXmlStreamReader::Error XmlReader::getError() const
+{
+  return m_reader->error();
+}
+QString XmlReader::getErrorString() const
+{
+  return m_reader->errorString();
+}
+
+//--------------------------------------------------
+//Visitor
+//--------------------------------------------------
+Visitor::Visitor(std::shared_ptr<XmlReader> reader)
+{
+  m_reader = reader;
+}
+void Visitor::accept(std::shared_ptr<Visitor> nextElement)
+{
+  m_reader->setNextVisitor(nextElement);
+}
+void Visitor::setReader(std::shared_ptr<XmlReader> reader)
+{
+  m_reader = reader;
+}
 
 //--------------------------------------------------
 //Qcp Project Visitor
 //--------------------------------------------------
-QcpProjectVisitor::QcpProjectVisitor(ProjectData_t& data) :
+QcpProjectVisitor::QcpProjectVisitor(ProjectData_t& data,std::shared_ptr<XmlReader> reader) :
+  Visitor(reader), 
   m_data(data)
 {
 }
@@ -70,22 +89,18 @@ bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader
   } //end if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_PROJECT])
   else if (xmlReader->name() == Project::TagsStr[Project::Tags::NAME])
   {
-    QString name;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(name);
+      std::make_unique<CharactersVisitor<QString>>(std::get<static_cast<int>(ProjectTuple::NAME)>(m_data), m_reader);
     accept(std::move(chars));
 
-    std::get<static_cast<int>(ProjectTuple::NAME)>(m_data) = name;
     return false;
   } //end  else if (xmlReader->name() == Project::TagsStr[Project::Tags::NAME])
   else if (xmlReader->name() == Project::TagsStr[Project::Tags::PROJECT_ROOT_DIRECTORY])
   {
-    QString directory;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(directory);
+      std::make_unique<CharactersVisitor<QString>>(std::get<static_cast<int>(ProjectTuple::ROOT_DIRECTORY)>(m_data), m_reader);
     accept(std::move(chars));
 
-    std::get<static_cast<int>(ProjectTuple::ROOT_DIRECTORY)>(m_data) = directory;
     return false;
   } //end  else if (xmlReader->name() == Project::TagsStr[Project::Tags::PROJECT_ROOT_DIRECTORY])
   else if (xmlReader->name() == Project::TagsStr[Project::Tags::CONSTANT_LIST])
@@ -101,11 +116,11 @@ bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader
   else if (xmlReader->name() == Project::TagsStr[Project::Tags::CONSTANT] ||
            xmlReader->name() == Project::TagsStr[Project::Tags::ARRAY_CONSTANT])
   {
-    QcpVariable var;
-    std::unique_ptr<VariableVisitor> variable = std::make_unique<VariableVisitor>(var);
+    std::get<static_cast<int>(ProjectTuple::CONSTANT_LIST)>(m_data).push_back(QcpVariable());
+    std::unique_ptr<VariableVisitor> variable = 
+      std::make_unique<VariableVisitor>(std::get<static_cast<int>(ProjectTuple::CONSTANT_LIST)>(m_data).last(), m_reader);
     accept(std::move(variable));
 
-    std::get<static_cast<int>(ProjectTuple::CONSTANT_LIST)>(m_data).push_back(var);
     return false;
   } //end  else if (xmlReader->name() == Project::TagsStr[Project::Tags::CONSTANT]) ||
   else if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_FILE])
@@ -114,7 +129,7 @@ bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader
     QString path;
     QString attribName = Project::QcpFile::AttrStr[Project::QcpFile::Attributes::Location];
     std::unique_ptr<NewXmlVisitor> fileGetter = 
-      std::make_unique<NewXmlVisitor>(path, attribName);
+      std::make_unique<NewXmlVisitor>(path, attribName, m_reader);
     accept(std::move(fileGetter));
 
     //open new xml reader at file path
@@ -123,12 +138,11 @@ bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader
       std::make_unique<QXmlStreamReader>(&file);
 
     //handle the new xml file
-    FileData_t fileData;
+    std::get<static_cast<int>(ProjectTuple::FILE_LIST)>(m_data).push_back(FileData_t());
     std::unique_ptr<QcpFileVisitor> fileHandler = 
-      std::make_unique<QcpFileVisitor>(fileData);
+      std::make_unique<QcpFileVisitor>(std::get<static_cast<int>(ProjectTuple::FILE_LIST)>(m_data).last(), m_reader);
     accept(std::move(fileHandler));
 
-    std::get<static_cast<int>(ProjectTuple::FILE_LIST)>(m_data).push_back(fileData);
     return false;
   } //end  else if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_FILE])
   else
@@ -142,7 +156,8 @@ bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader
 //--------------------------------------------------
 //Qcp File Visitor
 //--------------------------------------------------
-QcpFileVisitor::QcpFileVisitor(FileData_t& data) :
+QcpFileVisitor::QcpFileVisitor(FileData_t& data, std::shared_ptr<XmlReader> reader) :
+  Visitor(reader),
   m_data(data)
 {
 }
@@ -162,19 +177,17 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   } //end  if (xmlReader->name() == File::TagsStr[File::Tags::QCP_FILE])
   else if (xmlReader->name() == File::TagsStr[File::Tags::NAME])
   {
-    QString name;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(name);
+      std::make_unique<CharactersVisitor<QString>>(std::get<static_cast<int>(FileTuple::NAME)>(m_data), m_reader);
     accept(std::move(chars));
 
-    std::get<static_cast<int>(FileTuple::NAME)>(m_data) = name;
     return false;
   } //end  else if (xmlReader->name() == File::TagsStr[File::Tags::NAME])
   else if (xmlReader->name() == File::TagsStr[File::Tags::LOCATION])
   {
     QString location;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(location);
+      std::make_unique<CharactersVisitor<QString>>(location, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(FileTuple::EXPORT_LOCATION)>(m_data) = location;
@@ -184,7 +197,7 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     QString comment;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(comment);
+      std::make_unique<CharactersVisitor<QString>>(comment, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(FileTuple::COMMENT)>(m_data) = comment;
@@ -194,7 +207,7 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     int defaultNum;
     std::unique_ptr<CharactersVisitor<int>> chars =
-      std::make_unique<CharactersVisitor<int>>(defaultNum);
+      std::make_unique<CharactersVisitor<int>>(defaultNum, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(FileTuple::DEFAULT_NUMBER)>(m_data) = defaultNum;
@@ -211,7 +224,7 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
     QString path;
     QString attribName = File::QcpGroup::AttrStr[File::QcpGroup::Attributes::LOCATION];
     std::unique_ptr<NewXmlVisitor> fileGetter = 
-      std::make_unique<NewXmlVisitor>(path, attribName);
+      std::make_unique<NewXmlVisitor>(path, attribName, m_reader);
     accept(std::move(fileGetter));
 
     //open new xml reader at file path
@@ -222,7 +235,7 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
     //handle the new xml file
     GroupData_t groupData;
     std::unique_ptr<QcpGroupVisitor> fileHandler = 
-      std::make_unique<QcpGroupVisitor>(groupData);
+      std::make_unique<QcpGroupVisitor>(groupData, m_reader);
     accept(std::move(fileHandler));
 
     std::get<static_cast<int>(FileTuple::GROUP_LIST)>(m_data).push_back(groupData);
@@ -239,7 +252,8 @@ bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 //--------------------------------------------------
 //Qcp Group Visitor
 //--------------------------------------------------
-QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data) :
+QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data, std::shared_ptr<XmlReader> reader) :
+  Visitor(reader),
   m_data(data)
 {
 }
@@ -261,7 +275,7 @@ bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     QString name;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(name);
+      std::make_unique<CharactersVisitor<QString>>(name, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(GroupTuple::NAME)>(m_data) = name;
@@ -271,7 +285,7 @@ bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     QString comment;
     std::unique_ptr<CharactersVisitor<QString>> chars =
-      std::make_unique<CharactersVisitor<QString>>(comment);
+      std::make_unique<CharactersVisitor<QString>>(comment, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(GroupTuple::COMMENT)>(m_data) = comment;
@@ -281,7 +295,7 @@ bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     int defaultNum;
     std::unique_ptr<CharactersVisitor<int>> chars =
-      std::make_unique<CharactersVisitor<int>>(defaultNum);
+      std::make_unique<CharactersVisitor<int>>(defaultNum, m_reader);
     accept(std::move(chars));
 
     std::get<static_cast<int>(GroupTuple::DEFAULT_NUMBER)>(m_data) = defaultNum;
@@ -296,7 +310,7 @@ bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
            xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_ARRAY])
   {
     QcpVariable var;
-    std::unique_ptr<VariableVisitor> variable = std::make_unique<VariableVisitor>(var);
+    std::unique_ptr<VariableVisitor> variable = std::make_unique<VariableVisitor>(var, m_reader);
     accept(std::move(variable));
 
     std::get<static_cast<int>(GroupTuple::VARIABLE_LIST)>(m_data).push_back(var);
@@ -313,7 +327,8 @@ bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 //--------------------------------------------------
 //Variable Visitor
 //--------------------------------------------------
-VariableVisitor::VariableVisitor(QcpVariable& variable) :
+VariableVisitor::VariableVisitor(QcpVariable& variable, std::shared_ptr<XmlReader> reader) :
+  Visitor(reader),
   m_variable(variable)
 {
 }
@@ -400,7 +415,7 @@ bool VariableVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
   {
     double value;
     std::unique_ptr<CharactersVisitor<double>> chars =
-      std::make_unique<CharactersVisitor<double>>(value);
+      std::make_unique<CharactersVisitor<double>>(value, m_reader);
     accept(std::move(chars));
 
     auto values = m_variable.getValue<QVector<double>>();
@@ -418,7 +433,9 @@ bool VariableVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 //--------------------------------------------------
 //New XML Visitor
 //--------------------------------------------------
-NewXmlVisitor::NewXmlVisitor(QString& path, const QString& attribName) :
+NewXmlVisitor::NewXmlVisitor(QString& path, const QString& attribName, 
+                             std::shared_ptr<XmlReader> reader) :
+  Visitor(reader),
   m_path(path),
   m_attribName(attribName)
 {
