@@ -93,6 +93,7 @@ void ConstCreator::createClicked()
   //check that value is valid for the given cconstant type
   switch(QcpVariable::strToType(m_ui->cmbType->currentText()))
   {
+    //TODO add handling for Type::INVALID
     case QcpVariable::Type::DOUBLE_ARRAY:
     {
       auto result = isValidDoubleArr();

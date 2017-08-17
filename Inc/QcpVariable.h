@@ -19,7 +19,8 @@ class QcpVariable
     enum class Type
     {
       DOUBLE,
-      DOUBLE_ARRAY
+      DOUBLE_ARRAY,
+      INVALID
     };
     static const QStringList typeStr;
     static QString typeToStr(Type toConvert);

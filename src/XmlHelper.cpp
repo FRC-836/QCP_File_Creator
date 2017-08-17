@@ -1,13 +1,60 @@
 #include "XmlHelper.h"
 
 //--------------------------------------------------
+//Visitor
+//--------------------------------------------------
+void Visitor::accept(std::unique_ptr<Visitor> nextElement)
+{
+  m_reader->readNext();
+  if (nextElement->visitorEnter(m_reader))
+  {
+    //continue reading document with this element
+    accept(std::move(nextElement));
+  } //end  if (nextElement->visitorEnter(m_reader))
+  else
+  {
+    m_reader->skipCurrentElement();
+  } //end  else
+}
+bool Visitor::acceptDoc(const QString& path)
+{
+  QFile* xmlFile = new QFile(path);
+
+  if (!xmlFile->exists())
+  {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    {
+      std::cout << "ERROR: XmlHelper: file " << path.toStdString() << " doesn't exist" 
+                << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    return false;
+  } //end  if (!xmlFile->exists())
+  if (!xmlFile->isReadable())
+  {
+    if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    {
+      std::cout << "ERROR: XmlHelper: file " << path.toStdString() << " isn't readable"
+                << std::endl;
+    } //end  if (CmdOptions::verbosity >= CmdOptions::DEBUG_LEVEL::ERRORS_ONLY)
+    return false;
+  } //end  if (!xmlFile->isReadable())
+
+  m_reader = std::make_shared<QXmlStreamReader>(xmlFile);
+  while (m_reader->isStartDocument())
+  {
+    m_reader->readNext();
+  } //end  while (m_reader->isStartDocument())
+  return true;
+}
+
+//--------------------------------------------------
 //Qcp Project Visitor
 //--------------------------------------------------
 QcpProjectVisitor::QcpProjectVisitor(ProjectData_t& data) :
   m_data(data)
 {
 }
-bool QcpProjectVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+bool QcpProjectVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 {
   if (xmlReader->name() == Project::TagsStr[Project::Tags::QCP_PROJECT])
   {
@@ -99,7 +146,7 @@ QcpFileVisitor::QcpFileVisitor(FileData_t& data) :
   m_data(data)
 {
 }
-bool QcpFileVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+bool QcpFileVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 {
   if (xmlReader->name() == File::TagsStr[File::Tags::QCP_FILE])
   {
@@ -196,7 +243,7 @@ QcpGroupVisitor::QcpGroupVisitor(GroupData_t& data) :
   m_data(data)
 {
 }
-bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+bool QcpGroupVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 {
   if (xmlReader->name() == Group::TagsStr[Group::Tags::QCP_GROUP])
   {
@@ -209,7 +256,7 @@ bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
     } //end  if (!attribs.hasAttribute(attribName))
     m_version = attribs.value(attribName).toString();
     return true;
-  }
+  } //end  if (xmlReader->name() == Group::TagsStr[Group::Tags::QCP_GROUP])
   else if (xmlReader->name() == Group::TagsStr[Group::Tags::NAME])
   {
     QString name;
@@ -219,7 +266,7 @@ bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 
     std::get<static_cast<int>(GroupTuple::NAME)>(m_data) = name;
     return false;
-  }
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::NAME])
   else if (xmlReader->name() == Group::TagsStr[Group::Tags::COMMENT])
   {
     QString comment;
@@ -229,7 +276,7 @@ bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 
     std::get<static_cast<int>(GroupTuple::COMMENT)>(m_data) = comment;
     return false;
-  }
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::COMMENT])
   else if (xmlReader->name() == Group::TagsStr[Group::Tags::DEFAULT_NUMBER])
   {
     int defaultNum;
@@ -239,12 +286,12 @@ bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 
     std::get<static_cast<int>(GroupTuple::DEFAULT_NUMBER)>(m_data) = defaultNum;
     return false;
-  }
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::DEFAULT_NUMBER])
   else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_LIST])
   {
     //doesn't actually do anything
     return true;
-  }
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_LIST])
   else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE] ||
            xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_ARRAY])
   {
@@ -254,13 +301,13 @@ bool QcpGroupVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
 
     std::get<static_cast<int>(GroupTuple::VARIABLE_LIST)>(m_data).push_back(var);
     return false;
-  }
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE] ||
   else
   {
     xmlReader->raiseError("Unrecognized tag " + xmlReader->name() + " at " +
                           xmlReader->lineNumber());
     return false;
-  }
+  } //end  else
 }
 
 //--------------------------------------------------
@@ -270,10 +317,102 @@ VariableVisitor::VariableVisitor(QcpVariable& variable) :
   m_variable(variable)
 {
 }
-bool VariableVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+bool VariableVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 {
-  //TODO implement
-  return false;
+  if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE])
+  {
+    //get attributes
+    auto attribs = xmlReader->attributes();
+
+    //handle name attribute
+    QString attribName = Group::Variable::AttrStr[Group::Variable::Attributes::NAME];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("No attribute " + attribName + " found at " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+    m_variable.setName(attribs.value(attribName).toString());
+
+    //handle type attribute
+    attribName = Group::Variable::AttrStr[Group::Variable::Attributes::TYPE];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("No attribute " + attribName + " found at " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+    
+    //ensure a valid type was supplied
+    QcpVariable::Type type = QcpVariable::strToType(attribs.value(attribName).toString());
+    if (type == QcpVariable::Type::INVALID)
+    {
+      xmlReader->raiseError("Invalid type provided for variable on line " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (type == QcpVariable::Type::INVALID)
+
+    //handle value attribute
+    attribName = Group::Variable::AttrStr[Group::Variable::Attributes::VALUE];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("No attribute " + attribName + " found at " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+    m_variable.changeValue(type, attribs.value(attribName).toString());
+  } //end  if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE])
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_ARRAY])
+  {
+    auto attribs = xmlReader->attributes();
+
+    //handle name attribute
+    QString attribName = Group::VariableArray::AttrStr[Group::VariableArray::Attributes::NAME];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("No attribute " + attribName + " found at " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+    m_variable.setName(attribs.value(attribName).toString());
+
+    //handle type attribute
+    attribName = Group::VariableArray::AttrStr[Group::VariableArray::Attributes::TYPE];
+    if (!attribs.hasAttribute(attribName))
+    {
+      xmlReader->raiseError("No attribute " + attribName + " found at " +
+                            xmlReader->lineNumber());
+      return false;
+    } //end  if (!attribs.hasAttribute(attribName))
+
+    //ensure type is valid
+    QcpVariable::Type type = QcpVariable::strToType(attribs.value(attribName).toString());
+    if (type == QcpVariable::Type::INVALID)
+    {
+      xmlReader->raiseError("Invalid type provided at " + xmlReader->lineNumber());
+      return false;
+    } //end  if (type == QcpVariable::Type::INVALID)
+
+    //TODO figure out how to handle other types
+    m_variable.changeValue(type, m_variable.getValue<QVector<double>>());
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VARIABLE_ARRAY])
+  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VALUE])
+  {
+    double value;
+    std::unique_ptr<CharactersVisitor<double>> chars =
+      std::make_unique<CharactersVisitor<double>>(value);
+    accept(std::move(chars));
+
+    auto values = m_variable.getValue<QVector<double>>();
+    values.push_back(value);
+    m_variable.changeValue(m_variable.getType(), values);
+  } //end  else if (xmlReader->name() == Group::TagsStr[Group::Tags::VALUE])
+  else
+  {
+    xmlReader->raiseError("Unrecognized tag " + xmlReader->name() + " at " +
+                          xmlReader->lineNumber());
+    return false;
+  } //end  else
 }
 
 //--------------------------------------------------
@@ -284,8 +423,15 @@ NewXmlVisitor::NewXmlVisitor(QString& path, const QString& attribName) :
   m_attribName(attribName)
 {
 }
-bool NewXmlVisitor::visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+bool NewXmlVisitor::visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
 {
-  //TODO implement
+  auto attribs = xmlReader->attributes();
+  if (!attribs.hasAttribute(m_attribName))
+  {
+    xmlReader->raiseError("Unrecognized attribute " + m_attribName + " found at " +
+                          xmlReader->lineNumber());
+    return false;
+  } //end  if (!attribs.hasAttribute(m_attribName))
+  m_path = attribs.value(m_attribName).toString();
   return false;
 }

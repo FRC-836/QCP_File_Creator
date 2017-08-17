@@ -21,8 +21,7 @@ QcpVariable::Type QcpVariable::strToType(const QString& toConvert)
   } //end  if (foundAt != typeStr.end())
   else
   {
-    throw std::out_of_range("No type " + toConvert.toStdString() + 
-                            " is supported by this application");
+    return Type::INVALID;
   } //end  else
 }
 std::ostream& operator<<(std::ostream& os, const QcpVariable::Type& type)

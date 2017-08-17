@@ -7,6 +7,7 @@
 #include <QStack>
 #include <QFile>
 #include <QtAlgorithms>
+#include <qvariant.h>
 
 #include <tuple>
 #include <memory>
@@ -276,16 +277,15 @@ class Visitor
   public:
     //member variables
     QString m_version = "";
+    std::shared_ptr<QXmlStreamReader> m_reader;
 
     //constructors
     virtual ~Visitor() = default;
 
     //public funcions
-    virtual void accept(std::unique_ptr<Visitor> nextElement)
-    {
-      //TODO implement
-    }
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader) = 0;
+    virtual void accept(std::unique_ptr<Visitor> nextElement);
+    virtual bool acceptDoc(const QString& path);
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader) = 0;
 };
 
 //top level visitors
@@ -300,7 +300,7 @@ class QcpProjectVisitor : public Visitor
     virtual ~QcpProjectVisitor() = default;
 
     //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpFileVisitor : public Visitor
 {
@@ -313,7 +313,7 @@ class QcpFileVisitor : public Visitor
     virtual ~QcpFileVisitor() = default;
 
     //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
 class QcpGroupVisitor : public Visitor
 {
@@ -326,7 +326,7 @@ class QcpGroupVisitor : public Visitor
     virtual ~QcpGroupVisitor() = default;
 
     //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
 
 template <typename T>
@@ -344,9 +344,28 @@ class CharactersVisitor : public Visitor
     virtual ~CharactersVisitor() = default;
 
     //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader)
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader)
     {
-      //TODO implement
+      //ensure that the reader is at characters
+      if (!xmlReader->isCharacters())
+      {
+        xmlReader->raiseError("No characters found at " + xmlReader->lineNumber());
+        return false;
+      } //end  if (!xmlReader->isCharacters())
+
+      //read the characters 
+      QVariant variant = QVariant::fromValue(xmlReader->text().toString());
+
+      //make sure the characters can be converted to the desired type
+      if (!variant.canConvert<T>())
+      {
+        xmlReader->raiseError("Cannot properly interperat characters at " + 
+                              xmlReader->lineNumber());
+        return false;
+      } //end  if (!variant.canConvert<T>())
+
+      //interperat the characters as the correct type
+      m_characters = variant.value<T>();
       return false;
     }
 };
@@ -363,7 +382,7 @@ class VariableVisitor : public Visitor
     virtual ~VariableVisitor() = default;
 
     //public functions
-    virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+    virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
 
 class NewXmlVisitor : public Visitor
@@ -378,6 +397,6 @@ public:
   virtual ~NewXmlVisitor() = default;
 
   //public functions
-  virtual bool visitorEnter(std::unique_ptr<QXmlStreamReader> xmlReader);
+  virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
 #endif
