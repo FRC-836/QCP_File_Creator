@@ -408,19 +408,4 @@ class VariableVisitor : public Visitor
     //public functions
     virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
 };
-
-class NewXmlVisitor : public Visitor
-{
-public:
-  //member variables
-  QString& m_path;
-  QString m_attribName;
-
-  //constructors
-  NewXmlVisitor(QString& path, const QString& attribName, std::shared_ptr<XmlReader> reader);
-  virtual ~NewXmlVisitor() = default;
-
-  //public functions
-  virtual bool visitorEnter(std::shared_ptr<QXmlStreamReader> xmlReader);
-};
 #endif

@@ -35,6 +35,4 @@ add ability to turn off name prepending
   
 XML HELPER CLASS
 =================================================================================================
-switch xml parsing to a visitor paradigm
-create classes for each tag (maybe) that take in a parent as well as process the info that they are supposed to
 make XML parsing extensible to other types than double (see VariableVisitor)
