@@ -39,6 +39,9 @@ bool XmlReader::acceptDoc(const QString& path)
 }
 void XmlReader::accept(std::shared_ptr<Visitor> visitor)
 {
+  int prevVisitorNum = 0;
+  QXmlStreamReader::TokenType prevTokenType;
+  while (m_reader->error() == QXmlStreamReader::NoError && 
 }
 QXmlStreamReader::Error XmlReader::getError() const
 {

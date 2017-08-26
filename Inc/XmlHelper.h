@@ -296,7 +296,6 @@ class Visitor
 {
   public:
     //member variables
-    QString m_version = "";
     std::shared_ptr<XmlReader> m_reader;
 
     //constructors
